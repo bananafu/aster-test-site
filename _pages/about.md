@@ -1,3 +1,10 @@
+---
+layout: single
+title: "About Me"
+permalink: /about/
+author_profile: true
+---
+
 <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
 
   <div style="flex: 1; min-width: 250px;">
