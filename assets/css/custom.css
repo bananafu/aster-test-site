@@ -1,6 +1,9 @@
 /* Custom styles for Aster's site */
-
+/* 強制首頁標題不換行 + 微偏左 */
 .layout--home .page__title {
   white-space: nowrap;
-  font-size: 2rem;
+  font-size: 2.4rem;
+  text-align: left;         /* 靠左對齊 */
+  margin-left: 10vw;        /* 左側內縮距離 */
+  max-width: 80vw;          /* 避免文字超出頁面 */
 }
