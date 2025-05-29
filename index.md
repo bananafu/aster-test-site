@@ -1,6 +1,6 @@
 ---
 layout: home
-title: "Architecture X Climate ... Is this Possible?"
+title: "Architecture X Climate"
 ---
 
 <section style="text-align:center;">
