@@ -1,0 +1,18 @@
+title: Aster Fu Portfolio
+email: youtzor128@gmail.com
+description: >-
+  建築シミュレーション × 大気科学 × サステナブル建築設計｜学びと作品の記録
+github_username: bananafu
+minimal_mistakes_skin: aqua
+remote_theme: mmistakes/minimal-mistakes
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed
+  - jemoji
+  - jekyll-include-cache
+markdown: kramdown
+permalink: /:categories/:title/
+paginate: 5
+paginate_path: /page:num/
+timezone: Asia/Taipei
