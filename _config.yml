@@ -29,4 +29,7 @@ nav:
 
 include:
   - _pages
+  
+custom_css:
+  - "/assets/css/custom.css"
 
