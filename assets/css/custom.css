@@ -1,0 +1,6 @@
+/* Custom styles for Aster's site */
+
+.layout--home .page__title {
+  white-space: nowrap;
+  font-size: 2.2rem;
+}
