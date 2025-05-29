@@ -1,11 +1,11 @@
 ---
 layout: home
-title: "Architecture X Climate"
+title: "Architecture X Climate ... Is this Possible?"
 ---
 
 <section style="text-align:center;">
-  <h2>Hello, I'm Aster 👋</h2>
-  <p>I'm passionate about environmental simulation, data visualization, and sustainable design.</p>
+  <h2>What did I did?</h2>
+  <p>I can make the architecture design more scientific!</p>
 </section>
 
 ---
