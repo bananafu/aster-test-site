@@ -8,16 +8,18 @@ author_profile: true
 <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
 
   <div style="flex: 1; min-width: 250px;">
-  <p>Hello! I'm Aster 🌱</p>
+  <p style="margin: 0;">Hello! I'm Aster 🌱</p>
 
-  <div style="color: #f8a34d;">
-    <p>I'm a student passionate about:</p>
-    <ul style="list-style: none; padding-left: 1em; margin: 0;">
-      <li>• Environmental simulation</li>
-      <li>• Architectural design</li>
-      <li>• Climate data visualization</li>
-    </ul>
-  </div>
+  <p style="margin: 0;">I'm a student passionate about:</p>
+  <ul style="color: #f8a34d; list-style: none; padding-left: 1em; margin: 0; line-height: 1.4;">
+    <li>• Environmental simulation</li>
+    <li>• Architectural design</li>
+    <li>• Climate data visualization</li>
+  </ul>
+
+  <p style="margin: 0;">This page is still under construction. Stay tuned!</p>
+</div>
+
 
   <p>This page is still under construction. Stay tuned!</p>
 </div>
