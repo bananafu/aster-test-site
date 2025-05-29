@@ -17,6 +17,16 @@ paginate: 5
 paginate_path: /page:num/
 timezone: Asia/Taipei
 
+nav:
+  - title: "Home"
+    url: /
+  - title: "About"
+    url: "{{ '/about/' | relative_url }}"
+  - title: "Portfolio"
+    url: "{{ '/portfolio/' | relative_url }}"
+  - title: "Contact"
+    url: "{{ '/contact/' | relative_url }}"
+
 include:
   - _pages
 
