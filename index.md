@@ -1,10 +1,9 @@
 ---
 layout: home
-title: "Hi! I'm Aster Fu"
+title: "Architecture X Climate"
 ---
 
 <section style="text-align:center;">
-  <img src="{{ '/assets/images/photo.jpg' | relative_url }}" alt="Aster photo" style="border-radius: 50%; max-width: 200px;" />
   <h2>Hello, I'm Aster 👋</h2>
   <p>I'm passionate about environmental simulation, data visualization, and sustainable design.</p>
 </section>
