@@ -4,7 +4,7 @@ title: "Architecture X Climate ... Is this Possible?"
 ---
 
 <section style="text-align:center;">
-  <h2>What did I did?</h2>
+  <h2>What have I done?</h2>
   <p>I can make the architecture design more scientific!</p>
 </section>
 
