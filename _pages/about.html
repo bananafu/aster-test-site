@@ -11,53 +11,68 @@ header:
 ---
 
 <style>
-/* 移除黑色 About Me 區塊 */
 .page__header {
-  display: none !important;  /* ← 加這個保證 override 主題的樣式 */
+  display: none !important;
 }
 
-
-/* 內容容器 */
 .about-container {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  flex-direction: row;
   flex-wrap: wrap;
-  background-color: rgba(30, 60, 50, 0.8); /* ✨ 墨綠半透明 */
+  background-color: rgba(60, 90, 80, 0.95); /* 深墨綠 */
   border-radius: 24px;
   padding: 3rem;
-  max-width: 2000px;
+  max-width: 1100px;
   width: 100%;
-  color: #eafff3; /* 淺青白字 */
+  color: #eef7f0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
-/* 文字區塊 */
 .about-text {
   flex: 1;
-  min-width: 280px;
+  min-width: 300px;
+  text-align: left;
+  padding-right: 2rem;
 }
 
 .about-text p {
   margin: 0 0 1rem;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
 .about-text ul li {
   color: #ffd699;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
 }
 
-/* 照片 */
+/* 讓圖片靠右對齊並置中顯示 */
 .rounded-photo {
-  flex: 0 0 80px;
-  margin-left: 2rem;
+  flex: 0 0 auto;
+  width: 250px;
+  height: auto;
+  align-self: center;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   border-radius: 18px;
   filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));
-  max-width: 100%;
-  height: auto;
 }
+</style>
+
+<div class="about-container">
+  <div class="about-text">
+    <p>Hello! I'm Aster 🌱</p>
+    <p>I'm a student passionate about:</p>
+    <ul style="list-style: none; padding-left: 1em; margin: 0; line-height: 1.6;">
+      <li>• Environmental simulation</li>
+      <li>• Architectural design</li>
+      <li>• Climate data visualization</li>
+    </ul>
+    <p>This page is still under construction. Stay tuned!</p>
+  </div>
+
+  <img src="{{ '/assets/images/photo.jpg' | relative_url }}" alt="Aster photo" class="rounded-photo" />
+</div>
+
 </style>
 
 <div class="about-container">
