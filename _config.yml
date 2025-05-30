@@ -38,7 +38,7 @@ include:
   - _includes/floating-nav.html
   
 custom_css:
-  - "/assets/css/custom.css"
+  - "assets/css/custom.css"
 
 # hook 設定：
 defaults:
