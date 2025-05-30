@@ -15,7 +15,21 @@ header:
   display: none !important;
 }
 
+.outer-wrapper {
+  max-width: 1200px; /* 或用你喜歡的尺寸 */
+  padding: 0 100px;  /* 讓左右少 100px */
+  margin: 0 auto;    /* 讓整個區塊置中 */
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .outer-wrapper {
+    padding: 0 5px; /* 手機左右 5px */
+  }
+}
+
 .about-container {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -25,22 +39,6 @@ header:
   padding: 3rem 10px;
   color: #eef7f0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  width: calc(100% - 200px); /* 全寬 - 左右 10px */
-  max-width: none;
-}
-
-.outer-wrapper {
-  width: calc(100vw - 200px);
-  margin-left: calc(-50vw + 50%);
-  transform: translateX(0);
-}
-
-@media (max-width: 768px) {
-  .outer-wrapper {
-    width: calc(100vw - 10px); /* 手機縮小左右邊界 */
-    margin-left: calc(-50vw + 50%);
-    transform: translateX(0);  /* 手機不要偏移 */
-  }
 }
 
   .about-text {
