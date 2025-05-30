@@ -10,10 +10,10 @@
   max-width: 90%;
 }
 
-
+/* Menu 按鈕樣式 */
 .floating-nav-toggle {
-  all: unset; /* ❗️這行會徹底清除 button 預設樣式 */
-  background-color: rgba(0, 0, 0, 0.7);
+  all: unset;
+  background-color: rgba(0, 0, 0, 0.75);
   color: white;
   border-radius: 999px;
   padding: 0.4rem 0.8rem;
@@ -21,34 +21,35 @@
   cursor: pointer;
   font-weight: bold;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  display: inline-block;
   text-align: center;
 }
 
+/* Menu 連結列表（預設不顯示） */
 .floating-nav {
   display: none;
-  flex-direction: row;
+  flex-direction: column; /* ✅ 垂直排列 */
   background-color: rgba(0, 0, 0, 0.85);
   padding: 0.75rem 1rem;
   border-radius: 1rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   margin-top: 0.5rem;
-  gap: 1rem;
+  text-align: right;
 }
 
+/* 每一個連結樣式 */
 .floating-nav a {
   color: white;
   text-decoration: none;
   font-weight: bold;
   font-size: 0.9rem;
-  margin-bottom: 0.4rem;
+  margin: 0.25rem 0;
 }
 
 .floating-nav a:hover {
   text-decoration: underline;
 }
 
-/* 當滑鼠 hover 到整個區塊時顯示 nav */
+/* hover 顯示選單 */
 .floating-nav-wrapper:hover .floating-nav {
   display: flex;
 }
