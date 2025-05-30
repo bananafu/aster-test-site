@@ -14,8 +14,6 @@ body {
   position: relative;
 }
 
-
-
 /* Menu 按鈕樣式 */
 .floating-nav-toggle {
   all: unset;
@@ -69,9 +67,9 @@ body {
 }
 
 .hero-title {
-  max-width: 700px;
+  max-width: 100%;
   margin: 2rem auto;
-  padding: 0 1rem;
+  padding: 0 2rem;
   text-align: center;
 }
 
