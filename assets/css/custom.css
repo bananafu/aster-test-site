@@ -3,55 +3,48 @@
   padding: 0 2rem;
 }
 
-.floating-nav-wrapper {
+.floating-nav {
   position: fixed;
   top: 1rem;
-  right: 1rem;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  right: 1.5rem;
+  z-index: 1000;
 }
 
-/* ☰ Menu 按鈕 */
-.floating-nav-toggle {
-  all: unset;
-  background-color: rgba(0, 0, 0, 0.75);
+.floating-nav button {
+  background-color: #008080;
   color: white;
-  border-radius: 999px;
-  padding: 0.4rem 1rem;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  font-weight: bold;
-  width: 100%;
-  text-align: left;  /* ✅ 左對齊 */
 }
 
-/* 展開選單 */
-.floating-nav {
+.floating-nav ul {
   display: none;
-  flex-direction: column;
-  background-color: rgba(0, 0, 0, 0.9);
-  padding: 0.75rem 1rem;
-  border-radius: 1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  list-style: none;
   margin-top: 0.5rem;
-  min-width: 180px;
+  padding: 0;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border-radius: 8px;
 }
 
-/* 每個選單項目 */
-.floating-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: normal;
-  font-size: 0.9rem;
-  padding-left: 1rem;   /* ✅ 縮排在這裡！ */
+.floating-nav ul.show {
   display: block;
-  margin: 0.25rem 0;
 }
-.floating-nav a:hover {
-  text-decoration: underline;
+
+.floating-nav ul li a {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: #333;
+  text-decoration: none;
 }
+
+.floating-nav ul li a:hover {
+  background-color: #f0f0f0;
+}
+
 
 /* Hover 顯示選單 */
 .floating-nav-wrapper:hover .floating-nav {
