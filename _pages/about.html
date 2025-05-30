@@ -15,37 +15,34 @@ header:
   display: none !important;
 }
 
-<div style="width: 100vw; margin-left: calc(-50vw + 50%);">
-  <div class="about-container">
-    <p>Hello! I'm Aster 🌱</p>
-    <p>I'm a student passionate about:</p>
-    <ul style="list-style: none; padding-left: 1em; margin: 0; line-height: 1.6;">
-      <li>• Environmental simulation</li>
-      <li>• Architectural design</li>
-      <li>• Climate data visualization</li>
-    </ul>
-    <p>This page is still under construction. Stay tuned!</p>
-  </div>
-</div>
-
 .about-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  background-color: rgba(60, 90, 80, 0.95); /* 深墨綠 */
+  background-color: rgba(60, 90, 80, 0.95);
   border-radius: 24px;
   padding: 3rem 10px;
   color: #eef7f0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  width: calc(100% - 20px); /* 全寬但保留左右 10px 空間 */
+  width: calc(100% - 20px); /* 全寬 - 左右 10px */
   max-width: none;
 }
 
 @media (max-width: 768px) {
   .about-container {
     padding: 2rem 5px;
-    width: calc(100% - 10px); /* 手機時左右各保留 5px */
+    width: calc(100% - 10px); /* 手機左右 5px */
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-text {
+    padding-right: 0;
+  }
+
+  .rounded-photo {
+    margin-top: 2rem;
   }
 }
 
@@ -66,7 +63,6 @@ header:
   font-size: 1.1rem;
 }
 
-/* 讓圖片靠右對齊並置中顯示 */
 .rounded-photo {
   flex: 0 0 auto;
   width: 250px;
@@ -78,8 +74,20 @@ header:
 }
 </style>
 
+<!-- 外層突破版心限制 -->
+<div style="width: 100vw; margin-left: calc(-50vw + 50%);">
+  <div class="about-container">
+    <div class="about-text">
+      <p>Hello! I'm Aster 🌱</p>
+      <p>I'm a student passionate about:</p>
+      <ul style="list-style: none; padding-left: 1em; margin: 0; line-height: 1.6;">
+        <li>• Environmental simulation</li>
+        <li>• Architectural design</li>
+        <li>• Climate data visualization</li>
+      </ul>
+      <p>This page is still under construction. Stay tuned!</p>
+    </div>
 
-  <img src="{{ '/assets/images/photo.jpg' | relative_url }}" alt="Aster photo" class="rounded-photo" />
+    <img src="{{ '/assets/images/photo.jpg' | relative_url }}" alt="Aster photo" class="rounded-photo" />
+  </div>
 </div>
-
-</style>
