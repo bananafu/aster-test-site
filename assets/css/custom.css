@@ -7,7 +7,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  max-width: 90%;
 }
 
 /* Menu 按鈕樣式 */
@@ -59,4 +58,43 @@
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+.hero-title {
+  text-align: center;
+  margin-top: 2rem;
+}
+.hero-title h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.hero-title p {
+  font-size: 1.2rem;
+  color: #234;
+}
+
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  text-align: center;
+}
+.skills-grid div {
+  min-width: 100px;
+}
+
+.quick-links {
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 1.5rem;
+}
+.quick-links a {
+  color: #00aaff;
+  font-weight: bold;
+  text-decoration: none;
+}
+.quick-links a:hover {
+  text-decoration: underline;
 }
