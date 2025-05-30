@@ -5,10 +5,13 @@ permalink: /
 ---
 
 <!-- Hero 標題區 -->
-<div class="hero-title">
-  <h1>Architecture X Climate</h1>
-  <p>I can make the architecture design more scientific!</p>
+<div class="wide-content">
+  <div class="hero-title">
+    <h1>Architecture X Climate</h1>
+    <p>I can make the architecture design more scientific!</p>
+  </div>
 </div>
+
 
 ---
 
