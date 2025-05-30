@@ -143,10 +143,12 @@
   padding: 2rem;
   border-radius: 20px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-  font-size: 1.2rem;
-  line-height: 1.8;
-  max-width: 700px;
-  margin: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
   transition: transform 0.3s ease;
 }
 
