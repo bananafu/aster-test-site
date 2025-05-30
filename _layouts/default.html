@@ -4,16 +4,26 @@
     {% include head.html %}
   </head>
   <body class="{{ page.classes | default: layout.classes }}">
-  
- 
-    <div class="page">
-    {% include header.html %}
-    <div class="initial-content">
-      {{ content }}
-    </div>
-    {% include footer.html %}
-  </div>
+    {% include skip-links.html %}
 
-  {% include scripts.html %}
-</body>
+    <!-- ✅ 浮動在右上角的 menu -->
+    <div class="floating-nav-wrapper">
+      <div class="floating-nav-toggle">☰ Menu</div>
+      <div class="floating-nav">
+        <a href="{{ '/about/' | relative_url }}">About</a><br>
+        <a href="{{ '/portfolio/' | relative_url }}">Portfolio</a><br>
+        <a href="{{ '/skills/' | relative_url }}">Skills</a><br>
+        <a href="{{ '/projects/' | relative_url }}">Projects</a><br>
+        <a href="{{ '/publications/' | relative_url }}">Publications</a>
+      </div>
+    </div>
+
+    {% include masthead.html %}
+    <main id="main" role="main">
+      {{ content }}
+    </main>
+
+    {% include footer.html %}
+    {% include scripts.html %}
+  </body>
 </html>
