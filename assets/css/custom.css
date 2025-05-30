@@ -45,7 +45,7 @@
   text-decoration: none;
   font-weight: normal;
   font-size: 0.9rem;
-  padding-left: 1.5rem;   /* ✅ 縮排在這裡！ */
+  padding-left: 1rem;   /* ✅ 縮排在這裡！ */
   display: block;
   margin: 0.25rem 0;
 }
