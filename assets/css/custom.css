@@ -58,3 +58,32 @@
   display: flex;
 }
 
+.embedded-nav {
+  margin-left: 2rem;  /* 控制整體靠左程度，可微調 */
+  font-family: sans-serif;
+}
+
+.embedded-nav-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  margin-left: 0.2rem;
+}
+
+.embedded-nav ul {
+  list-style: none;
+  padding-left: 2rem; /* ✅ 這裡讓 About 跟 M 對齊 */
+  margin: 0;
+}
+
+.embedded-nav li {
+  margin: 0.3rem 0;
+}
+.skills-grid {
+  display: flex;
+  justify-content: center; /* 或 space-between / space-around 看你風格 */
+  align-items: center;
+  flex-wrap: wrap; /* 若畫面太小會自動換行 */
+  gap: 2rem;
+  text-align: center;
+  margin-top: 1rem;
+}
