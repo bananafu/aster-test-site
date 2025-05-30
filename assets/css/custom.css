@@ -1,10 +1,16 @@
 /* Custom styles for Aster's site */
+
+/* ✅ 黑色 hero 橫幅滿版 */
 .page__hero--overlay {
   width: 100vw !important;
   margin-left: calc(-50vw + 50%);
   padding: 3rem 1rem;
+  text-align: center;
+  background-color: black;
+  color: white;
 }
 
+/* ✅ 固定在右上角的浮動選單 */
 .floating-nav-wrapper {
   position: fixed !important;
   top: 1rem;
@@ -60,6 +66,7 @@
   display: flex;
 }
 
+/* ✅ 手機版修正：選單靠左對齊 */
 @media (max-width: 768px) {
   .floating-nav {
     flex-direction: column;
@@ -67,22 +74,26 @@
   }
 }
 
+/* ✅ Hero title 排版 */
 .hero-title {
   max-width: 700px;
   margin: 2rem auto;
   padding: 0 1rem;
   text-align: center;
 }
+
 .hero-title h1 {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
 }
+
 .hero-title p {
   font-size: 1.2rem;
   color: #234;
 }
 
+/* ✅ Skills 區塊 */
 .skills-grid {
   display: flex;
   flex-wrap: wrap;
@@ -90,20 +101,24 @@
   gap: 2rem;
   text-align: center;
 }
+
 .skills-grid div {
   min-width: 100px;
 }
 
+/* ✅ Quick links 區塊 */
 .quick-links {
   text-align: center;
   font-size: 1rem;
   margin-top: 1.5rem;
 }
+
 .quick-links a {
   color: #00aaff;
   font-weight: bold;
   text-decoration: none;
 }
+
 .quick-links a:hover {
   text-decoration: underline;
 }
