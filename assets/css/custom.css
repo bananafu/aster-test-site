@@ -8,6 +8,19 @@
   top: 1rem;
   right: 1.5rem;
   z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 0.5rem; /* 👈 擴大 hover hitbox */
+}
+
+.floating-nav::before {
+  content: "";
+  position: absolute;
+  top: -0.5rem;
+  bottom: -1rem;
+  left: -1rem;
+  right: -1rem;
 }
 
 .floating-nav button {
