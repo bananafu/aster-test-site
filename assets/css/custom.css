@@ -122,8 +122,9 @@ body {
 }
 
 .embedded-nav {
-  text-align: center;
-  margin: 1rem auto;
+  text-align: left;
+  margin: 1rem 13px 1rem 1rem;
+  max-width: 1200px;
 }
 
 .embedded-nav ul {
