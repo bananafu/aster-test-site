@@ -3,7 +3,7 @@
   position: fixed;
   top: 1rem;
   right: 1rem;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: red;
   border-radius: 0.75rem;
   padding: 0.5rem 1rem;
   z-index: 9999;
