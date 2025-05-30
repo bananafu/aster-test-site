@@ -1,11 +1,19 @@
-<nav class="embedded-nav">
-  <div class="embedded-nav-title">☰ Menu</div>
-  <ul>
+<div class="floating-menu">
+  <button id="menu-toggle">☰</button>
+  <ul id="menu-items">
     <li><a href="{{ '/about/' | relative_url }}">About</a></li>
     <li><a href="{{ '/portfolio/' | relative_url }}">Portfolio</a></li>
-    <li><a href="{{ '/skills/' | relative_url }}">Skills</a></li>
     <li><a href="{{ '/projects/' | relative_url }}">Projects</a></li>
-    <li><a href="{{ '/publications/' | relative_url }}">Publications</a></li>
+    <li><a href="{{ '/contact/' | relative_url }}">Contact</a></li>
   </ul>
-</nav>
+</div>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.getElementById("menu-toggle");
+    const menu = document.getElementById("menu-items");
+    toggle.addEventListener("click", function () {
+      menu.classList.toggle("show");
+    });
+  });
+</script>
