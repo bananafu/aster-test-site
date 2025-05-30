@@ -1,5 +1,5 @@
 ---
-layout: home
+layout: custom_home
 title: "Architecture X Climate"
 permalink: /
 ---
