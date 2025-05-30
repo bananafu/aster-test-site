@@ -21,11 +21,12 @@ header:
 }
 
 @media (max-width: 768px) {
-  .outer-wrapper {
-    margin: 0 auto;
-    width: calc(100% - 10px); /* 自動置中，兩側 5px */
+  .about-container {
+    flex-direction: column;
+    align-items: center;   /* ✅ 水平置中所有內容 */
+    text-align: center;    /* ✅ 讓文字置中 */
+    padding: 2rem 1rem;
   }
-}
 
 .about-container {
   width: 100%;
@@ -44,10 +45,12 @@ header:
 
   .about-text {
     padding-right: 0;
+    text-align: center;
   }
 
   .rounded-photo {
     margin-top: 2rem;
+    margin-bottom: 1rem;
   }
 }
 
