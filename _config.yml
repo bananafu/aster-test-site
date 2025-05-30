@@ -36,7 +36,6 @@ nav:
 include:
   - _pages
   - _includes/floating-nav.html
-  - _includes/head.html
 
 custom_css:
   - "assets/css/custom.css"
@@ -51,7 +50,6 @@ defaults:
         overlay_filter: "0.3"
       layout: custom_home
       after_header: floating-nav
-      favicon: "favicon.ico"
 
 header:
   overlay_color: "#000"
