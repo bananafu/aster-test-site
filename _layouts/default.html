@@ -4,26 +4,27 @@
     {% include head.html %}
   </head>
   <body class="{{ page.classes | default: layout.classes }}">
-    {% include skip-links.html %}
-
-    <!-- ✅ 這裡插入浮動選單 -->
-    <div class="floating-nav-wrapper">
-      <div class="floating-nav-toggle">☰ Menu</div>
-      <div class="floating-nav">
-        <a href="{{ '/about/' | relative_url }}">About</a><br>
-        <a href="{{ '/portfolio/' | relative_url }}">Portfolio</a><br>
-        <a href="{{ '/skills/' | relative_url }}">Skills</a><br>
-        <a href="{{ '/projects/' | relative_url }}">Projects</a><br>
-        <a href="{{ '/publications/' | relative_url }}">Publications</a>
-      </div>
+  
+  <!-- ✅ 移到這裡，最外層 -->
+  <div class="floating-nav-wrapper">
+    <div class="floating-nav-toggle">☰ Menu</div>
+    <div class="floating-nav">
+      <a href="{{ '/about/' | relative_url }}">About</a><br>
+      <a href="{{ '/portfolio/' | relative_url }}">Portfolio</a><br>
+      <a href="{{ '/skills/' | relative_url }}">Skills</a><br>
+      <a href="{{ '/projects/' | relative_url }}">Projects</a><br>
+      <a href="{{ '/publications/' | relative_url }}">Publications</a>
     </div>
-
-    {% include masthead.html %}
-    <main id="main" role="main">
+  </div>
+    
+    <div class="page">
+    {% include header.html %}
+    <div class="initial-content">
       {{ content }}
-    </main>
-
+    </div>
     {% include footer.html %}
-    {% include scripts.html %}
-  </body>
+  </div>
+
+  {% include scripts.html %}
+</body>
 </html>
