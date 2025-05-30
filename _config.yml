@@ -51,7 +51,7 @@ defaults:
         overlay_filter: "0.3"
       layout: custom_home
       after_header: floating-nav
-
+      favicon: "favicon.ico"
 
 header:
   overlay_color: "#000"
