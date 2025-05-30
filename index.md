@@ -17,6 +17,19 @@ permalink: /
 
 <h2 id="-skills--tools">🧰 Skills & Tools</h2>
 
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;        /* ✅ 可換行 */
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+.skills-grid > div {
+  flex: 0 0 150px;         /* ✅ 固定寬度讓它橫排 */
+  text-align: center;
+}
+
 <div class="skills-grid">
   <div>
     <img src="{{ '/assets/images/energyplus.png' | relative_url }}" alt="EnergyPlus logo" style="height:50px;" />
