@@ -50,3 +50,6 @@ This site showcases my learning journey in:
   <a href="{{ '/projects/' | relative_url }}">Projects</a>
   <a href="{{ '/publications/' | relative_url }}">Publications</a>
 </div>
+<div style="position:fixed; top:1rem; right:1rem; background:red; color:white; padding:0.5rem; z-index:9999;">
+  Test Floating Nav
+</div>
