@@ -16,15 +16,14 @@ header:
 }
 
 .outer-wrapper {
-  max-width: 1200px; /* 或用你喜歡的尺寸 */
-  padding: 0 100px;  /* 讓左右少 100px */
-  margin: 0 auto;    /* 讓整個區塊置中 */
-  width: 100%;
+  width: calc(100vw - 200px);   /* 真正讓它展開到視窗邊界 - 200px */
+  margin-left: calc(-50vw + 50%);  /* 從畫面中心往左偏移一半，再平衡對齊 */
 }
 
 @media (max-width: 768px) {
   .outer-wrapper {
-    padding: 0 5px; /* 手機左右 5px */
+    width: calc(100vw - 10px);      /* 手機左右縮小為 5px */
+    margin-left: calc(-50vw + 50%);
   }
 }
 
