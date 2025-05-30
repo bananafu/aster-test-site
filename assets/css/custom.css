@@ -136,3 +136,20 @@
   color: #4a6e68 !important;  /* 溫暖木頭棕，安定自然感 */
   text-shadow: none !important;
 }
+
+.about-card {
+  background-color: #3f5953;
+  color: #fffce8;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  font-size: 1.2rem;
+  line-height: 1.8;
+  max-width: 700px;
+  margin: auto;
+  transition: transform 0.3s ease;
+}
+
+.about-card:hover {
+  transform: translateY(-5px);
+}
