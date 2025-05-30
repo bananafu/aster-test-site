@@ -6,43 +6,31 @@ author_profile: false
 ---
 
 <style>
-
-/* 隱藏黑色 header 區塊 */
 .page__header {
   display: none;
 }
 
-/* 列表字色 */
-.page__inner ul li {
+.about-container {
+  display: flex;
+  align-items: center;
+  flex-direction: row;  /* 水平排列：文字在左，照片在右 */
+  flex-wrap: wrap;
+  max-width: 1000px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.about-text {
+  flex: 1;
+  min-width: 280px;
+}
+
+.about-text ul li {
   color: #ffd699;
 }
 
-/* 照片樣式 */
 .rounded-photo {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  border-radius: 18px;
-  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));
-  margin-left: 2rem;
-  max-width: 100%;
-  height: auto;
-}
-</style>
-
-<div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
-
-  <div style="flex: 1; min-width: 250px;">
-    <p style="margin: 0;">Hello! I'm Aster 🌱</p>
-    <p style="margin: 0;">I'm a student passionate about:</p>
-    <ul style="list-style: none; padding-left: 1em; margin: 0; line-height: 1.4;">
-      <li>• Environmental simulation</li>
-      <li>• Architectural design</li>
-      <li>• Climate data visualization</li>
-    </ul>
-    <p style="margin: 0;">This page is still under construction. Stay tuned!</p>
-  </div>
-
-  <div style="flex: 0 0 200px;">
-    <img src="{{ '/assets/images/photo.jpg' | relative_url }}" alt="Aster photo" class="rounded-photo" />
-  </div>
-
-</div>
+  flex: 0 0 220px;
