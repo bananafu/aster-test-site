@@ -71,7 +71,6 @@
 
 .embedded-nav ul {
   list-style: none;
-  padding-left: 2.2rem;  /* ✅ 對齊 Menu 的 M 字開頭 */
   margin: 0;
 }
 
