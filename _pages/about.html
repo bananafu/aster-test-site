@@ -6,12 +6,18 @@ author_profile: false
 ---
 
 <style>
-/* 去除單頁黑色 header 區塊（Minimal Mistakes 默認 .page__header） */
+
+/* 隱藏黑色 header 區塊 */
 .page__header {
   display: none;
 }
 
-/* 照片樣式：陰影、圓角、模糊邊緣 */
+/* 列表字色 */
+.page__inner ul li {
+  color: #ffd699;
+}
+
+/* 照片樣式 */
 .rounded-photo {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   border-radius: 18px;
@@ -27,7 +33,7 @@ author_profile: false
   <div style="flex: 1; min-width: 250px;">
     <p style="margin: 0;">Hello! I'm Aster 🌱</p>
     <p style="margin: 0;">I'm a student passionate about:</p>
-    <ul style="color: #f8a34d; list-style: none; padding-left: 1em; margin: 0; line-height: 1.4;">
+    <ul style="list-style: none; padding-left: 1em; margin: 0; line-height: 1.4;">
       <li>• Environmental simulation</li>
       <li>• Architectural design</li>
       <li>• Climate data visualization</li>
@@ -36,7 +42,7 @@ author_profile: false
   </div>
 
   <div style="flex: 0 0 200px;">
-    <img src="{{ '/assets/images/photo.jpg' | relative_url }}" alt="Aster photo" style="max-width: 100%; height: auto;" />
+    <img src="{{ '/assets/images/photo.jpg' | relative_url }}" alt="Aster photo" class="rounded-photo" />
   </div>
 
 </div>
