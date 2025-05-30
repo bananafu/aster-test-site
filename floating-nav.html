@@ -1,0 +1,31 @@
+<div class="floating-nav" id="floating-nav">
+  <button id="menu-toggle" class="floating-nav-toggle">☰</button>
+  <ul class="floating-nav-menu" id="menu-items">
+    <li><a href="{{ '/about/' | relative_url }}">About</a></li>
+    <li><a href="{{ '/portfolio/' | relative_url }}">Portfolio</a></li>
+    <li><a href="{{ '/skills/' | relative_url }}">Skills</a></li>
+    <li><a href="{{ '/projects/' | relative_url }}">Projects</a></li>
+    <li><a href="{{ '/publication/' | relative_url }}">Plubication</a></li>
+  </ul>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.getElementById("menu-toggle");
+    const menu = document.getElementById("menu-items");
+
+    toggle.addEventListener("click", function (event) {
+      event.stopPropagation();
+      menu.classList.toggle("show");
+    });
+
+    document.addEventListener("click", function (event) {
+      const isClickInside = menu.contains(event.target) || toggle.contains(event.target);
+      if (!isClickInside) {
+        menu.classList.remove("show");
+      }
+    });
+  });
+</script>
+
+
