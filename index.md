@@ -15,7 +15,7 @@ permalink: /
 
 ---
 
-## 🧰 Skills & Tools
+<h2 id="-skills--tools">🧰 Skills & Tools</h2>
 
 <div class="skills-grid">
   <div>
