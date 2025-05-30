@@ -4,7 +4,7 @@
 }
 
 .floating-nav {
-  position: fixed;
+  position: relative;
   top: 1rem;
   right: 1.5rem;
   z-index: 1000;
@@ -22,12 +22,18 @@
 
 .floating-nav ul {
   display: none;
+  position: absolute;
+  right: 0;
+  top: 2.5rem;
   list-style: none;
   margin-top: 0.5rem;
   padding: 0;
   background-color: white;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   border-radius: 8px;
+  transition: opacity 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .floating-nav ul.show {
@@ -41,8 +47,10 @@
   text-decoration: none;
 }
 
-.floating-nav ul li a:hover {
-  background-color: #f0f0f0;
+.floating-nav:hover ul {
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 
