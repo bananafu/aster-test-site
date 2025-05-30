@@ -133,5 +133,6 @@
 }
 
 .page__title {
-  color: #004B97 !important;  /* 青藏色 */
+  color: #6b4f3b;  /* 溫暖木頭棕，安定自然感 */
+  text-shadow: none;
 }
