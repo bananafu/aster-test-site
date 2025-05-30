@@ -35,9 +35,22 @@ nav:
 
 include:
   - _pages
+  - _includes/floating-nav.html
   
 custom_css:
   - "/assets/css/custom.css"
+
+# hook 設定：
+defaults:
+  - scope:
+      path: ""
+    values:
+      header:
+        overlay_color: "#000"
+        overlay_filter: "0.3"
+      layout: home
+      after_header: floating-nav
+
 
 header:
   overlay_color: "#000"
