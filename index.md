@@ -3,13 +3,12 @@ layout: home
 title: "Architecture X Climate"
 ---
 
-<div class="floating-nav">
-  <a href="{{ '/about/' | relative_url }}">About</a>
-  <a href="{{ '/portfolio/' | relative_url }}">Portfolio</a>
-  <a href="{{ '/skills/' | relative_url }}">Skills</a>
-  <a href="{{ '/projects/' | relative_url }}">Projects</a>
-  <a href="{{ '/publications/' | relative_url }}">Publications</a>
+
+<div style="position: fixed; top: 1rem; right: 1rem; background: red; padding: 1rem; color: white;">
+  <a href="/about/" style="color: white;">About</a><br>
+  <a href="/projects/" style="color: white;">Projects</a>
 </div>
+
 
 <section style="text-align:center;">
   <h2>What have I done?</h2>
