@@ -65,24 +65,29 @@ header:
 
 /* ✅ 手機版修飾 */
 @media (max-width: 768px) {
+  .outer-wrapper {
+    width: calc(100% - 10px);
+    margin: 0 auto;
+  }
+
   .about-container {
     flex-direction: column;
-    align-items: center;   /* ✅ 水平置中所有內容 */
-    text-align: center;    /* ✅ 讓文字置中 */
+    align-items: center;
+    text-align: center;
     padding: 2rem 1rem;
   }
 
   .about-text {
     padding-right: 0;
-    text-align: left;
+    text-align: center;
   }
 
   .rounded-photo {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     margin-bottom: 1rem;
+    width: 220px; /* 稍微小一點，手機上比較平衡 */
   }
 }
-
 </style>
 
 <div class="outer-wrapper">
