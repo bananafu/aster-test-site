@@ -3,6 +3,14 @@ layout: home
 title: "Architecture X Climate"
 ---
 
+<div class="floating-nav">
+  <a href="{{ '/about/' | relative_url }}">About</a>
+  <a href="{{ '/portfolio/' | relative_url }}">Portfolio</a>
+  <a href="{{ '/skills/' | relative_url }}">Skills</a>
+  <a href="{{ '/projects/' | relative_url }}">Projects</a>
+  <a href="{{ '/publications/' | relative_url }}">Publications</a>
+</div>
+
 <section style="text-align:center;">
   <h2>What have I done?</h2>
   <p>I can make the architecture design more scientific!</p>
@@ -43,13 +51,3 @@ This site showcases my learning journey in:
   📬 <a href="{{ '/contact/' | relative_url }}">Contact Me</a> ｜ 💼 <a href="{{ '/about/' | relative_url }}">About</a>
 </p>
 
-<div class="floating-nav">
-  <a href="{{ '/about/' | relative_url }}">About</a>
-  <a href="{{ '/portfolio/' | relative_url }}">Portfolio</a>
-  <a href="{{ '/skills/' | relative_url }}">Skills</a>
-  <a href="{{ '/projects/' | relative_url }}">Projects</a>
-  <a href="{{ '/publications/' | relative_url }}">Publications</a>
-</div>
-<div style="position:fixed; top:1rem; right:1rem; background:red; color:white; padding:0.5rem; z-index:9999;">
-  Test Floating Nav
-</div>
