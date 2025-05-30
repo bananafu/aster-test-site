@@ -47,5 +47,5 @@ This site showcases my learning journey in:
 
 <!-- 快速連結區 -->
 <p class="quick-links">
-  📬 <a href="{{ '/contact/' | relative_url }}">Contact Me</a> ｜ 💼 <a href="{{ '/about/' | relative_url }}">About</a>
+  📬 <a href="{{ '/contact/' | relative_url }}">Contact Me</a>
 </p>
