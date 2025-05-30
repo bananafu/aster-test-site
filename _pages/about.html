@@ -16,18 +16,11 @@ header:
 }
 
 .outer-wrapper {
-  width: calc(100vw - 300px);   /* 真正讓它展開到視窗邊界 - 200px */
+  width: calc(100vw - 300px);   /* 真正讓它展開到視窗邊界 - 300px */
   margin-left: calc(-50vw + 50% + 150px);  /* 從畫面中心往左偏移一半，再平衡對齊 */
 }
 
-@media (max-width: 768px) {
-  .about-container {
-    flex-direction: column;
-    align-items: center;   /* ✅ 水平置中所有內容 */
-    text-align: center;    /* ✅ 讓文字置中 */
-    padding: 2rem 1rem;
-  }
-
+/* ✅ 移出來：桌機版 about-container，保留你原本的樣式 */
 .about-container {
   width: 100%;
   max-width: 1000px;
@@ -41,17 +34,6 @@ header:
   padding: 3rem 2rem; /* 給整體內容內縮 padding */
   color: #eef7f0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-}
-
-  .about-text {
-    padding-right: 0;
-    text-align: center;
-  }
-
-  .rounded-photo {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-  }
 }
 
 .about-text {
@@ -80,6 +62,27 @@ header:
   border-radius: 18px;
   filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));
 }
+
+/* ✅ 手機版修飾 */
+@media (max-width: 768px) {
+  .about-container {
+    flex-direction: column;
+    align-items: center;   /* ✅ 水平置中所有內容 */
+    text-align: center;    /* ✅ 讓文字置中 */
+    padding: 2rem 1rem;
+  }
+
+  .about-text {
+    padding-right: 0;
+    text-align: center;
+  }
+
+  .rounded-photo {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+}
+
 </style>
 
 <div class="outer-wrapper">
