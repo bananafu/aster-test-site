@@ -14,17 +14,7 @@ body {
   position: relative;
 }
 
-/* ✅ 固定在右上角的浮動選單 */
-.floating-nav-wrapper {
-  position: fixed !important;
-  top: 1rem;
-  right: 1rem;
-  z-index: 999999;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  pointer-events: auto;
-}
+
 
 /* Menu 按鈕樣式 */
 .floating-nav-toggle {
