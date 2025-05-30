@@ -59,19 +59,19 @@
 }
 
 .embedded-nav {
-  padding-left: 1.5rem;   /* ✅ 控制整體靠左，對齊 emoji 左緣 */
+  padding-left: 1.5rem;  /* 控制「☰ Menu」靠左程度 */
   font-family: sans-serif;
 }
 
 .embedded-nav-title {
   font-weight: bold;
   margin-bottom: 0.5rem;
-  padding-left: 0rem;     /* 和下面的項目齊行，不偏右 */
+  padding-left: 0.4rem;  /* 對齊 ☰ 右邊的 Menu */
 }
 
 .embedded-nav ul {
   list-style: none;
-  padding-left: 0;        /* 移除預設縮排，讓文字直接從最左邊開始 */
+  padding-left: 2.2rem;  /* ✅ 對齊 Menu 的 M 字開頭 */
   margin: 0;
 }
 
@@ -80,11 +80,11 @@
 }
 
 .embedded-nav a {
-  display: inline-block;
-  padding-left: 0rem;     /* ✅ 讓 About / Portfolio 等文字與 emoji 對齊 */
   text-decoration: none;
   color: inherit;
+  font-weight: normal;
 }
+
 
 .skills-grid {
   display: flex;
