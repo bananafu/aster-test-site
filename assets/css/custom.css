@@ -56,8 +56,23 @@
   text-decoration: none;
 }
 
-/* Hover 顯示選單 */
-.floating-nav-wrapper:hover .floating-nav {
+.floating-nav-menu {
+  display: none;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  margin-top: 0.5rem;
+  min-width: 180px;
+  position: absolute;
+  top: 2.5rem;
+  right: 0;
+}
+
+/* 顯示條件：hover 或有 .open class */
+.floating-nav:hover .floating-nav-menu,
+.floating-nav.open .floating-nav-menu {
   display: flex;
 }
 
