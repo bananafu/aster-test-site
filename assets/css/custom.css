@@ -13,12 +13,14 @@
 .floating-nav button {
   background-color: #008080;
   color: white;
-  font-size: 1rem;
+  font-size: 1.2rem;
   padding: 0.5rem 0.75rem;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  display: inline-block;  /* 保證是行內元素 */
 }
+
 
 .floating-nav ul {
   display: none;
