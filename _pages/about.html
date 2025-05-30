@@ -29,13 +29,19 @@ header:
   max-width: none;
 }
 
+.outer-wrapper {
+  width: calc(100vw - 200px);
+  margin-left: calc(-50vw + 50%);
+  transform: translateX(0);
+}
+
 @media (max-width: 768px) {
-  .about-container {
-    padding: 2rem 5px;
-    width: calc(100% - 10px); /* 手機左右 5px */
-    flex-direction: column;
-    text-align: center;
+  .outer-wrapper {
+    width: calc(100vw - 10px); /* 手機縮小左右邊界 */
+    margin-left: calc(-50vw + 50%);
+    transform: translateX(0);  /* 手機不要偏移 */
   }
+}
 
   .about-text {
     padding-right: 0;
