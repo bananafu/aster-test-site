@@ -29,9 +29,9 @@ nav:
   - title: "Skills"
     url: "{{ '/skills/' | relative_url }}"
   - title: "Projects"
-    url: {{ '/projects/' | relative_url }}"
+    url: "{{ '/projects/' | relative_url }}"
   - title: "Publications"
-    url: {{ '/publications/' | relative_url }}"
+    url: "{{ '/publications/' | relative_url }}"
 
 include:
   - _pages
