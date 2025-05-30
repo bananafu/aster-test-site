@@ -36,7 +36,8 @@ nav:
 include:
   - _pages
   - _includes/floating-nav.html
-  
+  - _includes/head.html
+
 custom_css:
   - "assets/css/custom.css"
 
