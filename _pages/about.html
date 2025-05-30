@@ -15,6 +15,19 @@ header:
   display: none !important;
 }
 
+<div style="width: 100vw; margin-left: calc(-50vw + 50%);">
+  <div class="about-container">
+    <p>Hello! I'm Aster 🌱</p>
+    <p>I'm a student passionate about:</p>
+    <ul style="list-style: none; padding-left: 1em; margin: 0; line-height: 1.6;">
+      <li>• Environmental simulation</li>
+      <li>• Architectural design</li>
+      <li>• Climate data visualization</li>
+    </ul>
+    <p>This page is still under construction. Stay tuned!</p>
+  </div>
+</div>
+
 .about-container {
   display: flex;
   justify-content: space-between;
@@ -25,9 +38,8 @@ header:
   padding: 3rem 10px;
   color: #eef7f0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  width: calc(100% - 20px); /* 展開至頁面邊緣，左右保留10px */
-  max-width: none; /* 移除最大寬度限制 */
-  margin: 0 auto;
+  width: calc(100% - 20px); /* 全寬但保留左右 10px 空間 */
+  max-width: none;
 }
 
 @media (max-width: 768px) {
@@ -66,17 +78,6 @@ header:
 }
 </style>
 
-<div class="about-container">
-  <div class="about-text">
-    <p>Hello! I'm Aster 🌱</p>
-    <p>I'm a student passionate about:</p>
-    <ul style="list-style: none; padding-left: 1em; margin: 0; line-height: 1.6;">
-      <li>• Environmental simulation</li>
-      <li>• Architectural design</li>
-      <li>• Climate data visualization</li>
-    </ul>
-    <p>This page is still under construction. Stay tuned!</p>
-  </div>
 
   <img src="{{ '/assets/images/photo.jpg' | relative_url }}" alt="Aster photo" class="rounded-photo" />
 </div>
