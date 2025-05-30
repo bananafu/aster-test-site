@@ -8,8 +8,9 @@ author_profile: false
 <style>
 /* 移除黑色 About Me 區塊 */
 .page__header {
-  display: none;
+  display: none !important;  /* ← 加這個保證 override 主題的樣式 */
 }
+
 
 /* 內容容器 */
 .about-container {
