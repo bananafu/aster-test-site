@@ -5,6 +5,7 @@ permalink: /about/
 author_profile: false
 ---
 
+{% raw %}
 <style>
 /* 去除單頁黑色 header 區塊（Minimal Mistakes 默認 .page__header） */
 .page__header {
@@ -21,6 +22,7 @@ author_profile: false
   height: auto;
 }
 </style>
+{% endraw %}
 
 <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
 
