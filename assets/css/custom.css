@@ -131,3 +131,7 @@
   text-align: center;
   margin-top: 1rem;
 }
+
+.page__title {
+  color: #3c5a50 !important;  /* 青藏色 */
+}
