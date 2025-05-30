@@ -11,10 +11,16 @@ header:
 ---
 
 <style>
-.page__header {
-  background-color: #4b615a !important;  /* 淺一點的森林綠 */
-  color: #f2f8f5 !important;
+/* 嘗試各種常見 header class 覆蓋 Minimal Mistakes */
+.page__hero, .page__header, header.page__head, #page-header, .page-title {
+  background-color: #3c5a50 !important;
+  color: #eef7f0 !important;
   text-align: center;
+}
+
+/* 標題字也改色 */
+.page__hero h1, .page__header h1, .page-title h1 {
+  color: #eef7f0 !important;
 }
 
 .outer-wrapper {
