@@ -4,7 +4,7 @@
 }
 
 .floating-nav {
-  position: relative;
+  position: fixed;
   top: 1rem;
   right: 1.5rem;
   z-index: 1000;
@@ -18,8 +18,13 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  display: inline-block;  /* 保證是行內元素 */
+
+  /* 新增以下兩行確保大小與排版穩定 */
+  display: inline-block;
+  min-width: 3rem;
+  text-align: center;
 }
+
 
 
 .floating-nav ul {
