@@ -54,13 +54,6 @@
   text-decoration: none;
 }
 
-.floating-nav:hover ul {
-  display: block;
-  opacity: 1;
-  pointer-events: auto;
-}
-
-
 /* Hover 顯示選單 */
 .floating-nav-wrapper:hover .floating-nav {
   display: flex;
