@@ -39,3 +39,12 @@ include:
 custom_css:
   - "/assets/css/custom.css"
 
+header:
+  overlay_color: "#000"
+  overlay_filter: "0.3"
+  show_overlay_excerpt: false
+  actions:
+    - label: "Learn More"
+      url: "/about/"
+    - label: "See My Projects"
+      url: "/projects/"
