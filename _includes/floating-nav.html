@@ -13,13 +13,11 @@
     const toggle = document.getElementById("menu-toggle");
     const menu = document.getElementById("menu-items");
 
-    // 切換顯示與否
     toggle.addEventListener("click", function (event) {
-      event.stopPropagation(); // 防止點擊按鈕時也觸發關閉
+      event.stopPropagation();
       menu.classList.toggle("show");
     });
 
-    // 點選其他地方 → 關閉選單
     document.addEventListener("click", function (event) {
       const isClickInside = menu.contains(event.target) || toggle.contains(event.target);
       if (!isClickInside) {
@@ -28,4 +26,5 @@
     });
   });
 </script>
+
 
