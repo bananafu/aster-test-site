@@ -14,3 +14,7 @@
   text-align: left; 
   min-width: 140px;  
 }
+.floating-nav-toggle {
+  text-align: left;   
+  width: 100%;        
+}
