@@ -3,6 +3,10 @@ layout: single
 title: "Contact"
 permalink: /contact/
 author_profile: true
+header:
+  overlay: true
+  overlay_color: none
+  overlay_filter: "0"
 ---
 
 📮 You can reach me at:  
