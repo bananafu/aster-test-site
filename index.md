@@ -3,19 +3,6 @@ layout: home
 title: "Architecture X Climate"
 ---
 
-<div class="floating-nav-wrapper">
-  <div class="floating-nav-toggle">☰ Menu</div>
-  <div class="floating-nav">
-    <a href="{{ '/about/' | relative_url }}">About</a>
-    <a href="{{ '/portfolio/' | relative_url }}">Portfolio</a>
-    <a href="{{ '/skills/' | relative_url }}">Skills</a>
-    <a href="{{ '/projects/' | relative_url }}">Projects</a>
-    <a href="{{ '/publications/' | relative_url }}">Publications</a>
-  </div>
-</div>
-
-
-
 <section style="text-align:center;">
   <h2>What have I done?</h2>
   <p>I can make the architecture design more scientific!</p>
