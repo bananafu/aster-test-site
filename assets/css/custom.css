@@ -133,8 +133,17 @@
 }
 
 .page__title {
-  color: #4a6e68 !important;  /* 溫暖木頭棕，安定自然感 */
+  color: #4a6e68 !important;
   text-shadow: none !important;
+}
+
+.about-container::before {
+  content: "";
+  display: block;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, rgba(60, 90, 80, 0.1));
+  margin-top: -40px;
+  margin-bottom: 0;
 }
 
 .about-card {
