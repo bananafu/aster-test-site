@@ -1,6 +1,6 @@
 /* Custom styles for Aster's site */
 .floating-nav-wrapper {
-  position: fixed;
+  position: fixed !important;
   top: 1.5rem;
   right: 1rem;
   z-index: 999999;
