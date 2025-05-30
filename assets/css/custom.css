@@ -120,3 +120,28 @@ body {
 .quick-links a:hover {
   text-decoration: underline;
 }
+
+.embedded-nav {
+  text-align: center;
+  margin: 1rem auto;
+}
+
+.embedded-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.embedded-nav a {
+  text-decoration: none;
+  color: #007acc;
+  font-weight: bold;
+}
+
+.embedded-nav a:hover {
+  text-decoration: underline;
+}
