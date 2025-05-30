@@ -73,6 +73,11 @@ body {
 }
 
 /* ✅ Hero title 排版 */
+.wide-content {
+  max-width: 100%;
+  padding: 0 3rem;
+}
+
 .hero-title {
   max-width: 700px;
   margin: 2rem auto;
