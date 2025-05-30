@@ -4,7 +4,7 @@ title: "Architecture X Climate"
 ---
 
 <div class="floating-nav-wrapper">
-  <button class="floating-nav-toggle" type="button">☰ Menu</button>
+  <div class="floating-nav-toggle">☰ Menu</div>
   <div class="floating-nav">
     <a href="{{ '/about/' | relative_url }}">About</a>
     <a href="{{ '/portfolio/' | relative_url }}">Portfolio</a>
@@ -13,6 +13,7 @@ title: "Architecture X Climate"
     <a href="{{ '/publications/' | relative_url }}">Publications</a>
   </div>
 </div>
+
 
 
 <section style="text-align:center;">
