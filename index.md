@@ -42,3 +42,11 @@ This site showcases my learning journey in:
 <p style="text-align:center;">
   📬 <a href="{{ '/contact/' | relative_url }}">Contact Me</a> ｜ 💼 <a href="{{ '/about/' | relative_url }}">About</a>
 </p>
+
+<div class="floating-nav">
+  <a href="{{ '/about/' | relative_url }}">About</a>
+  <a href="{{ '/portfolio/' | relative_url }}">Portfolio</a>
+  <a href="{{ '/skills/' | relative_url }}">Skills</a>
+  <a href="{{ '/projects/' | relative_url }}">Projects</a>
+  <a href="{{ '/publications/' | relative_url }}">Publications</a>
+</div>
