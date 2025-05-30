@@ -45,6 +45,8 @@
 
 .floating-nav ul.show {
   display: block;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .floating-nav ul li a {
