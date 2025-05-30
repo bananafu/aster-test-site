@@ -3,7 +3,6 @@ layout: home
 title: "Architecture X Climate"
 ---
 
-
 <div class="floating-nav-wrapper">
   <button class="floating-nav-toggle" type="button">☰ Menu</button>
   <div class="floating-nav">
@@ -14,9 +13,6 @@ title: "Architecture X Climate"
     <a href="{{ '/publications/' | relative_url }}">Publications</a>
   </div>
 </div>
-
-
-
 
 
 <section style="text-align:center;">
