@@ -4,10 +4,17 @@ title: "Architecture X Climate"
 ---
 
 
-<div style="position: fixed; top: 1rem; right: 1rem; background: aqua; padding: 1rem; color: white;">
-  <a href="/about/" style="color: white;">About</a>
-  <a href="/projects/" style="color: white;">Projects</a>
+<div class="floating-nav-wrapper">
+  <button class="floating-nav-toggle">☰ Menu</button>
+  <div class="floating-nav">
+    <a href="/about/">About</a>
+    <a href="/portfolio/">Portfolio</a>
+    <a href="/skills/">Skills</a>
+    <a href="/projects/">Projects</a>
+    <a href="/publications/">Publications</a>
+  </div>
 </div>
+
 
 
 <section style="text-align:center;">
