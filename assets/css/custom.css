@@ -25,8 +25,6 @@
   text-align: center;
 }
 
-
-
 .floating-nav ul {
   display: none;
   position: absolute;
@@ -68,12 +66,19 @@
   position: absolute;
   top: 2.5rem;
   right: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
 }
 
-/* 顯示條件：hover 或有 .open class */
+/* 滑鼠移入或點擊 .show 時都能展開 */
 .floating-nav:hover .floating-nav-menu,
-.floating-nav.open .floating-nav-menu {
+.floating-nav-menu.show {
   display: flex;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .embedded-nav {
