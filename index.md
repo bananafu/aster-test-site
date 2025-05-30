@@ -4,8 +4,8 @@ title: "Architecture X Climate"
 ---
 
 
-<div style="position: fixed; top: 1rem; right: 1rem; background: red; padding: 1rem; color: white;">
-  <a href="/about/" style="color: white;">About</a><br>
+<div style="position: fixed; top: 1rem; right: 1rem; background: mint; padding: 1rem; color: white;">
+  <a href="/about/" style="color: white;">About</a>
   <a href="/projects/" style="color: white;">Projects</a>
 </div>
 
