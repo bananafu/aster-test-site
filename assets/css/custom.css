@@ -59,25 +59,33 @@
 }
 
 .embedded-nav {
-  margin-left: 2rem;  /* 控制整體靠左程度，可微調 */
+  padding-left: 1.5rem;   /* ✅ 控制整體靠左，對齊 emoji 左緣 */
   font-family: sans-serif;
 }
 
 .embedded-nav-title {
   font-weight: bold;
   margin-bottom: 0.5rem;
-  margin-left: 0.2rem;
+  padding-left: 0rem;     /* 和下面的項目齊行，不偏右 */
 }
 
 .embedded-nav ul {
   list-style: none;
-  padding-left: 2rem; /* ✅ 這裡讓 About 跟 M 對齊 */
+  padding-left: 0;        /* 移除預設縮排，讓文字直接從最左邊開始 */
   margin: 0;
 }
 
 .embedded-nav li {
   margin: 0.3rem 0;
 }
+
+.embedded-nav a {
+  display: inline-block;
+  padding-left: 0rem;     /* ✅ 讓 About / Portfolio 等文字與 emoji 對齊 */
+  text-decoration: none;
+  color: inherit;
+}
+
 .skills-grid {
   display: flex;
   justify-content: center; /* 或 space-between / space-around 看你風格 */
