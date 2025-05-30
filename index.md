@@ -5,7 +5,7 @@ title: "Architecture X Climate"
 
 
 <div class="floating-nav-wrapper">
-  <button class="floating-nav-toggle">☰ Menu</button>
+  <button class="floating-nav-toggle" type="button">☰ Menu</button>
   <div class="floating-nav">
     <a href="/about/">About</a>
     <a href="/portfolio/">Portfolio</a>
