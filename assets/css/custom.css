@@ -143,3 +143,17 @@
   padding: 2rem;    /* ✅ 增加左右邊距 */
   text-align: left; /* ✅ 確保文字靠左對齊 */
 }
+
+/* 強制 contact page 在桌面寬度維持正常排版 */
+.page__content {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .page__content {
+    padding: 2rem;
+  }
+}
