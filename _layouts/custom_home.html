@@ -8,21 +8,20 @@
 </head>
 <body>
   {% include masthead.html %}
-  
-<!-- ✅ 加入右上角浮動選單 -->
   {% include floating-nav.html %}
 
-  <!-- ✅ 主內容 -->
   <main id="main" role="main">
-    {{ content }}
+    <!-- ✅ 圖片置頂 -->
     <div class="hero-banner">
       <img src="{{ '/assets/images/banner.png' | relative_url }}" alt="Banner" />
     </div>
 
-    
+    <!-- ✅ 首頁內容置中 -->
+    <div style="text-align: center;">
+      {{ content }}
+    </div>
   </main>
 
   {% include footer.html %}
-
 </body>
 </html>
