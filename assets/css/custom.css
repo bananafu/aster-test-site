@@ -156,3 +156,28 @@
   line-height: 1.6;
   text-align: center;  /* 讓內容置中，更乾淨 */
 }
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  padding: 1rem;
+  font-size: 1.2rem;
+}
+
+.contact-links a {
+  text-decoration: none;
+  color: #008080;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact-links .icon {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 0.5rem;
+}
