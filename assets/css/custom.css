@@ -136,3 +136,10 @@
   color: #4a6e68 !important;
   text-shadow: none !important;
 }
+
+.container {
+  max-width: 900px; /* 可根據需求調整寬度 */
+  margin: 0 auto;   /* ✅ 讓整體內容水平置中 */
+  padding: 2rem;    /* ✅ 增加左右邊距 */
+  text-align: left; /* ✅ 確保文字靠左對齊 */
+}
