@@ -11,12 +11,12 @@ header:
 
 <div class="contact-links">
   <a href="mailto:youtzor128@gmail.com">
-    <img src="/assets/images/gmail-icon.png" alt="Email Icon" class="icon"> Email
+    <img src="{{ '/assets/images/gmail-icon.png' | relative_url }}" alt="Email Icon" class="icon">
   </a>
   <a href="https://github.com/bananafu">
-    <img src="/assets/images/github-icon.png" alt="GitHub Icon" class="icon"> GitHub
+    <img src="{{ '/assets/images/github-icon.png' | relative_url }}" alt="GitHub Icon" class="icon">
   </a>
   <a href="https://instagram.com/fu_asteroid03">
-    <img src="/assets/images/ig-icon.png" alt="Instagram Icon" class="icon"> Instagram
+    <img src="{{ '/assets/images/ig-icon.png' | relative_url }}" alt="Instagram Icon" class="icon">
   </a>
 </div>
