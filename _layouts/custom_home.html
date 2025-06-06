@@ -9,22 +9,24 @@
 <body>
   {% include masthead.html %}
   
-<nav class="embedded-nav">
-    <div class="embedded-nav-title">☰ Menu</div>
-    <ul>
-      <li><a href="{{ '/about/' | relative_url }}">About</a></li>
-      <li><a href="{{ '/portfolio/' | relative_url }}">Portfolio</a></li>
-      <li><a href="{{ '/skills/' | relative_url }}">Skills</a></li>
-      <li><a href="{{ '/projects/' | relative_url }}">Projects</a></li>
-      <li><a href="{{ '/publications/' | relative_url }}">Publications</a></li>
-    </ul>
-  </nav>
-  
-  <!-- 放你自己的內容 -->
+<!-- ✅ 加入右上角浮動選單 -->
+  {% include floating-nav.html %}
+
+  <!-- ✅ 主內容 -->
   <main id="main" role="main">
     {{ content }}
+
+    <!-- ✅ Portfolio 標題下方橫向選單 -->
+    <div class="horizontal-links">
+      <a href="{{ '/about/' | relative_url }}">About</a>
+      <a href="{{ '/portfolio/' | relative_url }}">Portfolio</a>
+      <a href="{{ '/skills/' | relative_url }}">Skills</a>
+      <a href="{{ '/projects/' | relative_url }}">Projects</a>
+      <a href="{{ '/publications/' | relative_url }}">Publications</a>
+    </div>
   </main>
 
   {% include footer.html %}
+
 </body>
 </html>
