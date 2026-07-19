@@ -1,6 +1,6 @@
 <!-- _layouts/custom_home.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ site.locale | default: 'zh-TW' }}">
 <head>
   <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
   {% include head.html %}
@@ -11,9 +11,8 @@
   {% include floating-nav.html %}
 
   <main id="main" role="main">
-    <!-- ✅ 圖片置頂 -->
     <div class="hero-banner">
-      <img src="{{ '/assets/images/banner.png' | relative_url }}" alt="Banner" />
+      <img src="{{ '/assets/images/banner.png' | relative_url }}" alt="Aster Fu portfolio banner" />
     </div>
 
     <div class="container">
