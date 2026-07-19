@@ -1,11 +1,20 @@
 <div class="floating-nav" id="floating-nav">
-  <button id="menu-toggle" class="floating-nav-toggle">☰</button>
+  <button
+    id="menu-toggle"
+    class="floating-nav-toggle"
+    type="button"
+    aria-label="Open navigation menu"
+    aria-controls="menu-items"
+    aria-expanded="false"
+  >
+    ☰
+  </button>
   <ul class="floating-nav-menu" id="menu-items">
     <li><a href="{{ '/about/' | relative_url }}">About</a></li>
     <li><a href="{{ '/portfolio/' | relative_url }}">Portfolio</a></li>
     <li><a href="{{ '/skills/' | relative_url }}">Skills</a></li>
     <li><a href="{{ '/projects/' | relative_url }}">Projects</a></li>
-    <li><a href="{{ '/publication/' | relative_url }}">Plubication</a></li>
+    <li><a href="{{ '/publications/' | relative_url }}">Publications</a></li>
   </ul>
 </div>
 
@@ -14,18 +23,29 @@
     const toggle = document.getElementById("menu-toggle");
     const menu = document.getElementById("menu-items");
 
+    if (!toggle || !menu) return;
+
+    function closeMenu() {
+      menu.classList.remove("show");
+      toggle.setAttribute("aria-expanded", "false");
+    }
+
     toggle.addEventListener("click", function (event) {
       event.stopPropagation();
-      menu.classList.toggle("show");
+      const isOpen = menu.classList.toggle("show");
+      toggle.setAttribute("aria-expanded", String(isOpen));
     });
 
     document.addEventListener("click", function (event) {
       const isClickInside = menu.contains(event.target) || toggle.contains(event.target);
-      if (!isClickInside) {
-        menu.classList.remove("show");
+      if (!isClickInside) closeMenu();
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        closeMenu();
+        toggle.focus();
       }
     });
   });
 </script>
-
-
