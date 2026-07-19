@@ -10,39 +10,47 @@ header:
 ---
 
 <style>
-
 .outer-wrapper {
-  width: calc(100vw - 300px);   /* 真正讓它展開到視窗邊界 - 300px */
-  margin-left: calc(-50vw + 50% + 150px);  /* 從畫面中心往左偏移一半，再平衡對齊 */
+  width: calc(100vw - 300px);
+  margin-left: calc(-50vw + 50% + 150px);
+  box-sizing: border-box;
 }
 
-/* ✅ 移出來：桌機版 about-container，保留你原本的樣式 */
 .about-container {
   width: 100%;
   max-width: 1000px;
-  margin: 0 auto; /* 讓內容區塊置中 */
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  gap: 2rem;
   background-color: rgba(60, 90, 80, 0.95);
   border-radius: 24px;
-  padding: 3rem 2rem; /* 給整體內容內縮 padding */
+  padding: 3rem 2rem;
   color: #eef7f0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .about-text {
-  flex: 1;
-  min-width: 300px;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 100%;
   text-align: left;
   padding-right: 2rem;
+  overflow-wrap: anywhere;
+  box-sizing: border-box;
 }
 
 .about-text p {
   margin: 0 0 1rem;
   font-size: 1.2rem;
+}
+
+.about-text ul {
+  margin: 0 0 1rem;
+  padding-left: 1.5rem;
 }
 
 .about-text ul li {
@@ -53,6 +61,7 @@ header:
 .rounded-photo {
   flex: 0 0 auto;
   width: 250px;
+  max-width: 100%;
   height: auto;
   align-self: center;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
@@ -60,30 +69,66 @@ header:
   filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));
 }
 
-/* ✅ 手機版修飾 */
 @media (max-width: 768px) {
   .outer-wrapper {
-    width: calc(100% - 10px);
+    width: 100%;
+    max-width: 100%;
     margin: 0 auto;
+    padding: 0 0.5rem;
   }
 
   .about-container {
+    width: 100%;
+    max-width: 100%;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    text-align: center;
-    padding: 2rem 1rem;
-    overflow: hidden;
+    gap: 1.5rem;
+    padding: 2rem 1.25rem;
+    border-radius: 18px;
   }
 
   .about-text {
+    flex: 0 1 auto;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
     padding-right: 0;
     text-align: left;
   }
 
+  .about-text p,
+  .about-text ul {
+    max-width: 100%;
+  }
+
+  .about-text ul {
+    padding-left: 1.25rem;
+  }
+
   .rounded-photo {
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
-    width: 220px; /* 稍微小一點，手機上比較平衡 */
+    display: block;
+    width: min(220px, 100%);
+    margin: 0 auto 0.5rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .outer-wrapper {
+    padding: 0 0.25rem;
+  }
+
+  .about-container {
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+  }
+
+  .about-text p {
+    font-size: 1.05rem;
+  }
+
+  .about-text ul li {
+    font-size: 1rem;
   }
 }
 </style>
@@ -96,14 +141,11 @@ header:
       <ul>
         <li>🌿 Environmental Simulation</li>
         <li>🏛️ Architectural Design</li>
-        <li>☁️ Climate & Energy Studies</li>
+        <li>☁️ Climate &amp; Energy Studies</li>
       </ul>
       <p>This page is still under construction. Stay tuned!</p>
     </div>
 
-    <img src="{{ '/assets/images/photo.jpg' | relative_url }}" alt="Aster photo" class="rounded-photo" />
+    <img src="{{ '/assets/images/photo.jpg' | relative_url }}" alt="Aster" class="rounded-photo" />
   </div>
 </div>
-
-
-
