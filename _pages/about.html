@@ -45,7 +45,8 @@ header:
 
 .about-text p {
   margin: 0 0 1rem;
-  font-size: 1.2rem;
+  font-size: clamp(1.1rem, 1rem + 0.35vw, 1.2rem);
+  line-height: 1.65;
 }
 
 .about-text ul {
@@ -55,7 +56,8 @@ header:
 
 .about-text ul li {
   color: #ffd699;
-  font-size: 1.1rem;
+  font-size: clamp(1.05rem, 0.98rem + 0.3vw, 1.1rem);
+  line-height: 1.65;
 }
 
 .rounded-photo {
@@ -84,13 +86,13 @@ header:
     justify-content: center;
     align-items: center;
     gap: 1.5rem;
-    padding: 2rem 1.25rem;
+    padding: clamp(1.5rem, 5vw, 2rem) clamp(1rem, 5vw, 1.5rem);
     border-radius: 18px;
   }
 
   .about-text {
     flex: 0 1 auto;
-    width: 100%;
+    width: min(100%, 34rem);
     min-width: 0;
     max-width: 100%;
     padding-right: 0;
@@ -103,12 +105,12 @@ header:
   }
 
   .about-text ul {
-    padding-left: 1.25rem;
+    padding-left: 1.5rem;
   }
 
   .rounded-photo {
     display: block;
-    width: min(220px, 100%);
+    width: min(220px, 72vw);
     margin: 0 auto 0.5rem;
   }
 }
@@ -119,16 +121,7 @@ header:
   }
 
   .about-container {
-    padding: 1.5rem 1rem;
     border-radius: 16px;
-  }
-
-  .about-text p {
-    font-size: 1.05rem;
-  }
-
-  .about-text ul li {
-    font-size: 1rem;
   }
 }
 </style>
