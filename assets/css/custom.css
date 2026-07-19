@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  padding: 0.5rem; /* 👈 擴大 hover hitbox */
+  padding: 0.5rem;
 }
 
 .floating-nav::before {
@@ -24,91 +24,89 @@
 }
 
 .floating-nav button {
-  background-color: #008080;
-  color: white;
-  font-size: 1rem;
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  min-width: 3rem;
   padding: 0.5rem 0.75rem;
   border: none;
   border-radius: 6px;
-  cursor: pointer;
-
-  /* 新增以下兩行確保大小與排版穩定 */
-  display: inline-block;
-  min-width: 3rem;
+  background-color: #008080;
+  color: white;
+  font-size: 1rem;
   text-align: center;
+  cursor: pointer;
 }
 
-.floating-nav ul {
-  display: none;
-  position: absolute;
-  right: 0;
-  top: 2.5rem;
-  list-style: none;
-  margin-top: 0.5rem;
-  padding: 0;
-  background-color: white;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  border-radius: 8px;
-  transition: opacity 0.2s ease;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.floating-nav ul.show {
-  display: block;
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.floating-nav ul li a {
-  display: block;
-  padding: 0.75rem 1rem;
-  color: #333;
-  text-decoration: none;
+.floating-nav button:focus-visible,
+.floating-nav-menu a:focus-visible {
+  outline: 3px solid #00bfff;
+  outline-offset: 3px;
 }
 
 .floating-nav-menu {
-  display: none;
-  flex-direction: column;
-  background-color: rgba(0, 0, 0, 0.9);
-  padding: 0.75rem 1rem;
-  border-radius: 1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  margin-top: 0.5rem;
-  min-width: 180px;
   position: absolute;
   top: 2.5rem;
   right: 0;
+  min-width: 180px;
+  margin: 0.5rem 0 0;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  border-radius: 1rem;
+  background-color: rgba(0, 0, 0, 0.9);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  visibility: hidden;
   opacity: 0;
   transform: translateY(-10px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
   pointer-events: none;
 }
 
-/* 滑鼠移入或點擊 .show 時都能展開 */
-.floating-nav:hover .floating-nav-menu,
 .floating-nav-menu.show {
-  display: flex;
+  visibility: visible;
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .floating-nav:hover .floating-nav-menu {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+.floating-nav-menu li a {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: white;
+  text-decoration: none;
+  border-radius: 0.5rem;
+}
+
+.floating-nav-menu li a:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
 .embedded-nav {
-  padding-left: 1.5rem;  /* 控制「☰ Menu」靠左程度 */
+  padding-left: 1.5rem;
   font-family: sans-serif;
 }
 
 .embedded-nav-title {
-  font-weight: bold;
   margin-bottom: 0.5rem;
-  padding-left: 0.4rem;  /* 對齊 ☰ 右邊的 Menu */
+  padding-left: 0.4rem;
+  font-weight: bold;
 }
 
 .embedded-nav ul {
-  list-style: none;
-  padding-left: 1.6rem;
   margin: 0;
+  padding-left: 1.6rem;
+  list-style: none;
 }
 
 .embedded-nav li {
@@ -116,20 +114,19 @@
 }
 
 .embedded-nav a {
-  text-decoration: none;
   color: inherit;
   font-weight: normal;
+  text-decoration: none;
 }
-
 
 .skills-grid {
   display: flex;
-  justify-content: center; /* 或 space-between / space-around 看你風格 */
+  justify-content: center;
   align-items: center;
-  flex-wrap: wrap; /* 若畫面太小會自動換行 */
+  flex-wrap: wrap;
   gap: 2rem;
-  text-align: center;
   margin-top: 1rem;
+  text-align: center;
 }
 
 .page__title {
@@ -138,13 +135,12 @@
 }
 
 .container {
-  max-width: 900px; /* 可根據需求調整寬度 */
-  margin: 0 auto;   /* ✅ 讓整體內容水平置中 */
-  padding: 2rem;    /* ✅ 增加左右邊距 */
-  text-align: left; /* ✅ 確保文字靠左對齊 */
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: left;
 }
 
-/* contact 頁面寬度與內文格式最佳化 */
 .page .page__inner-wrap {
   max-width: 960px;
   margin: 0 auto;
@@ -154,30 +150,47 @@
 .page .page__content {
   font-size: 1.1rem;
   line-height: 1.6;
-  text-align: center;  /* 讓內容置中，更乾淨 */
+  text-align: center;
 }
 
 .contact-links {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
   flex-wrap: wrap;
+  gap: 2rem;
   padding: 1rem;
   font-size: 1.1rem;
 }
 
 .contact-links a {
-  text-decoration: none;
-  color: #008080;
-  font-weight: bold;
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: #00bfff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.contact-links a:hover,
+.contact-links a:focus-visible {
+  text-decoration: underline;
 }
 
 .contact-links .icon {
   width: 50px;
   height: 50px;
   margin-bottom: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .floating-nav {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .container,
+  .page .page__inner-wrap {
+    padding: 1.25rem;
+  }
 }

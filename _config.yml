@@ -3,6 +3,7 @@ email: youtzor128@gmail.com
 description: >-
   建築シミュレーション × 大気科学 × サステナブル建築設計｜学びと作品の記録
 github_username: bananafu
+locale: zh-TW
 minimal_mistakes_skin: aqua
 remote_theme: mmistakes/minimal-mistakes
 plugins:
@@ -40,7 +41,6 @@ include:
 custom_css:
   - "assets/css/custom.css"
 
-# hook 設定：
 defaults:
   - scope:
       path: ""
@@ -61,5 +61,5 @@ header:
       url: "/about/"
     - label: "See My Projects"
       url: "/projects/"
-      
+
 baseurl: "/aster-test-site"
