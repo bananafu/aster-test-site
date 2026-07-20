@@ -162,7 +162,7 @@ nav a:hover:after,
   position: relative;
   max-width: 900px;
   margin: 35px 0 26px;
-  font: 400 clamp(58px,7.2vw,104px)/.99 Georgia,serif;
+  font: 400 clamp(48px,6vw,86px)/.99 Georgia,serif;
   letter-spacing: -.045em
 }
 
@@ -646,7 +646,7 @@ footer>small {
   }
 
   .hero h1 {
-    font-size: clamp(49px,14vw,74px)
+    font-size: clamp(42px,10vw,60px)
   }
 
   .hero-copy {
