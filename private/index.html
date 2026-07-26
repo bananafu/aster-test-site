@@ -1,1 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Private Workspace｜Aster</title>
+
+  <link rel="stylesheet" href="/css/custom.css">
+
+  <style>
+    .private-page {
+      min-height: 100vh;
+      padding: 120px 24px 80px;
+    }
+
+    .private-container {
+      width: min(1100px, 100%);
+      margin: 0 auto;
+    }
+
+    .private-header {
+      margin-bottom: 48px;
+    }
+
+    .private-eyebrow {
+      margin-bottom: 12px;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.65;
+    }
+
+    .private-title {
+      margin: 0;
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      line-height: 1;
+    }
+
+    .private-description {
+      max-width: 620px;
+      margin-top: 20px;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      opacity: 0.72;
+    }
+
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .workspace-card {
+      display: block;
+      min-height: 210px;
+      padding: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 28px;
+      color: inherit;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    .workspace-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.13);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .workspace-icon {
+      display: block;
+      margin-bottom: 44px;
+      font-size: 2rem;
+    }
+
+    .workspace-card h2 {
+      margin: 0 0 8px;
+      font-size: 1.4rem;
+    }
+
+    .workspace-card p {
+      margin: 0;
+      line-height: 1.6;
+      opacity: 0.65;
+    }
+
+    .private-home-link {
+      display: inline-block;
+      margin-top: 36px;
+      color: inherit;
+      text-decoration: none;
+      opacity: 0.68;
+    }
+
+    .private-home-link:hover {
+      opacity: 1;
+    }
+
+    @media (max-width: 700px) {
+      .private-page {
+        padding-top: 90px;
+      }
+
+      .workspace-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .workspace-card {
+        min-height: 180px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="private-page">
+    <div class="private-container">
+
+      <header class="private-header">
+        <p class="private-eyebrow">Aster Teacher Workspace</p>
+
+        <h1 class="private-title">
+          Private<br>
+          Workspace
+        </h1>
+
+        <p class="private-description">
+          我的私人教學工作空間，用來整理課程簡報、學習單、考卷與教學筆記。
+        </p>
+      </header>
+
+      <section class="workspace-grid">
+
+        <a class="workspace-card" href="#">
+          <span class="workspace-icon">📚</span>
+          <h2>Presentations</h2>
+          <p>課堂簡報與教學投影片</p>
+        </a>
+
+        <a class="workspace-card" href="#">
+          <span class="workspace-icon">📄</span>
+          <h2>Worksheets</h2>
+          <p>學習單、活動單與課堂素材</p>
+        </a>
+
+        <a class="workspace-card" href="#">
+          <span class="workspace-icon">📝</span>
+          <h2>Exams</h2>
+          <p>題庫、測驗與參考解答</p>
+        </a>
+
+        <a class="workspace-card" href="#">
+          <span class="workspace-icon">📓</span>
+          <h2>Notes</h2>
+          <p>備課筆記與教學紀錄</p>
+        </a>
+
+      </section>
+
+      <a class="private-home-link" href="/">
+        ← Back to homepage
+      </a>
+
+    </div>
+  </main>
+</body>
+</html>
