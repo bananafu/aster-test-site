@@ -96,6 +96,7 @@
       color: #dff7ff;
       background: rgba(125, 211, 252, 0.1);
       font-size: 0.9rem;
+      letter-spacing: 0.08em;
     }
 
     h1,
@@ -109,7 +110,7 @@
       margin-bottom: 14px;
       font-size: clamp(2rem, 6vw, 4.7rem);
       line-height: 0.98;
-      letter-spacing: -0.05em;
+      letter-spacing: 0.035em;
     }
 
     .hero p {
@@ -122,13 +123,16 @@
 
     .solar-system {
       position: relative;
-      min-height: 210px;
+      min-height: 270px;
       display: grid;
       place-items: center;
+      isolation: isolate;
     }
 
     .sun {
-      width: 78px;
+      position: relative;
+      z-index: 10;
+      width: 72px;
       aspect-ratio: 1;
       border-radius: 50%;
       background: radial-gradient(circle at 32% 28%, #fff5bb 0 8%, #ffcf4a 24%, #ff8c2b 68%, #ee4d19 100%);
@@ -138,36 +142,44 @@
 
     .orbit {
       position: absolute;
-      width: 290px;
-      height: 125px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      z-index: var(--layer);
+      width: var(--orbit-width);
+      height: var(--orbit-height);
+      border: 1px solid rgba(255, 255, 255, 0.13);
       border-radius: 50%;
-      animation: orbitSpin 14s linear infinite;
+      animation: orbitSpin var(--duration) linear infinite;
+      animation-delay: var(--delay);
     }
 
-    .orbit.second {
-      width: 200px;
-      height: 86px;
-      animation-duration: 9s;
-      animation-direction: reverse;
-    }
-
-    .orbit-dot {
+    .orbit-planet {
       position: absolute;
       top: 50%;
-      left: -10px;
-      width: 20px;
+      left: calc(var(--planet-size) / -2);
+      width: var(--planet-size);
       aspect-ratio: 1;
-      margin-top: -10px;
+      margin-top: calc(var(--planet-size) / -2);
       border-radius: 50%;
-      background: linear-gradient(145deg, #8be9ff, #3b82f6);
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.55);
+      box-shadow:
+        inset -4px -4px 7px rgba(0, 0, 0, 0.28),
+        0 0 10px rgba(125, 211, 252, 0.25);
     }
 
-    .orbit.second .orbit-dot {
-      width: 14px;
-      margin-top: -7px;
-      background: linear-gradient(145deg, #ffd898, #ca7042);
+    .orbit-mercury { --orbit-width: 112px; --orbit-height: 50px; --planet-size: 8px; --duration: 7s; --delay: -2s; --layer: 9; }
+    .orbit-venus   { --orbit-width: 142px; --orbit-height: 64px; --planet-size: 11px; --duration: 9s; --delay: -5s; --layer: 8; }
+    .orbit-earth   { --orbit-width: 174px; --orbit-height: 78px; --planet-size: 12px; --duration: 11s; --delay: -8s; --layer: 7; }
+    .orbit-mars    { --orbit-width: 206px; --orbit-height: 92px; --planet-size: 10px; --duration: 13s; --delay: -3s; --layer: 6; }
+    .orbit-jupiter { --orbit-width: 240px; --orbit-height: 108px; --planet-size: 22px; --duration: 17s; --delay: -12s; --layer: 5; }
+    .orbit-saturn  { --orbit-width: 274px; --orbit-height: 124px; --planet-size: 19px; --duration: 21s; --delay: -7s; --layer: 4; }
+    .orbit-uranus  { --orbit-width: 308px; --orbit-height: 140px; --planet-size: 15px; --duration: 25s; --delay: -18s; --layer: 3; }
+    .orbit-neptune { --orbit-width: 342px; --orbit-height: 156px; --planet-size: 15px; --duration: 29s; --delay: -11s; --layer: 2; }
+
+    .orbit-planet.saturn::after {
+      content: "";
+      position: absolute;
+      inset: 5px -5px;
+      border: 2px solid rgba(239, 220, 171, 0.8);
+      border-radius: 50%;
+      transform: rotate(-18deg);
     }
 
     .panel {
@@ -521,10 +533,16 @@
         <h1>八大行星<br>隨機分組器</h1>
         <p>輸入班級總人數，系統會自動建立座號，並把學生隨機、平均地分配到水星、金星、地球、火星、木星、土星、天王星與海王星八組。</p>
       </div>
-      <div class="solar-system" aria-label="太陽系動畫示意">
-        <div class="orbit"><span class="orbit-dot"></span></div>
-        <div class="orbit second"><span class="orbit-dot"></span></div>
-        <div class="sun"></div>
+      <div class="solar-system" aria-label="太陽與八大行星繞行動畫">
+        <div class="orbit orbit-mercury"><span class="orbit-planet mercury" title="水星"></span></div>
+        <div class="orbit orbit-venus"><span class="orbit-planet venus" title="金星"></span></div>
+        <div class="orbit orbit-earth"><span class="orbit-planet earth" title="地球"></span></div>
+        <div class="orbit orbit-mars"><span class="orbit-planet mars" title="火星"></span></div>
+        <div class="orbit orbit-jupiter"><span class="orbit-planet jupiter" title="木星"></span></div>
+        <div class="orbit orbit-saturn"><span class="orbit-planet saturn" title="土星"></span></div>
+        <div class="orbit orbit-uranus"><span class="orbit-planet uranus" title="天王星"></span></div>
+        <div class="orbit orbit-neptune"><span class="orbit-planet neptune" title="海王星"></span></div>
+        <div class="sun" title="太陽"></div>
       </div>
     </section>
 
