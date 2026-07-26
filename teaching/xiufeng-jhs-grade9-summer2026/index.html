@@ -1,12 +1,183 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Grade 9 Summer Course | Aster Fu</title>
+  <meta name="description" content="Earth Science slides for Xiufeng Junior High School Grade 9 Summer Course, 2026.">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="../../assets/css/custom.css">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: var(--paper, #f4f1e9);
+      color: var(--ink, #132c28);
+    }
+
+    .course-shell {
+      width: min(940px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 42px 0 96px;
+    }
+
+    .course-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 100px;
+    }
+
+    .back-link {
+      color: inherit;
+      font-size: 14px;
+      text-decoration: none;
+      opacity: .72;
+      transition: opacity .2s ease;
+    }
+
+    .back-link:hover {
+      opacity: 1;
+    }
+
+    .course-header {
+      padding: 0 0 58px;
+      border-bottom: 1px solid var(--line, rgba(19,44,40,.16));
+    }
+
+    .course-header .eyebrow {
+      margin: 0 0 18px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      opacity: .55;
+    }
+
+    .course-header h1 {
+      margin: 0 0 24px;
+      font: 400 clamp(44px, 7vw, 78px)/1.03 Georgia, serif;
+      letter-spacing: -.045em;
+    }
+
+    .course-header p {
+      margin: 0;
+      color: #456158;
+      font-size: clamp(17px, 2vw, 20px);
+      line-height: 1.7;
+    }
+
+    .course-theme {
+      margin-top: 14px !important;
+      font-size: 14px !important;
+      letter-spacing: .03em;
+      opacity: .75;
+    }
+
+    .resource-list {
+      border-bottom: 1px solid var(--line, rgba(19,44,40,.16));
+    }
+
+    .resource-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 32px;
+      min-height: 128px;
+      padding: 26px 4px;
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid var(--line, rgba(19,44,40,.16));
+      transition: padding .25s ease, background .25s ease;
+    }
+
+    .resource-item:last-child {
+      border-bottom: 0;
+    }
+
+    .resource-item:hover {
+      padding-left: 18px;
+      padding-right: 18px;
+      background: rgba(255,255,255,.35);
+    }
+
+    .resource-name {
+      margin: 0 0 12px;
+      font: 400 clamp(25px, 3vw, 36px)/1.2 Georgia, serif;
+      letter-spacing: -.02em;
+    }
+
+    .resource-type {
+      margin: 0;
+      color: #60766d;
+      font-size: 14px;
+    }
+
+    .resource-arrow {
+      font-size: 25px;
+      transition: transform .25s ease;
+    }
+
+    .resource-item:hover .resource-arrow {
+      transform: translateX(6px);
+    }
+
+    @media (max-width: 640px) {
+      .course-shell {
+        width: min(100% - 32px, 940px);
+        padding-top: 28px;
+      }
+
+      .course-nav {
+        margin-bottom: 72px;
+      }
+
+      .course-header {
+        padding-bottom: 42px;
+      }
+
+      .resource-item {
+        min-height: 110px;
+        gap: 18px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Xiufeng Junior High School</h1>
-  <p>Grade 9 Summer Course · Earth Science · 2026</p>
+  <main class="course-shell">
+    <nav class="course-nav" aria-label="Course navigation">
+      <a class="brand" href="/" aria-label="Aster Fu home">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span><strong>Aster Fu</strong><small>Earth Science · Teaching</small></span>
+      </a>
+      <a class="back-link" href="../">← Teaching</a>
+    </nav>
+
+    <header class="course-header">
+      <p class="eyebrow">Teaching</p>
+      <h1>Xiufeng Junior High School</h1>
+      <p>Grade 9 Summer Course<br>Earth Science · 2026</p>
+      <p class="course-theme">Introduction to Scientific Reasoning</p>
+    </header>
+
+    <section class="resource-list" aria-label="Course slides">
+      <a class="resource-item" href="slides/01自然概論.pptx" download>
+        <div>
+          <h2 class="resource-name">01 自然概論</h2>
+          <p class="resource-type">Slides</p>
+        </div>
+        <span class="resource-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="resource-item" href="slides/02自然概論.pptx" download>
+        <div>
+          <h2 class="resource-name">02 自然概論</h2>
+          <p class="resource-type">Slides</p>
+        </div>
+        <span class="resource-arrow" aria-hidden="true">→</span>
+      </a>
+    </section>
+  </main>
 </body>
 </html>
