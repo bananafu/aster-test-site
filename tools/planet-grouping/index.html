@@ -649,14 +649,13 @@
     }
 
     .groups .planet-visual {
-      position: relative;
-      width: clamp(58px, 5.8vw, 86px);
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      box-shadow:
-        inset -16px -12px 22px rgba(0, 0, 0, 0.38),
-        inset 9px 7px 16px rgba(255, 255, 255, 0.14),
-        0 10px 28px rgba(0, 0, 0, 0.42);
+      width: clamp(70px, 7vw, 104px);
+      height: clamp(70px, 7vw, 104px);
+      object-fit: contain;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
     }
 
     .groups .planet-visual::before,
@@ -962,9 +961,7 @@
     }
 
     function getPlanetVisual(group) {
-      const planet = `<span class="planet-visual ${group.className}" aria-hidden="true"></span>`;
-      if (!group.ring) return planet;
-      return `<span class="saturn-ring" aria-hidden="true"></span>${planet}`;
+      return `<img class="planet-visual" src="assets/${group.className}.png" alt="${group.name}圖示">`;
     }
 
     function getCardMarkup(group, index, hidden = false) {
