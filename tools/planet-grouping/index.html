@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="八大行星主題的互動式隨機分組工具">
+  <title>八大行星隨機分組器</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: rgba(13, 26, 46, 0.82);
+      --panel-strong: rgba(18, 35, 60, 0.95);
+      --text: #f5f8ff;
+      --muted: #afbdd3;
+      --border: rgba(255, 255, 255, 0.12);
+      --accent: #7dd3fc;
+      --accent-strong: #38bdf8;
+      --chip: rgba(125, 211, 252, 0.12);
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.16), transparent 30%),
+        radial-gradient(circle at 85% 15%, rgba(129, 140, 248, 0.14), transparent 28%),
+        linear-gradient(180deg, #050914 0%, #07111f 55%, #09182b 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.5;
+      background-image:
+        radial-gradient(circle, rgba(255, 255, 255, 0.9) 0 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(255, 255, 255, 0.5) 0 1px, transparent 1.5px);
+      background-size: 95px 95px, 145px 145px;
+      background-position: 0 0, 35px 60px;
+      animation: starDrift 30s linear infinite;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 52px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      min-height: 270px;
+      padding: 36px;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(12, 27, 50, 0.94), rgba(7, 17, 31, 0.82));
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+      align-self: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border: 1px solid rgba(125, 211, 252, 0.28);
+      border-radius: 999px;
+      color: #dff7ff;
+      background: rgba(125, 211, 252, 0.1);
+      font-size: 0.9rem;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 14px;
+      font-size: clamp(2rem, 6vw, 4.7rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.8;
+    }
+
+    .solar-system {
+      position: relative;
+      min-height: 210px;
+      display: grid;
+      place-items: center;
+    }
+
+    .sun {
+      width: 78px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle at 32% 28%, #fff5bb 0 8%, #ffcf4a 24%, #ff8c2b 68%, #ee4d19 100%);
+      box-shadow: 0 0 34px rgba(255, 177, 50, 0.8), 0 0 80px rgba(255, 126, 43, 0.45);
+      animation: pulse 2.6s ease-in-out infinite;
+    }
+
+    .orbit {
+      position: absolute;
+      width: 290px;
+      height: 125px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      animation: orbitSpin 14s linear infinite;
+    }
+
+    .orbit.second {
+      width: 200px;
+      height: 86px;
+      animation-duration: 9s;
+      animation-direction: reverse;
+    }
+
+    .orbit-dot {
+      position: absolute;
+      top: 50%;
+      left: -10px;
+      width: 20px;
+      aspect-ratio: 1;
+      margin-top: -10px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #8be9ff, #3b82f6);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.55);
+    }
+
+    .orbit.second .orbit-dot {
+      width: 14px;
+      margin-top: -7px;
+      background: linear-gradient(145deg, #ffd898, #ca7042);
+    }
+
+    .panel {
+      margin-top: 24px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: var(--panel);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .control-grid {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) auto;
+      gap: 20px;
+      align-items: end;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      margin-top: 10px;
+      padding: 14px 16px;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.06);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input[type="number"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(125, 211, 252, 0.12);
+    }
+
+    .helper {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .button {
+      padding: 13px 18px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(125, 211, 252, 0.65);
+      background: rgba(125, 211, 252, 0.09);
+    }
+
+    .button.primary {
+      border-color: transparent;
+      color: #042334;
+      font-weight: 800;
+      background: linear-gradient(135deg, #b8efff, #38bdf8);
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .metric {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 1.65rem;
+    }
+
+    .status {
+      margin: 18px 0 0;
+      color: #d7e7f8;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin: 34px 0 14px;
+    }
+
+    .section-heading h2 {
+      margin-bottom: 6px;
+      font-size: 1.45rem;
+    }
+
+    .section-heading p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .badge {
+      flex: 0 0 auto;
+      padding: 7px 11px;
+      border: 1px solid rgba(125, 211, 252, 0.26);
+      border-radius: 999px;
+      color: #dff7ff;
+      background: rgba(125, 211, 252, 0.09);
+      font-size: 0.86rem;
+    }
+
+    .groups {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .planet-card {
+      position: relative;
+      overflow: hidden;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: linear-gradient(145deg, rgba(18, 35, 60, 0.94), rgba(9, 22, 40, 0.88));
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
+      transition: transform 0.24s ease, border-color 0.24s ease;
+    }
+
+    .planet-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(125, 211, 252, 0.52);
+    }
+
+    .card-top {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .planet-visual-wrap {
+      position: relative;
+      width: 78px;
+      height: 68px;
+      flex: 0 0 78px;
+      display: grid;
+      place-items: center;
+    }
+
+    .planet-visual {
+      width: 62px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      box-shadow: inset -12px -12px 18px rgba(0, 0, 0, 0.26), 0 8px 24px rgba(0, 0, 0, 0.24);
+      animation: float 3.2s ease-in-out infinite;
+    }
+
+    .mercury { background: radial-gradient(circle at 32% 28%, #f0e6d8 0 8%, #aaa096 36%, #6f675f 72%, #403b37 100%); }
+    .venus { background: repeating-linear-gradient(-10deg, #f4d39d 0 8px, #c9854d 9px 14px, #e4b674 15px 21px); }
+    .earth { background: radial-gradient(circle at 30% 24%, #8be5a4 0 14%, #49a2ed 15% 56%, #1b4e9a 84%); }
+    .mars { background: radial-gradient(circle at 34% 27%, #f1a072, #b84f2e 62%, #65251b 100%); }
+    .jupiter { background: repeating-linear-gradient(0deg, #e6c29a 0 7px, #ad7055 8px 13px, #efd5b3 14px 20px); }
+    .saturn { background: radial-gradient(circle at 35% 28%, #f7dfa8, #c3a05d 72%, #826636 100%); }
+    .uranus { background: radial-gradient(circle at 32% 26%, #d7fbfc, #6bcbd3 72%, #2b7f8b 100%); }
+    .neptune { background: radial-gradient(circle at 32% 26%, #7ca9ff, #345cc6 66%, #152c74 100%); }
+
+    .saturn-ring {
+      position: absolute;
+      width: 80px;
+      height: 24px;
+      border: 4px solid rgba(229, 211, 163, 0.72);
+      border-radius: 50%;
+      transform: rotate(-13deg);
+    }
+
+    .card-content {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .planet-title-row {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .planet-title-row h3 {
+      margin-bottom: 2px;
+      font-size: 1.22rem;
+    }
+
+    .planet-title-row small,
+    .fact {
+      color: var(--muted);
+    }
+
+    .fact {
+      margin: 10px 0 0;
+      line-height: 1.6;
+      font-size: 0.92rem;
+    }
+
+    .student-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .student-chip {
+      min-width: 52px;
+      padding: 8px 11px;
+      text-align: center;
+      border: 1px solid rgba(125, 211, 252, 0.22);
+      border-radius: 999px;
+      background: var(--chip);
+      animation: pop 0.38s ease both;
+    }
+
+    .teaching-tip {
+      margin-top: 28px;
+      padding: 18px 20px;
+      border-left: 4px solid var(--accent);
+      border-radius: 14px;
+      color: #ddecf9;
+      background: rgba(125, 211, 252, 0.08);
+    }
+
+    footer {
+      padding-top: 28px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .shuffle-active .planet-card {
+      animation: shuffle 0.56s ease;
+    }
+
+    @keyframes starDrift {
+      to { transform: translateY(95px); }
+    }
+
+    @keyframes pulse {
+      50% { transform: scale(1.08); }
+    }
+
+    @keyframes orbitSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes float {
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes pop {
+      from { opacity: 0; transform: translateY(8px) scale(0.92); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes shuffle {
+      30% { transform: translateY(-8px) rotate(-1deg); }
+      65% { transform: translateY(3px) rotate(1deg); }
+    }
+
+    @media (max-width: 820px) {
+      .hero,
+      .control-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .solar-system {
+        min-height: 190px;
+      }
+
+      .metrics,
+      .groups {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .app-shell {
+        width: min(100% - 20px, 1180px);
+        padding-top: 10px;
+      }
+
+      .hero,
+      .panel {
+        padding: 20px;
+        border-radius: 20px;
+      }
+
+      .button-row,
+      .button {
+        width: 100%;
+      }
+
+      .metrics,
+      .groups {
+        grid-template-columns: 1fr;
+      }
+
+      .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">🌍 國中地科 × 班級活動</span>
+        <h1>八大行星<br>隨機分組器</h1>
+        <p>輸入班級總人數，系統會自動建立座號，並把學生隨機、平均地分配到水星、金星、地球、火星、木星、土星、天王星與海王星八組。</p>
+      </div>
+      <div class="solar-system" aria-label="太陽系動畫示意">
+        <div class="orbit"><span class="orbit-dot"></span></div>
+        <div class="orbit second"><span class="orbit-dot"></span></div>
+        <div class="sun"></div>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="controls-title">
+      <div class="control-grid">
+        <label for="studentCount">
+          <span id="controls-title">班級總人數</span>
+          <input id="studentCount" type="number" min="1" max="200" value="32" inputmode="numeric">
+          <span class="helper">座號從 1 號開始自動產生，最多可輸入 200 人。</span>
+        </label>
+        <div class="button-row">
+          <button id="generateBtn" class="button primary" type="button">產生分組</button>
+          <button id="shuffleBtn" class="button" type="button">重新洗牌</button>
+          <button id="revealBtn" class="button" type="button">逐組揭曉</button>
+        </div>
+      </div>
+
+      <div class="metrics">
+        <div class="metric"><span>學生人數</span><strong id="studentMetric">32</strong></div>
+        <div class="metric"><span>行星組數</span><strong>8</strong></div>
+        <div class="metric"><span>每組約</span><strong id="averageMetric">4</strong></div>
+        <div class="metric"><span>最大人數差</span><strong id="differenceMetric">0</strong></div>
+      </div>
+      <p id="status" class="status" aria-live="polite">已準備好分配 32 位學生。</p>
+    </section>
+
+    <section aria-labelledby="result-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="result-title">行星分組結果</h2>
+          <p>每次重新洗牌都會得到新的隨機結果。</p>
+        </div>
+        <span id="balanceBadge" class="badge">平均分配</span>
+      </div>
+      <div id="groups" class="groups" aria-live="polite"></div>
+    </section>
+
+    <aside class="teaching-tip">
+      <strong>教學延伸：</strong> 可以請各組查詢自己行星的特色，再設計組呼、組徽，或進行一分鐘行星介紹。
+    </aside>
+
+    <footer>八大行星隨機分組器 · Designed for Earth Science Class</footer>
+  </main>
+
+  <script>
+    const planets = [
+      { name: "水星", en: "Mercury", className: "mercury", fact: "距離太陽最近，也是八大行星中公轉速度最快的行星。" },
+      { name: "金星", en: "Venus", className: "venus", fact: "擁有濃厚的二氧化碳大氣，強烈溫室效應使表面非常炎熱。" },
+      { name: "地球", en: "Earth", className: "earth", fact: "目前已知唯一具有液態海洋與生命的行星。" },
+      { name: "火星", en: "Mars", className: "mars", fact: "地表富含氧化鐵，因此從太空看起來呈現紅色。" },
+      { name: "木星", en: "Jupiter", className: "jupiter", fact: "太陽系中體積最大的行星，著名的大紅斑是一個巨大風暴。" },
+      { name: "土星", en: "Saturn", className: "saturn", fact: "具有明顯而壯觀的行星環，主要由冰與岩石碎屑構成。", ring: true },
+      { name: "天王星", en: "Uranus", className: "uranus", fact: "自轉軸傾斜角度很大，看起來像躺著繞太陽公轉。" },
+      { name: "海王星", en: "Neptune", className: "neptune", fact: "距離太陽最遠，擁有太陽系中極強的高空風。" }
+    ];
+
+    const countInput = document.getElementById("studentCount");
+    const generateBtn = document.getElementById("generateBtn");
+    const shuffleBtn = document.getElementById("shuffleBtn");
+    const revealBtn = document.getElementById("revealBtn");
+    const groupsElement = document.getElementById("groups");
+    const statusElement = document.getElementById("status");
+    const studentMetric = document.getElementById("studentMetric");
+    const averageMetric = document.getElementById("averageMetric");
+    const differenceMetric = document.getElementById("differenceMetric");
+    const balanceBadge = document.getElementById("balanceBadge");
+
+    let currentGroups = [];
+    let revealTimers = [];
+
+    function getValidCount() {
+      const value = Number.parseInt(countInput.value, 10);
+      if (!Number.isFinite(value)) return 1;
+      return Math.max(1, Math.min(200, value));
+    }
+
+    function shuffle(array) {
+      const result = [...array];
+      for (let index = result.length - 1; index > 0; index -= 1) {
+        const randomIndex = Math.floor(Math.random() * (index + 1));
+        [result[index], result[randomIndex]] = [result[randomIndex], result[index]];
+      }
+      return result;
+    }
+
+    function createGroups(count) {
+      const studentNumbers = shuffle(Array.from({ length: count }, (_, index) => index + 1));
+      const groups = planets.map((planet) => ({ ...planet, students: [] }));
+
+      studentNumbers.forEach((studentNumber, index) => {
+        groups[index % groups.length].students.push(studentNumber);
+      });
+
+      groups.forEach((group) => group.students.sort((a, b) => a - b));
+      return groups;
+    }
+
+    function getPlanetVisual(group) {
+      const planet = `<span class="planet-visual ${group.className}" aria-hidden="true"></span>`;
+      if (!group.ring) return planet;
+      return `<span class="saturn-ring" aria-hidden="true"></span>${planet}`;
+    }
+
+    function getCardMarkup(group, index, hidden = false) {
+      const studentMarkup = group.students.length
+        ? group.students.map((number, chipIndex) => `<span class="student-chip" style="animation-delay:${chipIndex * 35}ms">${number} 號</span>`).join("")
+        : `<span class="helper">此組暫時沒有學生</span>`;
+
+      return `
+        <article class="planet-card" data-index="${index}" style="${hidden ? "opacity:0;transform:translateY(16px)" : ""}">
+          <div class="card-top">
+            <div class="planet-visual-wrap">${getPlanetVisual(group)}</div>
+            <div class="card-content">
+              <div class="planet-title-row">
+                <div>
+                  <h3>${group.name}組</h3>
+                  <small>${group.en}</small>
+                </div>
+                <span class="badge">${group.students.length} 人</span>
+              </div>
+              <p class="fact">${group.fact}</p>
+            </div>
+          </div>
+          <div class="student-list">${studentMarkup}</div>
+        </article>
+      `;
+    }
+
+    function updateMetrics(count) {
+      const sizes = currentGroups.map((group) => group.students.length);
+      const difference = Math.max(...sizes) - Math.min(...sizes);
+      studentMetric.textContent = count;
+      averageMetric.textContent = (count / 8).toFixed(count % 8 === 0 ? 0 : 1);
+      differenceMetric.textContent = difference;
+      balanceBadge.textContent = difference <= 1 ? "平均分配" : "請檢查分組";
+    }
+
+    function renderGroups({ animate = false } = {}) {
+      revealTimers.forEach((timer) => window.clearTimeout(timer));
+      revealTimers = [];
+
+      const count = getValidCount();
+      countInput.value = count;
+      currentGroups = createGroups(count);
+      groupsElement.innerHTML = currentGroups.map((group, index) => getCardMarkup(group, index)).join("");
+      updateMetrics(count);
+      statusElement.textContent = `已將 ${count} 位學生隨機分配到八大行星，任兩組人數差不超過 1 人。`;
+
+      if (animate) {
+        groupsElement.classList.add("shuffle-active");
+        window.setTimeout(() => groupsElement.classList.remove("shuffle-active"), 600);
+      }
+    }
+
+    function revealOneByOne() {
+      revealTimers.forEach((timer) => window.clearTimeout(timer));
+      revealTimers = [];
+
+      const count = getValidCount();
+      countInput.value = count;
+      currentGroups = createGroups(count);
+      groupsElement.innerHTML = currentGroups.map((group, index) => getCardMarkup(group, index, true)).join("");
+      updateMetrics(count);
+      statusElement.textContent = "正在逐組揭曉分組結果……";
+
+      const cards = [...groupsElement.querySelectorAll(".planet-card")];
+      cards.forEach((card, index) => {
+        const timer = window.setTimeout(() => {
+          card.style.transition = "opacity 0.42s ease, transform 0.42s ease";
+          card.style.opacity = "1";
+          card.style.transform = "translateY(0)";
+          statusElement.textContent = `已揭曉 ${index + 1}／8 組：${currentGroups[index].name}組。`;
+
+          if (index === cards.length - 1) {
+            statusElement.textContent = `全部揭曉完成！${count} 位學生已分配到八大行星。`;
+          }
+        }, index * 520);
+        revealTimers.push(timer);
+      });
+    }
+
+    generateBtn.addEventListener("click", () => renderGroups());
+    shuffleBtn.addEventListener("click", () => renderGroups({ animate: true }));
+    revealBtn.addEventListener("click", revealOneByOne);
+
+    countInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") renderGroups();
+    });
+
+    countInput.addEventListener("input", () => {
+      const count = getValidCount();
+      statusElement.textContent = `按下「產生分組」，即可分配 ${count} 位學生。`;
+    });
+
+    renderGroups();
+  </script>
+</body>
+</html>
