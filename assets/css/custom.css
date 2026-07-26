@@ -594,6 +594,63 @@ nav a:hover:after,
   box-shadow: 0 0 28px rgba(185,199,185,.45);
 }
 
+.teaching-icon {
+  width: 160px;
+  height: 160px;
+  display: grid;
+  place-items: center;
+}
+
+.teaching-icon svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.teaching-icon-halo {
+  fill: rgba(185,199,185,.05);
+  stroke: rgba(255,255,255,.18);
+  stroke-width: 1;
+  stroke-dasharray: 3 6;
+}
+
+.teaching-icon-page {
+  fill: rgba(245,242,233,.08);
+  stroke: #d7e0d8;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.teaching-icon-fold {
+  fill: none;
+  stroke: rgba(215,224,216,.6);
+  stroke-width: 1.5;
+}
+
+.teaching-icon-earth {
+  fill: #8fae9a;
+  stroke: #eef3ee;
+  stroke-width: 2;
+  filter: drop-shadow(0 7px 14px rgba(0,0,0,.22));
+}
+
+.teaching-icon-land {
+  fill: #365f50;
+}
+
+.teaching-icon-orbit {
+  fill: none;
+  stroke: rgba(255,255,255,.72);
+  stroke-width: 1.3;
+  transform: rotate(-14deg);
+  transform-origin: 80px 48px;
+}
+
+.teaching-icon-dot {
+  fill: #f5f2e9;
+}
+
+
 .tool-content {
   position: relative;
   z-index: 1;
@@ -823,7 +880,8 @@ footer>small {
     padding: 28px;
   }
 
-  .tool-orbit {
+  .tool-orbit,
+  .teaching-icon {
     width: 120px;
     height: 120px;
   }
