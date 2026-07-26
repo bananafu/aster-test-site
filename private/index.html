@@ -3,172 +3,565 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#173d35">
 
-  <title>Private Workspace｜Aster</title>
+  <title>Private Workspace｜Aster Fu</title>
 
-  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="/assets/css/custom.css">
 
   <style>
-    .private-page {
+    :root {
+      --private-forest: #173d35;
+      --private-deep: #102f29;
+      --private-moss: #789080;
+      --private-paper: #f5f2e9;
+      --private-cream: #ebe7db;
+      --private-white: rgba(255, 255, 255, 0.92);
+      --private-line: rgba(245, 242, 233, 0.17);
+      --private-card: rgba(255, 255, 255, 0.09);
+      --private-card-hover: rgba(255, 255, 255, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
       min-height: 100vh;
-      padding: 120px 24px 80px;
+      color: var(--private-paper);
+      background:
+        radial-gradient(circle at 12% 10%, rgba(132, 164, 144, 0.22), transparent 30%),
+        radial-gradient(circle at 88% 16%, rgba(225, 219, 194, 0.11), transparent 28%),
+        linear-gradient(145deg, var(--private-deep), var(--private-forest) 48%, #244f44);
+      font-family: Arial, "Noto Sans TC", sans-serif;
     }
 
-    .private-container {
-      width: min(1100px, 100%);
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.055;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.7) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.7) 1px, transparent 1px);
+      background-size: 72px 72px;
+    }
+
+    .private-shell {
+      position: relative;
+      z-index: 1;
+      width: min(1240px, calc(100% - 40px));
       margin: 0 auto;
+      padding: 28px 0 52px;
     }
 
-    .private-header {
-      margin-bottom: 48px;
+    .private-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 14px 18px;
+      border: 1px solid var(--private-line);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.075);
+      box-shadow: 0 18px 55px rgba(4, 25, 21, 0.22);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+    }
+
+    .private-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .private-brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(245, 242, 233, 0.7);
+      border-radius: 50%;
+      font: italic 23px Georgia, serif;
+    }
+
+    .private-brand strong,
+    .private-brand small {
+      display: block;
+    }
+
+    .private-brand strong {
+      font: 600 17px Georgia, serif;
+      letter-spacing: 0.03em;
+    }
+
+    .private-brand small {
+      margin-top: 3px;
+      color: rgba(245, 242, 233, 0.62);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .private-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .private-nav-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: rgba(245, 242, 233, 0.78);
+      text-decoration: none;
+      font-size: 13px;
+      transition: 0.2s ease;
+    }
+
+    .private-nav-links a:hover {
+      color: var(--private-paper);
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .private-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+      gap: 28px;
+      align-items: stretch;
+      padding: 86px 0 38px;
+    }
+
+    .private-hero-copy {
+      padding: 18px 4px 10px;
     }
 
     .private-eyebrow {
-      margin-bottom: 12px;
-      font-size: 0.85rem;
-      letter-spacing: 0.18em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 22px;
+      color: #c8d3c8;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      opacity: 0.65;
+    }
+
+    .private-eyebrow::before {
+      content: "";
+      width: 24px;
+      height: 1px;
+      background: currentColor;
     }
 
     .private-title {
+      max-width: 760px;
       margin: 0;
-      font-size: clamp(2.5rem, 7vw, 5.5rem);
-      line-height: 1;
+      font: 400 clamp(54px, 7vw, 92px)/0.96 Georgia, serif;
+      letter-spacing: -0.05em;
+    }
+
+    .private-title em {
+      color: #b9c7b9;
+      font-weight: 400;
     }
 
     .private-description {
-      max-width: 620px;
-      margin-top: 20px;
-      font-size: 1.05rem;
+      max-width: 650px;
+      margin: 28px 0 0;
+      color: rgba(245, 242, 233, 0.73);
+      font-size: 17px;
       line-height: 1.8;
-      opacity: 0.72;
+    }
+
+    .private-status {
+      min-height: 100%;
+      padding: 28px;
+      border: 1px solid var(--private-line);
+      border-radius: 30px;
+      background: linear-gradient(155deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.055));
+      box-shadow: 0 24px 70px rgba(4, 25, 21, 0.26);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+
+    .status-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: #dfe8df;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .status-dot::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #b9d5be;
+      box-shadow: 0 0 0 6px rgba(185, 213, 190, 0.12);
+    }
+
+    .private-status h2 {
+      margin: 50px 0 12px;
+      font: 400 30px/1.15 Georgia, serif;
+    }
+
+    .private-status p {
+      margin: 0;
+      color: rgba(245, 242, 233, 0.64);
+      line-height: 1.7;
+    }
+
+    .status-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .status-meta div {
+      padding: 14px;
+      border: 1px solid rgba(245, 242, 233, 0.11);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .status-meta small,
+    .status-meta strong {
+      display: block;
+    }
+
+    .status-meta small {
+      color: rgba(245, 242, 233, 0.52);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .status-meta strong {
+      margin-top: 6px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .workspace-section {
+      padding-top: 30px;
+    }
+
+    .workspace-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 30px;
+      margin-bottom: 22px;
+    }
+
+    .workspace-heading p {
+      margin: 0 0 8px;
+      color: #b9c7b9;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .workspace-heading h2 {
+      margin: 0;
+      font: 400 clamp(30px, 4vw, 46px)/1 Georgia, serif;
+    }
+
+    .workspace-heading span {
+      max-width: 360px;
+      color: rgba(245, 242, 233, 0.55);
+      font-size: 13px;
+      line-height: 1.6;
+      text-align: right;
     }
 
     .workspace-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 18px;
     }
 
     .workspace-card {
-      display: block;
-      min-height: 210px;
-      padding: 28px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 28px;
+      position: relative;
+      min-height: 230px;
+      padding: 24px;
+      overflow: hidden;
+      border: 1px solid var(--private-line);
+      border-radius: 26px;
       color: inherit;
       text-decoration: none;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      transition:
-        transform 0.25s ease,
-        background 0.25s ease,
-        border-color 0.25s ease;
+      background: var(--private-card);
+      box-shadow: 0 18px 50px rgba(4, 25, 21, 0.16);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+    }
+
+    .workspace-card:nth-child(1),
+    .workspace-card:nth-child(4) {
+      grid-column: span 7;
+    }
+
+    .workspace-card:nth-child(2),
+    .workspace-card:nth-child(3) {
+      grid-column: span 5;
+    }
+
+    .workspace-card::after {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      right: -70px;
+      bottom: -75px;
+      border: 1px solid rgba(245, 242, 233, 0.13);
+      border-radius: 50%;
+      box-shadow: 0 0 0 26px rgba(245, 242, 233, 0.025), 0 0 0 54px rgba(245, 242, 233, 0.018);
     }
 
     .workspace-card:hover {
-      transform: translateY(-5px);
-      background: rgba(255, 255, 255, 0.13);
-      border-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-6px);
+      background: var(--private-card-hover);
+      border-color: rgba(245, 242, 233, 0.34);
+    }
+
+    .workspace-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
     }
 
     .workspace-icon {
-      display: block;
-      margin-bottom: 44px;
-      font-size: 2rem;
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(245, 242, 233, 0.16);
+      border-radius: 16px;
+      background: rgba(245, 242, 233, 0.07);
+      font-size: 23px;
     }
 
-    .workspace-card h2 {
-      margin: 0 0 8px;
-      font-size: 1.4rem;
+    .workspace-arrow {
+      color: rgba(245, 242, 233, 0.55);
+      font-size: 22px;
+      transition: transform 0.25s ease, color 0.25s ease;
+    }
+
+    .workspace-card:hover .workspace-arrow {
+      color: var(--private-paper);
+      transform: translate(3px, -3px);
+    }
+
+    .workspace-card h3 {
+      position: relative;
+      z-index: 1;
+      margin: 56px 0 8px;
+      font: 400 27px/1.1 Georgia, serif;
     }
 
     .workspace-card p {
+      position: relative;
+      z-index: 1;
+      max-width: 420px;
       margin: 0;
-      line-height: 1.6;
-      opacity: 0.65;
+      color: rgba(245, 242, 233, 0.6);
+      line-height: 1.65;
     }
 
-    .private-home-link {
-      display: inline-block;
+    .private-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
       margin-top: 36px;
-      color: inherit;
+      padding-top: 24px;
+      border-top: 1px solid var(--private-line);
+      color: rgba(245, 242, 233, 0.52);
+      font-size: 12px;
+      letter-spacing: 0.05em;
+    }
+
+    .private-footer a {
+      color: rgba(245, 242, 233, 0.78);
       text-decoration: none;
-      opacity: 0.68;
     }
 
-    .private-home-link:hover {
-      opacity: 1;
+    .private-footer a:hover {
+      color: var(--private-paper);
     }
 
-    @media (max-width: 700px) {
-      .private-page {
-        padding-top: 90px;
-      }
-
-      .workspace-grid {
+    @media (max-width: 900px) {
+      .private-hero {
         grid-template-columns: 1fr;
+        padding-top: 64px;
       }
 
-      .workspace-card {
-        min-height: 180px;
+      .private-status {
+        min-height: auto;
+      }
+
+      .workspace-card,
+      .workspace-card:nth-child(n) {
+        grid-column: span 6;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .private-shell {
+        width: min(100% - 24px, 1240px);
+        padding-top: 12px;
+      }
+
+      .private-nav {
+        padding: 12px 14px;
+      }
+
+      .private-nav-links a:not(:last-child) {
+        display: none;
+      }
+
+      .private-hero {
+        padding: 52px 0 26px;
+      }
+
+      .private-title {
+        font-size: clamp(48px, 15vw, 68px);
+      }
+
+      .workspace-heading {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .workspace-heading span {
+        text-align: left;
+      }
+
+      .workspace-card,
+      .workspace-card:nth-child(n) {
+        grid-column: 1 / -1;
+        min-height: 210px;
+      }
+
+      .private-footer {
+        align-items: flex-start;
+        flex-direction: column;
       }
     }
   </style>
 </head>
 
 <body>
-  <main class="private-page">
-    <div class="private-container">
-
-      <header class="private-header">
-        <p class="private-eyebrow">Aster Teacher Workspace</p>
-
-        <h1 class="private-title">
-          Private<br>
-          Workspace
-        </h1>
-
-        <p class="private-description">
-          我的私人教學工作空間，用來整理課程簡報、學習單、考卷與教學筆記。
-        </p>
-      </header>
-
-      <section class="workspace-grid">
-
-        <a class="workspace-card" href="#">
-          <span class="workspace-icon">📚</span>
-          <h2>Presentations</h2>
-          <p>課堂簡報與教學投影片</p>
-        </a>
-
-        <a class="workspace-card" href="#">
-          <span class="workspace-icon">📄</span>
-          <h2>Worksheets</h2>
-          <p>學習單、活動單與課堂素材</p>
-        </a>
-
-        <a class="workspace-card" href="#">
-          <span class="workspace-icon">📝</span>
-          <h2>Exams</h2>
-          <p>題庫、測驗與參考解答</p>
-        </a>
-
-        <a class="workspace-card" href="#">
-          <span class="workspace-icon">📓</span>
-          <h2>Notes</h2>
-          <p>備課筆記與教學紀錄</p>
-        </a>
-
-      </section>
-
-      <a class="private-home-link" href="/">
-        ← Back to homepage
+  <div class="private-shell">
+    <header class="private-nav">
+      <a class="private-brand" href="/" aria-label="回到 Aster Fu 首頁">
+        <span class="private-brand-mark" aria-hidden="true">A</span>
+        <span>
+          <strong>Aster Fu</strong>
+          <small>Teacher Workspace</small>
+        </span>
       </a>
 
-    </div>
-  </main>
+      <nav class="private-nav-links" aria-label="私人工作區導覽">
+        <a href="#workspace">Workspace</a>
+        <a href="/">Public site</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="private-hero">
+        <div class="private-hero-copy">
+          <p class="private-eyebrow">Private teaching dashboard</p>
+          <h1 class="private-title">Private<br><em>Workspace.</em></h1>
+          <p class="private-description">
+            集中整理課程簡報、學習單、考卷與備課筆記，讓每一份教學素材都能快速找到、安心存取。
+          </p>
+        </div>
+
+        <aside class="private-status" aria-label="工作區狀態">
+          <span class="status-dot">Protected access</span>
+          <h2>Welcome back, Aster.</h2>
+          <p>這個區域已由 Cloudflare Access 保護，僅授權帳號可以進入。</p>
+
+          <div class="status-meta">
+            <div>
+              <small>Access</small>
+              <strong>Private</strong>
+            </div>
+            <div>
+              <small>Workspace</small>
+              <strong>Teaching</strong>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="workspace-section" id="workspace">
+        <div class="workspace-heading">
+          <div>
+            <p>Organize your materials</p>
+            <h2>Workspace</h2>
+          </div>
+          <span>目前先建立分類首頁，之後可逐一接上 Google Drive 資料夾或下載連結。</span>
+        </div>
+
+        <div class="workspace-grid">
+          <a class="workspace-card" href="#">
+            <div class="workspace-card-top">
+              <span class="workspace-icon" aria-hidden="true">▣</span>
+              <span class="workspace-arrow" aria-hidden="true">↗</span>
+            </div>
+            <h3>Presentations</h3>
+            <p>課堂簡報、教學投影片與主題式視覺教材。</p>
+          </a>
+
+          <a class="workspace-card" href="#">
+            <div class="workspace-card-top">
+              <span class="workspace-icon" aria-hidden="true">≡</span>
+              <span class="workspace-arrow" aria-hidden="true">↗</span>
+            </div>
+            <h3>Worksheets</h3>
+            <p>學習單、活動單與學生課堂任務素材。</p>
+          </a>
+
+          <a class="workspace-card" href="#">
+            <div class="workspace-card-top">
+              <span class="workspace-icon" aria-hidden="true">✓</span>
+              <span class="workspace-arrow" aria-hidden="true">↗</span>
+            </div>
+            <h3>Exams</h3>
+            <p>題庫、測驗卷、參考解答與評量資料。</p>
+          </a>
+
+          <a class="workspace-card" href="#">
+            <div class="workspace-card-top">
+              <span class="workspace-icon" aria-hidden="true">✦</span>
+              <span class="workspace-arrow" aria-hidden="true">↗</span>
+            </div>
+            <h3>Teaching Notes</h3>
+            <p>備課筆記、課後反思、教學流程與靈感整理。</p>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="private-footer">
+      <span>© 2026 Aster Fu · Private Teacher Workspace</span>
+      <a href="/">← Back to public website</a>
+    </footer>
+  </div>
 </body>
 </html>
