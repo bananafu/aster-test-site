@@ -4,28 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#173d35">
-
   <title>Private Workspace｜Aster Fu</title>
-
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="stylesheet" href="/assets/css/custom.css">
-
   <style>
     :root {
       --private-forest: #173d35;
       --private-deep: #102f29;
-      --private-moss: #789080;
       --private-paper: #f5f2e9;
-      --private-cream: #ebe7db;
-      --private-white: rgba(255, 255, 255, 0.92);
       --private-line: rgba(245, 242, 233, 0.17);
       --private-card: rgba(255, 255, 255, 0.09);
       --private-card-hover: rgba(255, 255, 255, 0.14);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -91,9 +83,7 @@
     }
 
     .private-brand strong,
-    .private-brand small {
-      display: block;
-    }
+    .private-brand small { display: block; }
 
     .private-brand strong {
       font: 600 17px Georgia, serif;
@@ -136,9 +126,7 @@
       padding: 86px 0 38px;
     }
 
-    .private-hero-copy {
-      padding: 18px 4px 10px;
-    }
+    .private-hero-copy { padding: 18px 4px 10px; }
 
     .private-eyebrow {
       display: flex;
@@ -235,9 +223,7 @@
     }
 
     .status-meta small,
-    .status-meta strong {
-      display: block;
-    }
+    .status-meta strong { display: block; }
 
     .status-meta small {
       color: rgba(245, 242, 233, 0.52);
@@ -252,9 +238,7 @@
       font-weight: 600;
     }
 
-    .workspace-section {
-      padding-top: 30px;
-    }
+    .workspace-section { padding-top: 30px; }
 
     .workspace-heading {
       display: flex;
@@ -309,14 +293,10 @@
     }
 
     .workspace-card:nth-child(1),
-    .workspace-card:nth-child(4) {
-      grid-column: span 7;
-    }
+    .workspace-card:nth-child(4) { grid-column: span 7; }
 
     .workspace-card:nth-child(2),
-    .workspace-card:nth-child(3) {
-      grid-column: span 5;
-    }
+    .workspace-card:nth-child(3) { grid-column: span 5; }
 
     .workspace-card::after {
       content: "";
@@ -399,9 +379,7 @@
       text-decoration: none;
     }
 
-    .private-footer a:hover {
-      color: var(--private-paper);
-    }
+    .private-footer a:hover { color: var(--private-paper); }
 
     @media (max-width: 900px) {
       .private-hero {
@@ -409,14 +387,10 @@
         padding-top: 64px;
       }
 
-      .private-status {
-        min-height: auto;
-      }
+      .private-status { min-height: auto; }
 
       .workspace-card,
-      .workspace-card:nth-child(n) {
-        grid-column: span 6;
-      }
+      .workspace-card:nth-child(n) { grid-column: span 6; }
     }
 
     @media (max-width: 680px) {
@@ -425,30 +399,17 @@
         padding-top: 12px;
       }
 
-      .private-nav {
-        padding: 12px 14px;
-      }
-
-      .private-nav-links a:not(:last-child) {
-        display: none;
-      }
-
-      .private-hero {
-        padding: 52px 0 26px;
-      }
-
-      .private-title {
-        font-size: clamp(48px, 15vw, 68px);
-      }
+      .private-nav { padding: 12px 14px; }
+      .private-nav-links a:not(:last-child) { display: none; }
+      .private-hero { padding: 52px 0 26px; }
+      .private-title { font-size: clamp(48px, 15vw, 68px); }
 
       .workspace-heading {
         align-items: start;
         flex-direction: column;
       }
 
-      .workspace-heading span {
-        text-align: left;
-      }
+      .workspace-heading span { text-align: left; }
 
       .workspace-card,
       .workspace-card:nth-child(n) {
@@ -463,7 +424,6 @@
     }
   </style>
 </head>
-
 <body>
   <div class="private-shell">
     <header class="private-nav">
@@ -486,25 +446,16 @@
         <div class="private-hero-copy">
           <p class="private-eyebrow">Private teaching dashboard</p>
           <h1 class="private-title">Private<br><em>Workspace.</em></h1>
-          <p class="private-description">
-            集中整理課程簡報、學習單、考卷與備課筆記，讓每一份教學素材都能快速找到、安心存取。
-          </p>
+          <p class="private-description">集中整理課程簡報、學習單、考卷與備課筆記，讓每一份教學素材都能快速找到、安心存取。</p>
         </div>
 
         <aside class="private-status" aria-label="工作區狀態">
           <span class="status-dot">Protected access</span>
           <h2>Welcome back, Aster.</h2>
           <p>這個區域已由 Cloudflare Access 保護，僅授權帳號可以進入。</p>
-
           <div class="status-meta">
-            <div>
-              <small>Access</small>
-              <strong>Private</strong>
-            </div>
-            <div>
-              <small>Workspace</small>
-              <strong>Teaching</strong>
-            </div>
+            <div><small>Access</small><strong>Private</strong></div>
+            <div><small>Workspace</small><strong>Teaching</strong></div>
           </div>
         </aside>
       </section>
@@ -515,11 +466,11 @@
             <p>Organize your materials</p>
             <h2>Workspace</h2>
           </div>
-          <span>目前先建立分類首頁，之後可逐一接上 Google Drive 資料夾或下載連結。</span>
+          <span>點選分類即可前往對應的教材資料夾；實際檔案由 Google Drive 管理。</span>
         </div>
 
         <div class="workspace-grid">
-          <a class="workspace-card" href="#">
+          <a class="workspace-card" href="https://drive.google.com/drive/folders/1HNUx9ukGS-MnBrs1-d8OlvQmu3ZQWtw7?usp=drive_link" target="_blank" rel="noopener noreferrer">
             <div class="workspace-card-top">
               <span class="workspace-icon" aria-hidden="true">▣</span>
               <span class="workspace-arrow" aria-hidden="true">↗</span>
