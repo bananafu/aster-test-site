@@ -631,12 +631,20 @@
     function createGroups(count) {
       const studentNumbers = shuffle(Array.from({ length: count }, (_, index) => index + 1));
       const groups = planets.map((planet) => ({ ...planet, students: [] }));
+      const baseGroupSize = Math.floor(count / groups.length);
+      const extraStudentCount = count % groups.length;
+      const extraStudentGroups = new Set(
+        shuffle(groups.map((_, index) => index)).slice(0, extraStudentCount)
+      );
 
-      studentNumbers.forEach((studentNumber, index) => {
-        groups[index % groups.length].students.push(studentNumber);
+      let studentIndex = 0;
+      groups.forEach((group, groupIndex) => {
+        const targetSize = baseGroupSize + (extraStudentGroups.has(groupIndex) ? 1 : 0);
+        group.students = studentNumbers.slice(studentIndex, studentIndex + targetSize);
+        studentIndex += targetSize;
+        group.students.sort((a, b) => a - b);
       });
 
-      groups.forEach((group) => group.students.sort((a, b) => a - b));
       return groups;
     }
 
