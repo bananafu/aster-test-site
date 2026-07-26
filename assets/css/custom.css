@@ -522,6 +522,117 @@ nav a:hover:after,
   margin: 24px 0 0
 }
 
+
+.tools {
+  background: var(--paper);
+}
+
+.tools-layout {
+  margin-top: 46px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 7vw;
+  align-items: start;
+}
+
+.tools-layout h2 {
+  margin: 0;
+  font: 400 clamp(36px,4.3vw,62px)/1.2 Georgia,serif;
+  letter-spacing: -.03em;
+}
+
+.tool-card {
+  position: relative;
+  min-height: 310px;
+  padding: 42px;
+  display: grid;
+  grid-template-columns: minmax(150px, .8fr) 1.4fr auto;
+  gap: 34px;
+  align-items: center;
+  overflow: hidden;
+  background: var(--forest);
+  color: var(--paper);
+  transition: transform .25s, box-shadow .25s;
+}
+
+.tool-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 50px rgba(19,44,40,.18);
+}
+
+.tool-orbit {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border: 1px solid rgba(255,255,255,.24);
+  border-radius: 50%;
+}
+
+.tool-orbit:before,
+.tool-orbit:after {
+  content: "";
+  position: absolute;
+  inset: 19px -15px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 50%;
+  transform: rotate(-24deg);
+}
+
+.tool-orbit:after {
+  inset: 42px -28px;
+  transform: rotate(18deg);
+}
+
+.tool-orbit span {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #b9c7b9;
+  box-shadow: 0 0 28px rgba(185,199,185,.45);
+}
+
+.tool-content {
+  position: relative;
+  z-index: 1;
+}
+
+.tool-category {
+  margin: 0 0 14px;
+  text-transform: uppercase;
+  color: #9fb0a4;
+  letter-spacing: .14em;
+  font-size: 11px;
+}
+
+.tool-card h3 {
+  margin: 0 0 15px;
+  font: 400 clamp(29px,3vw,43px) Georgia,serif;
+}
+
+.tool-card p:not(.tool-category) {
+  margin: 0;
+  color: #c5d0c7;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.tool-tags span {
+  color: #c5d0c7;
+}
+
+.tool-arrow {
+  align-self: start;
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 50%;
+}
+
 .interests {
   background: var(--cream)
 }
@@ -702,8 +813,23 @@ footer>small {
     display: none
   }
 
+  .tools-layout,
   .interest-layout {
     grid-template-columns: 1fr
+  }
+
+  .tool-card {
+    grid-template-columns: 1fr;
+    padding: 28px;
+  }
+
+  .tool-orbit {
+    width: 120px;
+    height: 120px;
+  }
+
+  .tool-arrow {
+    display: none;
   }
 
   .interest-item {
