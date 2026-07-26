@@ -153,6 +153,20 @@
       pointer-events: none;
     }
 
+    .resource-link {
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
+    }
+
+    .resource-link:hover {
+      transform: translateY(-4px);
+      background: rgba(250,252,248,.74);
+      box-shadow:
+        0 24px 58px rgba(31,59,49,.17),
+        inset 0 1px 0 rgba(255,255,255,.94);
+    }
+
     .resource-name {
       margin: 0 0 12px;
       font: 400 clamp(26px, 3vw, 38px)/1.2 Georgia, serif;
@@ -165,7 +179,8 @@
       font-size: 14px;
     }
 
-    .status-badge {
+    .status-badge,
+    .download-badge {
       position: relative;
       z-index: 1;
       display: inline-flex;
@@ -181,6 +196,20 @@
       font-weight: 700;
       letter-spacing: .09em;
       text-transform: uppercase;
+    }
+
+    .download-badge {
+      gap: 9px;
+      background: var(--deep-green);
+    }
+
+    .download-arrow {
+      font-size: 15px;
+      transition: transform .2s ease;
+    }
+
+    .resource-link:hover .download-arrow {
+      transform: translateX(4px);
     }
 
     @media (max-width: 640px) {
@@ -206,7 +235,8 @@
         border-radius: 22px;
       }
 
-      .status-badge {
+      .status-badge,
+      .download-badge {
         width: fit-content;
       }
     }
@@ -238,13 +268,13 @@
         <span class="status-badge">Coming soon</span>
       </article>
 
-      <article class="resource-item">
+      <a class="resource-item resource-link" href="slides/02自然概論.pptx" download>
         <div>
           <h2 class="resource-name">02 自然概論</h2>
-          <p class="resource-type">Slides</p>
+          <p class="resource-type">Slides · PowerPoint</p>
         </div>
-        <span class="status-badge">Coming soon</span>
-      </article>
+        <span class="download-badge">Download <span class="download-arrow" aria-hidden="true">→</span></span>
+      </a>
     </section>
   </main>
 </body>
