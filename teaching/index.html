@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Teaching | Aster Fu</title>
+  <meta name="description" content="Earth science teaching materials, animated lessons, classroom activities, and interactive learning resources by Aster Fu.">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="../assets/css/custom.css">
+  <style>
+    .teaching-page {
+      min-height: 100vh;
+      background: var(--paper);
+    }
+
+    .teaching-header {
+      position: relative;
+      min-height: 520px;
+      padding: 42px 9vw 84px;
+      overflow: hidden;
+      background: var(--forest);
+      color: var(--paper);
+    }
+
+    .teaching-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: #d7dfd7;
+    }
+
+    .teaching-hero {
+      position: relative;
+      z-index: 2;
+      max-width: 850px;
+      margin-top: 110px;
+    }
+
+    .teaching-hero h1 {
+      margin: 20px 0 24px;
+      font: 400 clamp(48px, 7vw, 88px)/1 Georgia, serif;
+      letter-spacing: -.045em;
+    }
+
+    .teaching-hero h1 em {
+      color: #b9c7b9;
+      font-weight: 400;
+    }
+
+    .teaching-hero p {
+      max-width: 690px;
+      margin: 0;
+      color: #d7dfd7;
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .lesson-orbits {
+      position: absolute;
+      width: 560px;
+      height: 560px;
+      right: -100px;
+      top: 35px;
+      opacity: .52;
+      animation: orbitFloat 8s ease-in-out infinite;
+    }
+
+    .lesson-orbits span {
+      position: absolute;
+      inset: 10%;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 50%;
+      transform: rotate(-18deg);
+    }
+
+    .lesson-orbits span:nth-child(2) {
+      inset: 24%;
+      transform: rotate(22deg);
+    }
+
+    .lesson-orbits span:nth-child(3) {
+      inset: 38%;
+      border-radius: 43% 57% 51% 49%;
+    }
+
+    .lesson-orbits i {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      top: 16%;
+      right: 22%;
+      border-radius: 50%;
+      background: #c6d6c8;
+      box-shadow: 0 0 32px rgba(198,214,200,.42);
+    }
+
+    .teaching-content {
+      padding: 100px 9vw 130px;
+    }
+
+    .teaching-intro {
+      display: grid;
+      grid-template-columns: minmax(180px, .8fr) 2fr;
+      gap: 8vw;
+      align-items: start;
+      margin-bottom: 62px;
+    }
+
+    .teaching-intro h2 {
+      margin: 0 0 18px;
+      font: 400 clamp(34px, 4vw, 58px)/1.15 Georgia, serif;
+      letter-spacing: -.03em;
+    }
+
+    .teaching-intro p {
+      max-width: 720px;
+      margin: 0;
+      color: #456158;
+      line-height: 1.9;
+    }
+
+    .lesson-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .lesson-card {
+      min-height: 330px;
+      padding: 34px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--line);
+      background: #f9f7f1;
+      transition: transform .25s, box-shadow .25s, border-color .25s;
+    }
+
+    .lesson-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(19,44,40,.35);
+      box-shadow: 0 22px 45px rgba(19,44,40,.1);
+    }
+
+    .lesson-card.featured {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: transparent;
+    }
+
+    .lesson-type {
+      margin: 0 0 18px;
+      color: #6f8877;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .featured .lesson-type,
+    .featured .lesson-description {
+      color: #aebbb1;
+    }
+
+    .lesson-card h3 {
+      max-width: 510px;
+      margin: 0 0 16px;
+      font: 400 clamp(26px, 3vw, 42px)/1.15 Georgia, serif;
+    }
+
+    .lesson-description {
+      max-width: 530px;
+      margin: 0;
+      color: #456158;
+      line-height: 1.75;
+    }
+
+    .lesson-meta {
+      margin-top: auto;
+      padding-top: 34px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .lesson-meta span {
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      font-size: 11px;
+      letter-spacing: .06em;
+    }
+
+    .featured .lesson-meta span {
+      border-color: rgba(255,255,255,.17);
+      color: #b8c4ba;
+    }
+
+    .lesson-arrow {
+      position: absolute;
+      right: 28px;
+      top: 28px;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      transition: transform .25s;
+    }
+
+    .featured .lesson-arrow {
+      border-color: rgba(255,255,255,.22);
+    }
+
+    .lesson-card:hover .lesson-arrow {
+      transform: rotate(45deg);
+    }
+
+    .coming-soon {
+      opacity: .72;
+      cursor: default;
+    }
+
+    .upload-note {
+      margin-top: 60px;
+      padding: 30px 34px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 22px;
+      align-items: center;
+      background: var(--cream);
+      border-left: 3px solid var(--moss);
+    }
+
+    .upload-note strong {
+      display: block;
+      margin-bottom: 6px;
+      font: 400 22px Georgia, serif;
+    }
+
+    .upload-note p {
+      margin: 0;
+      color: #456158;
+      line-height: 1.7;
+    }
+
+    .upload-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      font-size: 22px;
+    }
+
+    @keyframes orbitFloat {
+      50% { transform: translateY(14px) rotate(4deg); }
+    }
+
+    @media (max-width: 760px) {
+      .teaching-header {
+        min-height: 560px;
+        padding: 28px 7vw 70px;
+      }
+
+      .teaching-hero {
+        margin-top: 100px;
+      }
+
+      .lesson-orbits {
+        width: 390px;
+        height: 390px;
+        right: -180px;
+        top: 100px;
+      }
+
+      .teaching-content {
+        padding: 78px 7vw 100px;
+      }
+
+      .teaching-intro,
+      .lesson-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lesson-card {
+        min-height: 300px;
+      }
+
+      .upload-note {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .lesson-orbits { animation: none; }
+    }
+  </style>
+</head>
+<body class="teaching-page">
+  <header class="teaching-header">
+    <div class="teaching-nav">
+      <a class="brand" href="/" aria-label="Aster Fu home">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span><strong>Aster Fu</strong><small>Earth Science · Teaching</small></span>
+      </a>
+      <a class="back-link" href="/">← Back to portfolio</a>
+    </div>
+
+    <div class="teaching-hero">
+      <p class="hero-kicker"><span></span> Classroom resources</p>
+      <h1>Teaching Earth science<br><em>through exploration.</em></h1>
+      <p>Animated lessons, visual explanations, classroom activities, and interactive materials designed to help students understand the changing Earth.</p>
+    </div>
+
+    <div class="lesson-orbits" aria-hidden="true">
+      <span></span><span></span><span></span><i></i>
+    </div>
+  </header>
+
+  <main class="teaching-content">
+    <section class="teaching-intro">
+      <div class="section-label"><span>01</span> Lessons</div>
+      <div>
+        <p class="eyebrow">Middle school Earth science</p>
+        <h2>Lessons made for seeing,<br>thinking, and discussing.</h2>
+        <p>This space will collect teaching slides, animated explanations, downloadable materials, and interactive classroom experiences. Each lesson can later open as a presentation, video, PDF, or web-based activity.</p>
+      </div>
+    </section>
+
+    <section class="lesson-grid" aria-label="Teaching materials">
+      <article class="lesson-card featured coming-soon">
+        <span class="lesson-arrow" aria-hidden="true">↗</span>
+        <p class="lesson-type">Animated lesson · Coming soon</p>
+        <h3>Plate Tectonics &amp; the Moving Earth</h3>
+        <p class="lesson-description">A visual lesson about plate boundaries, earthquakes, volcanoes, and the evidence scientists use to reconstruct plate motion.</p>
+        <div class="lesson-meta"><span>Slides</span><span>Animation</span><span>Geology</span></div>
+      </article>
+
+      <article class="lesson-card coming-soon">
+        <span class="lesson-arrow" aria-hidden="true">↗</span>
+        <p class="lesson-type">Interactive lesson · Coming soon</p>
+        <h3>Weather Systems &amp; Typhoons</h3>
+        <p class="lesson-description">Explore air pressure, winds, clouds, fronts, and how warm oceans provide energy for tropical cyclones.</p>
+        <div class="lesson-meta"><span>Atmosphere</span><span>Typhoon</span><span>Interaction</span></div>
+      </article>
+
+      <article class="lesson-card coming-soon">
+        <span class="lesson-arrow" aria-hidden="true">↗</span>
+        <p class="lesson-type">Visual lesson · Coming soon</p>
+        <h3>Rocks, Strata &amp; Earth History</h3>
+        <p class="lesson-description">Use rock types, sedimentary order, fossils, and geological clues to reason backward through Earth history.</p>
+        <div class="lesson-meta"><span>Rock cycle</span><span>Strata</span><span>Inference</span></div>
+      </article>
+
+      <article class="lesson-card coming-soon">
+        <span class="lesson-arrow" aria-hidden="true">↗</span>
+        <p class="lesson-type">Story-based lesson · Coming soon</p>
+        <h3>From the Big Bang to the Solar System</h3>
+        <p class="lesson-description">A scientifically accurate story connecting the Big Bang, stars, black holes, the Sun, and the formation of the Solar System.</p>
+        <div class="lesson-meta"><span>Astronomy</span><span>Story</span><span>Reasoning</span></div>
+      </article>
+    </section>
+
+    <aside class="upload-note">
+      <div class="upload-icon" aria-hidden="true">↑</div>
+      <div>
+        <strong>Ready for your first teaching deck</strong>
+        <p>Your animated PowerPoint can later be added here as an embedded video, downloadable PPTX, PDF handout, or a fully interactive HTML presentation.</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    <a class="brand footer-brand" href="/">
+      <span class="brand-mark">A</span><strong>Aster Fu</strong>
+    </a>
+    <p>Earth Science • Teaching • Visual Learning</p>
+    <div><a href="/">Back to portfolio ↑</a></div>
+    <small>© 2026 Aster Fu. Built with curiosity in Taiwan.</small>
+  </footer>
+</body>
+</html>
