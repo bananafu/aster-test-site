@@ -3,31 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#efe1bf">
-  <title>二十八星宿與二十四節氣對應星座盤｜Aster Earth Science</title>
-  <meta name="description" content="以傳統中國天文為主題的互動式星座盤，呈現二十八星宿、四象、五行與二十四節氣。">
+  <meta name="theme-color" content="#ead8b2">
+  <title>二十八星宿與二十四節氣對應星座盤</title>
+  <meta name="description" content="二十八星宿、二十四節氣、北斗七星與四象互動式星座盤。">
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="page-frame">
     <header class="masthead">
-      <a class="teaching-mode" href="/">▣ 教學模式</a>
+      <a class="mode-button" href="/">▣ 教學模式</a>
       <div class="title-block">
         <h1>二十八星宿與二十四節氣對應星座盤</h1>
-        <p>北斗七星・四季・七曜・五行・二十八星宿對應圖</p>
+        <p>北斗七星四季七曜五行二十八星宿對應圖</p>
       </div>
-      <div class="header-actions">
-        <button id="nowBtn">使用現在時間</button>
-        <button id="fullscreenBtn">全螢幕</button>
-      </div>
+      <button id="fullscreenBtn" class="help-button">？ 使用說明</button>
     </header>
 
     <main class="main-layout">
       <aside class="left-rail">
-        <section class="panel legend-panel">
+        <section class="panel compact-panel">
           <h2>二十八星宿</h2>
-          <ul>
+          <ul class="legend-list">
             <li><i class="dot east-dot"></i>東方青龍七宿</li>
             <li><i class="dot south-dot"></i>南方朱雀七宿</li>
             <li><i class="dot west-dot"></i>西方白虎七宿</li>
@@ -35,9 +32,9 @@
           </ul>
         </section>
 
-        <section class="panel legend-panel">
+        <section class="panel compact-panel five-panel">
           <h2>五行對應</h2>
-          <ul>
+          <ul class="legend-list">
             <li><i class="dot wood"></i>木</li>
             <li><i class="dot fire"></i>火</li>
             <li><i class="dot earth"></i>土</li>
@@ -46,63 +43,80 @@
           </ul>
         </section>
 
-        <section class="panel legend-panel">
+        <section class="panel compact-panel options-panel">
           <h2>圖例</h2>
           <label><input id="linesToggle" type="checkbox" checked>顯示星座連線</label>
+          <label><input id="mansionsToggle" type="checkbox" checked>顯示二十八星宿名稱</label>
           <label><input id="labelsToggle" type="checkbox" checked>顯示北斗七星名稱</label>
-          <label><input id="mansionsToggle" type="checkbox" checked>顯示二十八星宿</label>
           <label><input id="termsToggle" type="checkbox" checked>顯示二十四節氣</label>
-          <label><input id="gridToggle" type="checkbox" checked>顯示方位與高度圈</label>
+          <label><input id="gridToggle" type="checkbox">顯示高度圈（30°／60°）</label>
         </section>
       </aside>
 
       <section class="chart-section">
-        <div class="chart-heading">
-          <span class="season-mark south">南</span>
-        </div>
         <div id="canvasWrap" class="chart-wrap">
           <canvas id="skyCanvas" aria-label="二十八星宿與二十四節氣互動式星座盤"></canvas>
           <div class="direction dir-south">南</div>
           <div class="direction dir-east">東</div>
           <div class="direction dir-west">西</div>
           <div class="direction dir-north">北</div>
-          <div class="drag-hint">拖曳星盤可旋轉</div>
         </div>
-        <div class="chart-footer">Aster Earth Science Lab</div>
+        <div class="chart-footer">Aster Earth Science Lab <span class="seal">地<br>科</span></div>
       </section>
 
       <aside class="right-rail">
-        <section class="panel controls-panel">
+        <section class="panel date-panel">
           <h2>日期與時間設定</h2>
-          <label class="stacked-label">日期<input id="dateInput" type="date"></label>
-          <label class="stacked-label">時間<input id="timeRange" type="range" min="0" max="1435" step="5"></label>
-          <div class="time-readout"><strong id="timeText">21:00</strong><span id="dateText"></span></div>
+          <div class="date-row">
+            <span>日期</span>
+            <input id="dateInput" type="date">
+          </div>
+          <div class="time-row">
+            <span>時間</span>
+            <strong id="timeText">21:00</strong>
+            <span id="dateText"></span>
+          </div>
           <p class="location">● 觀測地點：臺灣（北緯 23.5°）</p>
         </section>
 
-        <section class="panel controls-panel">
+        <section class="panel quick-panel">
           <h2>快速時間選擇</h2>
           <div class="quick-times">
             <button data-time="1080">18:00</button>
-            <button data-time="1260">21:00</button>
+            <button data-time="1260" class="active">21:00</button>
             <button data-time="0">00:00</button>
             <button data-time="180">03:00</button>
             <button data-time="360">06:00</button>
           </div>
+          <div class="range-line"><span>00:00</span><input id="timeRange" type="range" min="0" max="1435" step="5"><span>24:00</span></div>
         </section>
 
-        <section class="panel compass-panel">
-          <h2>視角方向</h2>
-          <div class="compass">
-            <span class="c-n">N</span><span class="c-e">E</span><span class="c-s">S</span><span class="c-w">W</span>
-            <strong>北</strong>
-          </div>
+        <section class="middle-panels">
+          <section class="panel display-panel">
+            <h2>顯示選項</h2>
+            <label><input type="checkbox" checked disabled>顯示二十八星宿名稱</label>
+            <label><input type="checkbox" checked disabled>顯示二十四節氣</label>
+            <label><input type="checkbox" checked disabled>顯示星座連線</label>
+            <label><input type="checkbox" checked disabled>顯示北斗七星名稱</label>
+            <label><input type="checkbox" checked disabled>顯示方位標示</label>
+            <label><input type="checkbox" disabled>顯示高度圈</label>
+          </section>
+          <section class="panel compass-panel">
+            <h2>視角方向</h2>
+            <div class="compass">
+              <span class="c-n">N</span><span class="c-e">E</span><span class="c-s">S</span><span class="c-w">W</span>
+              <strong>北</strong>
+            </div>
+          </section>
         </section>
 
-        <section class="panel controls-panel">
+        <section class="panel animation-panel">
           <h2>動畫與操作</h2>
-          <button id="playBtn" class="primary-button"><span id="playIcon">▶</span><span id="playText">播放星空運轉</span></button>
-          <label class="stacked-label">速度調整
+          <div class="animation-buttons">
+            <button id="playBtn" class="primary-button"><span id="playIcon">▶</span><span id="playText">播放星空運轉</span></button>
+            <button id="nowBtn">↻ 重置</button>
+          </div>
+          <label class="speed-label">速度調整
             <select id="speedSelect">
               <option value="5">慢</option>
               <option value="15" selected>正常</option>
@@ -114,8 +128,7 @@
 
         <section class="panel explanation-panel">
           <h2>說明</h2>
-          <p>星宿是古人劃分星空區域的方式，配合二十四節氣、四象與方位變化，可用來說明傳統中國天文觀測與曆法。</p>
-          <p class="note">此版本為教學視覺化模型，著重呈現對應關係與星空轉動規律。</p>
+          <p>星宿為古人劃分星空區域的方式，配合二十四節氣與方位變化，形成傳統天文觀測與曆法的重要依據。</p>
         </section>
       </aside>
     </main>
