@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <title>互動式星座盤｜Aster Earth Science</title>
+  <meta name="description" content="適合國中地科課堂使用的互動式星座盤，可調整日期、時間與顯示內容。">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="回到 Aster Fu 首頁">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Aster Earth Science</strong>
+          <small>Interactive Star Wheel</small>
+        </span>
+      </a>
+      <div class="top-actions">
+        <button id="nowBtn" class="ghost-button">使用現在時間</button>
+        <button id="fullscreenBtn" class="ghost-button">全螢幕</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="control-panel glass">
+        <div>
+          <p class="eyebrow">TAIWAN · 23.5°N</p>
+          <h1>互動式星座盤</h1>
+          <p class="lead">調整日期與時間，觀察北半球星空如何隨時間與季節改變。</p>
+        </div>
+
+        <section class="control-group">
+          <div class="section-title">
+            <span>01</span>
+            <h2>觀測時間</h2>
+          </div>
+
+          <label>
+            <span>日期</span>
+            <input id="dateInput" type="date">
+          </label>
+
+          <label>
+            <span>時間</span>
+            <input id="timeRange" type="range" min="0" max="1435" step="5">
+          </label>
+
+          <div class="time-readout">
+            <strong id="timeText">21:00</strong>
+            <span id="dateText"></span>
+          </div>
+
+          <div class="quick-times" aria-label="快速選擇時間">
+            <button data-time="1080">18:00</button>
+            <button data-time="1260">21:00</button>
+            <button data-time="0">00:00</button>
+            <button data-time="300">05:00</button>
+          </div>
+        </section>
+
+        <section class="control-group">
+          <div class="section-title">
+            <span>02</span>
+            <h2>顯示設定</h2>
+          </div>
+
+          <label class="switch-row">
+            <span>星座連線</span>
+            <input id="linesToggle" type="checkbox" checked>
+          </label>
+          <label class="switch-row">
+            <span>星座名稱</span>
+            <input id="labelsToggle" type="checkbox" checked>
+          </label>
+          <label class="switch-row">
+            <span>方位與高度圈</span>
+            <input id="gridToggle" type="checkbox" checked>
+          </label>
+        </section>
+
+        <section class="control-group">
+          <div class="section-title">
+            <span>03</span>
+            <h2>課堂播放</h2>
+          </div>
+          <button id="playBtn" class="primary-button">
+            <span id="playIcon">▶</span>
+            <span id="playText">播放星空運動</span>
+          </button>
+          <label>
+            <span>播放速度</span>
+            <select id="speedSelect">
+              <option value="5">每秒 5 分鐘</option>
+              <option value="15" selected>每秒 15 分鐘</option>
+              <option value="30">每秒 30 分鐘</option>
+              <option value="60">每秒 1 小時</option>
+            </select>
+          </label>
+        </section>
+
+        <p class="note">本工具為課堂視覺化模型，著重呈現星空隨時間與季節旋轉的規律；星體位置為教學近似值。</p>
+      </aside>
+
+      <section class="sky-panel glass">
+        <div class="sky-header">
+          <div>
+            <p class="eyebrow">SKY VIEW</p>
+            <h2 id="skyTitle">今晚的星空</h2>
+          </div>
+          <div class="status-pill"><span></span> 可拖曳旋轉星盤</div>
+        </div>
+
+        <div id="canvasWrap" class="canvas-wrap">
+          <canvas id="skyCanvas" aria-label="互動式星座盤"></canvas>
+          <div class="direction north">北</div>
+          <div class="direction east">東</div>
+          <div class="direction south">南</div>
+          <div class="direction west">西</div>
+          <div class="center-label">
+            <span>天頂</span>
+          </div>
+        </div>
+
+        <div class="legend">
+          <span><i class="star bright"></i>亮星</span>
+          <span><i class="star"></i>一般星</span>
+          <span><i class="line"></i>星座連線</span>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Designed for Earth Science Teaching</span>
+      <a href="/">返回網站首頁 ↗</a>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
