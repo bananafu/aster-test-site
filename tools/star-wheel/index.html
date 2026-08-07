@@ -57,13 +57,15 @@
       </aside>
 
       <section class="chart-section">
-        <div id="canvasWrap" class="chart-wrap">
-          <canvas id="skyCanvas" aria-label="二十八星宿與二十四節氣互動式星座盤"></canvas>
+        <div class="chart-compass-layout">
           <div class="direction dir-south">南</div>
           <div class="direction dir-east">東</div>
+          <div id="canvasWrap" class="chart-wrap">
+            <canvas id="skyCanvas" aria-label="二十八星宿與二十四節氣互動式星座盤"></canvas>
+            <div class="drag-hint">拖曳星盤可旋轉</div>
+          </div>
           <div class="direction dir-west">西</div>
           <div class="direction dir-north">北</div>
-          <div class="drag-hint">拖曳星盤可旋轉</div>
         </div>
         <div class="chart-footer">Aster Earth Science Lab <span class="seal">地科</span></div>
       </section>
