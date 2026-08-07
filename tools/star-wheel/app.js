@@ -10,15 +10,23 @@ const labelsToggle = document.getElementById("labelsToggle");
 const mansionsToggle = document.getElementById("mansionsToggle");
 const termsToggle = document.getElementById("termsToggle");
 const gridToggle = document.getElementById("gridToggle");
+const compactLinesToggle = document.getElementById("compactLinesToggle");
+const compactTermsToggle = document.getElementById("compactTermsToggle");
+const compactMansionsToggle = document.getElementById("compactMansionsToggle");
 const playBtn = document.getElementById("playBtn");
 const playText = document.getElementById("playText");
 const playIcon = document.getElementById("playIcon");
 const speedSelect = document.getElementById("speedSelect");
 const nowBtn = document.getElementById("nowBtn");
+const resetBtn = document.getElementById("resetBtn");
 const fullscreenBtn = document.getElementById("fullscreenBtn");
 const canvasWrap = document.getElementById("canvasWrap");
+const viewText = document.getElementById("viewText");
+const compassButtons = [...document.querySelectorAll("[data-view]")];
+const quickTimeButtons = [...document.querySelectorAll("[data-time]")];
 
 let manualRotation = 0;
+let viewRotation = 0;
 let isPlaying = false;
 let animationTimer = null;
 let dragging = false;
@@ -83,8 +91,23 @@ const backgroundStars = Array.from({ length: 260 }, (_, i) => {
   };
 });
 
-function pad(n) {
-  return String(n).padStart(2, "0");
+function pad(n) { return String(n).padStart(2, "0"); }
+
+function updateQuickTimeState() {
+  const current = Number(timeRange.value);
+  quickTimeButtons.forEach(button => {
+    button.classList.toggle("active", Number(button.dataset.time) === current);
+  });
+}
+
+function updateReadout() {
+  const total = Number(timeRange.value);
+  timeText.textContent = `${pad(Math.floor(total / 60))}:${pad(total % 60)}`;
+  const date = new Date(`${dateInput.value}T12:00:00`);
+  dateText.textContent = new Intl.DateTimeFormat("zh-TW", {
+    month: "long", day: "numeric", weekday: "short"
+  }).format(date);
+  updateQuickTimeState();
 }
 
 function setNow() {
@@ -96,18 +119,42 @@ function setNow() {
   draw();
 }
 
-function updateReadout() {
-  const total = Number(timeRange.value);
-  const hour = Math.floor(total / 60);
-  const minute = total % 60;
-  timeText.textContent = `${pad(hour)}:${pad(minute)}`;
+function stopPlayback() {
+  isPlaying = false;
+  clearInterval(animationTimer);
+  animationTimer = null;
+  playText.textContent = "播放星空運轉";
+  playIcon.textContent = "▶";
+}
 
-  const date = new Date(`${dateInput.value}T12:00:00`);
-  dateText.textContent = new Intl.DateTimeFormat("zh-TW", {
-    month: "long",
-    day: "numeric",
-    weekday: "short"
-  }).format(date);
+function resetAll() {
+  stopPlayback();
+  viewRotation = 0;
+  manualRotation = 0;
+  linesToggle.checked = true;
+  labelsToggle.checked = true;
+  mansionsToggle.checked = true;
+  termsToggle.checked = true;
+  gridToggle.checked = true;
+  compactLinesToggle.checked = true;
+  compactTermsToggle.checked = true;
+  compactMansionsToggle.checked = true;
+  setView("north");
+  setNow();
+}
+
+function setView(view) {
+  const views = {
+    north: { angle: 0, label: "北" },
+    east: { angle: -Math.PI / 2, label: "東" },
+    south: { angle: Math.PI, label: "南" },
+    west: { angle: Math.PI / 2, label: "西" }
+  };
+  const selected = views[view] || views.north;
+  viewRotation = selected.angle;
+  viewText.textContent = selected.label;
+  compassButtons.forEach(button => button.classList.toggle("active", button.dataset.view === view));
+  draw();
 }
 
 function getSkyRotation() {
@@ -115,19 +162,16 @@ function getSkyRotation() {
   const start = new Date(date.getFullYear(), 0, 0);
   const dayOfYear = Math.floor((date - start) / 86400000);
   const minutes = Number(timeRange.value);
-
-  return ((minutes / 1440) * Math.PI * 2) +
-    ((dayOfYear / 365.2422) * Math.PI * 2) +
-    manualRotation;
+  return (minutes / 1440) * Math.PI * 2 +
+    (dayOfYear / 365.2422) * Math.PI * 2 + manualRotation + viewRotation;
 }
 
 function resizeCanvas() {
-  const rect = canvasWrap.getBoundingClientRect();
+  const rect = canvas.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   canvas.width = Math.round(rect.width * dpr);
   canvas.height = Math.round(rect.height * dpr);
-  canvas.style.width = `${rect.width}px`;
-  canvas.style.height = `${rect.height}px`;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   draw();
 }
@@ -153,14 +197,14 @@ function polar(cx, cy, radius, angle) {
   return [cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius];
 }
 
-function drawRingSegment(cx, cy, innerRadius, outerRadius, start, end, fill, stroke = "rgba(78,57,28,.62)") {
+function drawRingSegment(cx, cy, innerRadius, outerRadius, start, end, fill) {
   ctx.beginPath();
   ctx.arc(cx, cy, outerRadius, start, end);
   ctx.arc(cx, cy, innerRadius, end, start, true);
   ctx.closePath();
   ctx.fillStyle = fill;
   ctx.fill();
-  ctx.strokeStyle = stroke;
+  ctx.strokeStyle = "rgba(78,57,28,.62)";
   ctx.lineWidth = 1;
   ctx.stroke();
 }
@@ -182,13 +226,13 @@ function drawTraditionalRings(width, height) {
   const cx = width / 2;
   const cy = height / 2;
   const base = Math.min(width, height) / 2;
-  const outer = base * .92;
-  const degreeInner = base * .84;
-  const mansionInner = base * .72;
-  const skyRadius = base * .685;
+  const outer = base * .91;
+  const degreeInner = base * .83;
+  const mansionInner = base * .71;
+  const skyRadius = base * .675;
 
   ctx.save();
-  ctx.fillStyle = "rgba(239,225,191,.96)";
+  ctx.fillStyle = "rgba(239,225,191,.97)";
   ctx.beginPath();
   ctx.arc(cx, cy, outer, 0, Math.PI * 2);
   ctx.fill();
@@ -198,10 +242,9 @@ function drawTraditionalRings(width, height) {
 
   for (let deg = 0; deg < 360; deg += 2) {
     const a = (deg - 90) * Math.PI / 180;
-    const tickOuter = outer;
     const tickInner = degreeInner + (deg % 10 === 0 ? 0 : base * .025);
     const [x1, y1] = polar(cx, cy, tickInner, a);
-    const [x2, y2] = polar(cx, cy, tickOuter, a);
+    const [x2, y2] = polar(cx, cy, outer, a);
     ctx.strokeStyle = "#c83a32";
     ctx.lineWidth = deg % 10 === 0 ? 1.5 : .7;
     ctx.beginPath();
@@ -232,7 +275,7 @@ function drawTraditionalRings(width, height) {
     solarTerms.forEach((term, i) => {
       const angle = -Math.PI / 2 + i * Math.PI * 2 / 24;
       const color = [0,6,12,18].includes(i) ? "#98281f" : "#15513a";
-      drawTextOnRing(term, cx, cy, base * .985, angle, color, Math.max(10, base * .029), false);
+      drawTextOnRing(term, cx, cy, base * .975, angle, color, Math.max(10, base * .029), false);
     });
   }
 
@@ -243,9 +286,7 @@ function drawTraditionalRings(width, height) {
   ctx.strokeStyle = "#efe0b4";
   ctx.lineWidth = 2;
   ctx.stroke();
-
   ctx.restore();
-
   return { cx, cy, skyRadius };
 }
 
@@ -253,13 +294,11 @@ function drawGrid(cx, cy, radius) {
   ctx.save();
   ctx.strokeStyle = "rgba(214,232,241,.16)";
   ctx.lineWidth = 1;
-
   [.35, .65, 1].forEach(mult => {
     ctx.beginPath();
     ctx.arc(cx, cy, radius * mult, 0, Math.PI * 2);
     ctx.stroke();
   });
-
   for (let i = 0; i < 12; i++) {
     const a = i / 12 * Math.PI * 2;
     ctx.beginPath();
@@ -280,7 +319,6 @@ function drawStar(x, y, radius, alpha = 1) {
   ctx.beginPath();
   ctx.arc(x, y, radius * 5, 0, Math.PI * 2);
   ctx.fill();
-
   ctx.fillStyle = `rgba(255,255,255,${alpha})`;
   ctx.beginPath();
   ctx.arc(x, y, Math.max(.7, radius), 0, Math.PI * 2);
@@ -288,23 +326,18 @@ function drawStar(x, y, radius, alpha = 1) {
   ctx.restore();
 }
 
-function clipToSky(cx, cy, radius) {
-  ctx.beginPath();
-  ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-  ctx.clip();
-}
-
 function draw() {
-  const rect = canvasWrap.getBoundingClientRect();
+  const rect = canvas.getBoundingClientRect();
   const width = rect.width;
   const height = rect.height;
   if (!width || !height) return;
 
   ctx.clearRect(0, 0, width, height);
   const { cx, cy, skyRadius } = drawTraditionalRings(width, height);
-
   ctx.save();
-  clipToSky(cx, cy, skyRadius);
+  ctx.beginPath();
+  ctx.arc(cx, cy, skyRadius, 0, Math.PI * 2);
+  ctx.clip();
 
   const skyGradient = ctx.createRadialGradient(cx, cy * .96, 0, cx, cy, skyRadius);
   skyGradient.addColorStop(0, "rgba(20,68,98,.42)");
@@ -314,40 +347,35 @@ function draw() {
   ctx.fillRect(cx - skyRadius, cy - skyRadius, skyRadius * 2, skyRadius * 2);
 
   if (gridToggle.checked) drawGrid(cx, cy, skyRadius);
-
   const angle = getSkyRotation();
 
   backgroundStars.forEach(star => {
-    const [x, y] = project(star.x, star.y, width, height, angle, .67);
+    const [x, y] = project(star.x, star.y, width, height, angle, .66);
     drawStar(x, y, star.size, star.alpha);
   });
 
   const allProjected = constellations.map(c => ({
     ...c,
-    projected: c.stars.map(s => project(s[0], s[1], width, height, angle, .67)),
-    labelPoint: project(c.label[0], c.label[1], width, height, angle, .67)
+    projected: c.stars.map(s => project(s[0], s[1], width, height, angle, .66)),
+    labelPoint: project(c.label[0], c.label[1], width, height, angle, .66)
   }));
 
   if (linesToggle.checked) {
     ctx.save();
     ctx.strokeStyle = "rgba(238,213,162,.68)";
     ctx.lineWidth = 1.25;
-    allProjected.forEach(c => {
-      c.lines.forEach(([a, b]) => {
-        ctx.beginPath();
-        ctx.moveTo(...c.projected[a]);
-        ctx.lineTo(...c.projected[b]);
-        ctx.stroke();
-      });
-    });
+    allProjected.forEach(c => c.lines.forEach(([a, b]) => {
+      ctx.beginPath();
+      ctx.moveTo(...c.projected[a]);
+      ctx.lineTo(...c.projected[b]);
+      ctx.stroke();
+    }));
     ctx.restore();
   }
 
-  allProjected.forEach(c => {
-    c.projected.forEach((p, i) => drawStar(p[0], p[1], c.stars[i][2], .95));
-  });
+  allProjected.forEach(c => c.projected.forEach((p, i) => drawStar(p[0], p[1], c.stars[i][2], .95)));
 
-  const [px, py] = project(.5, .5, width, height, angle, .67);
+  const [px, py] = project(.5, .5, width, height, angle, .66);
   drawStar(px, py, 2.8, 1);
   ctx.fillStyle = "rgba(245,230,194,.95)";
   ctx.font = `700 ${Math.max(12, skyRadius * .035)}px "Noto Serif TC", serif`;
@@ -357,12 +385,10 @@ function draw() {
     ctx.save();
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.font = `700 ${Math.max(12, skyRadius * .035)}px "Noto Serif TC", serif`;
     allProjected.forEach(c => {
-      const [x, y] = c.labelPoint;
+      ctx.font = `700 ${Math.max(12, skyRadius * .035)}px "Noto Serif TC", serif`;
       ctx.fillStyle = "rgba(244,231,196,.94)";
-      ctx.fillText(c.name, x, y);
-
+      ctx.fillText(c.name, c.labelPoint[0], c.labelPoint[1]);
       if (c.starNames) {
         c.starNames.forEach((name, i) => {
           const [sx, sy] = c.projected[i];
@@ -373,7 +399,6 @@ function draw() {
     });
     ctx.restore();
   }
-
   ctx.restore();
 }
 
@@ -391,31 +416,29 @@ function advanceTime() {
 }
 
 function togglePlay() {
-  isPlaying = !isPlaying;
-  playText.textContent = isPlaying ? "暫停星空運轉" : "播放星空運轉";
-  playIcon.textContent = isPlaying ? "Ⅱ" : "▶";
-
   if (isPlaying) {
-    animationTimer = setInterval(advanceTime, 1000);
+    stopPlayback();
   } else {
-    clearInterval(animationTimer);
+    isPlaying = true;
+    playText.textContent = "暫停星空運轉";
+    playIcon.textContent = "Ⅱ";
+    animationTimer = setInterval(advanceTime, 1000);
   }
 }
 
 function getPointerAngle(event) {
-  const rect = canvasWrap.getBoundingClientRect();
+  const rect = canvas.getBoundingClientRect();
   const x = event.clientX - rect.left - rect.width / 2;
   const y = event.clientY - rect.top - rect.height / 2;
   return Math.atan2(y, x);
 }
 
-canvasWrap.addEventListener("pointerdown", event => {
+canvas.addEventListener("pointerdown", event => {
   dragging = true;
   lastPointerAngle = getPointerAngle(event);
-  canvasWrap.setPointerCapture(event.pointerId);
+  canvas.setPointerCapture(event.pointerId);
 });
-
-canvasWrap.addEventListener("pointermove", event => {
+canvas.addEventListener("pointermove", event => {
   if (!dragging) return;
   const next = getPointerAngle(event);
   let delta = next - lastPointerAngle;
@@ -425,27 +448,22 @@ canvasWrap.addEventListener("pointermove", event => {
   lastPointerAngle = next;
   draw();
 });
+canvas.addEventListener("pointerup", () => { dragging = false; });
+canvas.addEventListener("pointercancel", () => { dragging = false; });
 
-canvasWrap.addEventListener("pointerup", () => { dragging = false; });
-canvasWrap.addEventListener("pointercancel", () => { dragging = false; });
+dateInput.addEventListener("change", () => { manualRotation = 0; updateReadout(); draw(); });
+timeRange.addEventListener("input", () => { manualRotation = 0; updateReadout(); draw(); });
+[linesToggle, labelsToggle, mansionsToggle, termsToggle, gridToggle].forEach(el => el.addEventListener("change", draw));
 
-dateInput.addEventListener("change", () => {
-  manualRotation = 0;
-  updateReadout();
-  draw();
-});
+function linkToggles(primary, compact) {
+  primary.addEventListener("change", () => { compact.checked = primary.checked; draw(); });
+  compact.addEventListener("change", () => { primary.checked = compact.checked; draw(); });
+}
+linkToggles(linesToggle, compactLinesToggle);
+linkToggles(termsToggle, compactTermsToggle);
+linkToggles(mansionsToggle, compactMansionsToggle);
 
-timeRange.addEventListener("input", () => {
-  manualRotation = 0;
-  updateReadout();
-  draw();
-});
-
-[linesToggle, labelsToggle, mansionsToggle, termsToggle, gridToggle].forEach(el => {
-  el.addEventListener("change", draw);
-});
-
-document.querySelectorAll("[data-time]").forEach(button => {
+quickTimeButtons.forEach(button => {
   button.addEventListener("click", () => {
     timeRange.value = button.dataset.time;
     manualRotation = 0;
@@ -453,9 +471,11 @@ document.querySelectorAll("[data-time]").forEach(button => {
     draw();
   });
 });
+compassButtons.forEach(button => button.addEventListener("click", () => setView(button.dataset.view)));
 
 playBtn.addEventListener("click", togglePlay);
 nowBtn.addEventListener("click", setNow);
+resetBtn.addEventListener("click", resetAll);
 
 fullscreenBtn.addEventListener("click", async () => {
   try {
@@ -475,8 +495,8 @@ document.addEventListener("fullscreenchange", () => {
   if (!document.fullscreenElement) fullscreenBtn.textContent = "全螢幕";
   setTimeout(resizeCanvas, 80);
 });
-
 window.addEventListener("resize", resizeCanvas);
 
+setView("north");
 setNow();
 resizeCanvas();
