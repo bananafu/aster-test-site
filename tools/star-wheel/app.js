@@ -7,6 +7,8 @@ const timeText = document.getElementById("timeText");
 const dateText = document.getElementById("dateText");
 const linesToggle = document.getElementById("linesToggle");
 const labelsToggle = document.getElementById("labelsToggle");
+const mansionsToggle = document.getElementById("mansionsToggle");
+const termsToggle = document.getElementById("termsToggle");
 const gridToggle = document.getElementById("gridToggle");
 const playBtn = document.getElementById("playBtn");
 const playText = document.getElementById("playText");
@@ -22,58 +24,61 @@ let animationTimer = null;
 let dragging = false;
 let lastPointerAngle = 0;
 
+const mansionGroups = [
+  { name: "東方青龍", color: "#2f6a50", mansions: ["角","亢","氐","房","心","尾","箕"] },
+  { name: "北方玄武", color: "#1d567d", mansions: ["斗","牛","女","虛","危","室","壁"] },
+  { name: "西方白虎", color: "#68466f", mansions: ["奎","婁","胃","昴","畢","觜","參"] },
+  { name: "南方朱雀", color: "#9f3328", mansions: ["井","鬼","柳","星","張","翼","軫"] }
+];
+
+const solarTerms = [
+  "冬至","小寒","大寒","立春","雨水","驚蟄",
+  "春分","清明","穀雨","立夏","小滿","芒種",
+  "夏至","小暑","大暑","立秋","處暑","白露",
+  "秋分","寒露","霜降","立冬","小雪","大雪"
+];
+
 const constellations = [
   {
     name: "北斗七星",
-    label: [0.30, 0.27],
-    stars: [[.19,.25,1.8],[.25,.22,1.4],[.31,.25,1.4],[.36,.31,1.3],[.43,.34,1.4],[.49,.31,1.7],[.55,.26,1.5]],
-    lines: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6]]
+    label: [0.34, 0.42],
+    stars: [[.24,.43,1.9],[.31,.39,1.5],[.37,.42,1.5],[.43,.48,1.4],[.50,.51,1.5],[.56,.48,1.8],[.62,.43,1.6]],
+    lines: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6]],
+    starNames: ["搖光","開陽","玉衡","天權","天璣","天璇","天樞"]
   },
   {
     name: "仙后座",
-    label: [0.69, 0.22],
-    stars: [[.59,.29,1.4],[.65,.23,1.5],[.71,.29,1.8],[.77,.22,1.4],[.82,.28,1.5]],
+    label: [0.70, 0.25],
+    stars: [[.60,.30,1.4],[.66,.23,1.5],[.72,.30,1.9],[.78,.23,1.5],[.83,.30,1.5]],
     lines: [[0,1],[1,2],[2,3],[3,4]]
   },
   {
-    name: "天鵝座",
-    label: [0.72, 0.50],
-    stars: [[.69,.40,1.6],[.71,.48,2.0],[.73,.57,1.4],[.63,.48,1.3],[.80,.48,1.4]],
-    lines: [[0,1],[1,2],[3,1],[1,4]]
-  },
-  {
     name: "天琴座",
-    label: [0.56, 0.48],
-    stars: [[.56,.43,2.5],[.52,.49,1.2],[.58,.52,1.1],[.61,.47,1.0]],
+    label: [0.62, 0.62],
+    stars: [[.60,.55,2.5],[.56,.61,1.2],[.62,.65,1.1],[.66,.60,1.0]],
     lines: [[0,1],[1,2],[2,3],[3,0]]
   },
   {
     name: "獵戶座",
-    label: [0.42, 0.72],
-    stars: [[.34,.63,1.7],[.48,.62,2.0],[.38,.70,1.2],[.42,.71,1.2],[.46,.72,1.2],[.36,.81,2.2],[.49,.80,1.7]],
+    label: [0.36, 0.74],
+    stars: [[.28,.65,1.7],[.43,.64,2.0],[.32,.72,1.2],[.36,.73,1.2],[.40,.74,1.2],[.30,.83,2.2],[.43,.82,1.7]],
     lines: [[0,2],[2,3],[3,4],[4,1],[2,5],[4,6],[5,6]]
   },
   {
-    name: "大犬座",
-    label: [0.64, 0.78],
-    stars: [[.61,.73,2.8],[.66,.78,1.4],[.71,.83,1.2],[.61,.86,1.2],[.55,.81,1.1]],
-    lines: [[0,1],[1,2],[1,3],[3,4],[4,0]]
-  },
-  {
     name: "天蠍座",
-    label: [0.25, 0.68],
-    stars: [[.18,.58,1.4],[.22,.62,1.5],[.25,.67,2.4],[.28,.72,1.4],[.31,.77,1.2],[.28,.82,1.2],[.23,.84,1.3],[.20,.81,1.1]],
+    label: [0.24, 0.64],
+    stars: [[.16,.56,1.4],[.20,.60,1.5],[.24,.65,2.4],[.27,.70,1.4],[.30,.76,1.2],[.27,.81,1.2],[.22,.83,1.3],[.19,.80,1.1]],
     lines: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7]]
   }
 ];
 
-const backgroundStars = Array.from({length: 180}, (_, i) => {
+const backgroundStars = Array.from({ length: 260 }, (_, i) => {
   const a = (i * 137.508) * Math.PI / 180;
-  const r = Math.sqrt(((i * 73) % 179) / 179) * .47;
+  const r = Math.sqrt(((i * 79) % 257) / 257) * .47;
   return {
     x: .5 + Math.cos(a) * r,
     y: .5 + Math.sin(a) * r,
-    size: .45 + ((i * 31) % 10) / 10,
+    size: .4 + ((i * 31) % 9) / 10,
     alpha: .28 + ((i * 17) % 60) / 100
   };
 });
@@ -84,7 +89,7 @@ function pad(n) {
 
 function setNow() {
   const now = new Date();
-  dateInput.value = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+  dateInput.value = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
   timeRange.value = now.getHours() * 60 + now.getMinutes();
   manualRotation = 0;
   updateReadout();
@@ -111,10 +116,9 @@ function getSkyRotation() {
   const dayOfYear = Math.floor((date - start) / 86400000);
   const minutes = Number(timeRange.value);
 
-  // 星空每天約提早 4 分鐘，因此日期與時間共同控制旋轉。
   return ((minutes / 1440) * Math.PI * 2) +
-         ((dayOfYear / 365.2422) * Math.PI * 2) +
-         manualRotation;
+    ((dayOfYear / 365.2422) * Math.PI * 2) +
+    manualRotation;
 }
 
 function resizeCanvas() {
@@ -137,24 +141,120 @@ function rotatePoint(x, y, cx, cy, angle) {
   ];
 }
 
-function project(nx, ny, width, height, angle) {
-  const size = Math.min(width, height) * .88;
+function project(nx, ny, width, height, angle, radiusScale = .66) {
+  const size = Math.min(width, height) * radiusScale * 2;
   const ox = (width - size) / 2;
   const oy = (height - size) / 2;
   const [rx, ry] = rotatePoint(nx, ny, .5, .5, angle);
   return [ox + rx * size, oy + ry * size];
 }
 
-function drawGrid(width, height) {
+function polar(cx, cy, radius, angle) {
+  return [cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius];
+}
+
+function drawRingSegment(cx, cy, innerRadius, outerRadius, start, end, fill, stroke = "rgba(78,57,28,.62)") {
+  ctx.beginPath();
+  ctx.arc(cx, cy, outerRadius, start, end);
+  ctx.arc(cx, cy, innerRadius, end, start, true);
+  ctx.closePath();
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.strokeStyle = stroke;
+  ctx.lineWidth = 1;
+  ctx.stroke();
+}
+
+function drawTextOnRing(text, cx, cy, radius, angle, color, size, rotate = true) {
+  const [x, y] = polar(cx, cy, radius, angle);
+  ctx.save();
+  ctx.translate(x, y);
+  if (rotate) ctx.rotate(angle + Math.PI / 2);
+  ctx.fillStyle = color;
+  ctx.font = `700 ${size}px "Noto Serif TC", "PMingLiU", serif`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(text, 0, 0);
+  ctx.restore();
+}
+
+function drawTraditionalRings(width, height) {
   const cx = width / 2;
   const cy = height / 2;
-  const radius = Math.min(width, height) * .44;
+  const base = Math.min(width, height) / 2;
+  const outer = base * .92;
+  const degreeInner = base * .84;
+  const mansionInner = base * .72;
+  const skyRadius = base * .685;
 
   ctx.save();
-  ctx.strokeStyle = "rgba(150, 210, 245, .14)";
+  ctx.fillStyle = "rgba(239,225,191,.96)";
+  ctx.beginPath();
+  ctx.arc(cx, cy, outer, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = "#9d342a";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  for (let deg = 0; deg < 360; deg += 2) {
+    const a = (deg - 90) * Math.PI / 180;
+    const tickOuter = outer;
+    const tickInner = degreeInner + (deg % 10 === 0 ? 0 : base * .025);
+    const [x1, y1] = polar(cx, cy, tickInner, a);
+    const [x2, y2] = polar(cx, cy, tickOuter, a);
+    ctx.strokeStyle = "#c83a32";
+    ctx.lineWidth = deg % 10 === 0 ? 1.5 : .7;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+  }
+
+  for (let deg = 0; deg < 360; deg += 15) {
+    const a = (deg - 90) * Math.PI / 180;
+    drawTextOnRing(String(deg), cx, cy, (outer + degreeInner) / 2, a, "#2b2a25", Math.max(9, base * .027), false);
+  }
+
+  if (mansionsToggle.checked) {
+    let index = 0;
+    mansionGroups.forEach(group => {
+      group.mansions.forEach(mansion => {
+        const start = -Math.PI / 2 + index * Math.PI * 2 / 28;
+        const end = -Math.PI / 2 + (index + 1) * Math.PI * 2 / 28;
+        drawRingSegment(cx, cy, mansionInner, degreeInner, start, end, group.color);
+        drawTextOnRing(mansion, cx, cy, (mansionInner + degreeInner) / 2, (start + end) / 2, "#f7edcf", Math.max(14, base * .04));
+        index += 1;
+      });
+    });
+  }
+
+  if (termsToggle.checked) {
+    solarTerms.forEach((term, i) => {
+      const angle = -Math.PI / 2 + i * Math.PI * 2 / 24;
+      const color = [0,6,12,18].includes(i) ? "#98281f" : "#15513a";
+      drawTextOnRing(term, cx, cy, base * .985, angle, color, Math.max(10, base * .029), false);
+    });
+  }
+
+  ctx.fillStyle = "#051b2b";
+  ctx.beginPath();
+  ctx.arc(cx, cy, skyRadius, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = "#efe0b4";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.restore();
+
+  return { cx, cy, skyRadius };
+}
+
+function drawGrid(cx, cy, radius) {
+  ctx.save();
+  ctx.strokeStyle = "rgba(214,232,241,.16)";
   ctx.lineWidth = 1;
 
-  [1, .72, .44].forEach(mult => {
+  [.35, .65, 1].forEach(mult => {
     ctx.beginPath();
     ctx.arc(cx, cy, radius * mult, 0, Math.PI * 2);
     ctx.stroke();
@@ -163,16 +263,10 @@ function drawGrid(width, height) {
   for (let i = 0; i < 12; i++) {
     const a = i / 12 * Math.PI * 2;
     ctx.beginPath();
-    ctx.moveTo(cx + Math.cos(a) * radius * .15, cy + Math.sin(a) * radius * .15);
+    ctx.moveTo(cx + Math.cos(a) * radius * .1, cy + Math.sin(a) * radius * .1);
     ctx.lineTo(cx + Math.cos(a) * radius, cy + Math.sin(a) * radius);
     ctx.stroke();
   }
-
-  ctx.strokeStyle = "rgba(185, 231, 255, .34)";
-  ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-  ctx.stroke();
   ctx.restore();
 }
 
@@ -180,7 +274,7 @@ function drawStar(x, y, radius, alpha = 1) {
   ctx.save();
   const glow = ctx.createRadialGradient(x, y, 0, x, y, radius * 5);
   glow.addColorStop(0, `rgba(255,255,255,${alpha})`);
-  glow.addColorStop(.2, `rgba(205,233,255,${alpha * .85})`);
+  glow.addColorStop(.25, `rgba(215,235,255,${alpha * .8})`);
   glow.addColorStop(1, "rgba(140,210,255,0)");
   ctx.fillStyle = glow;
   ctx.beginPath();
@@ -194,6 +288,12 @@ function drawStar(x, y, radius, alpha = 1) {
   ctx.restore();
 }
 
+function clipToSky(cx, cy, radius) {
+  ctx.beginPath();
+  ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+  ctx.clip();
+}
+
 function draw() {
   const rect = canvasWrap.getBoundingClientRect();
   const width = rect.width;
@@ -201,35 +301,39 @@ function draw() {
   if (!width || !height) return;
 
   ctx.clearRect(0, 0, width, height);
+  const { cx, cy, skyRadius } = drawTraditionalRings(width, height);
 
-  const skyGradient = ctx.createRadialGradient(width*.5, height*.48, 0, width*.5, height*.5, Math.max(width,height)*.65);
-  skyGradient.addColorStop(0, "rgba(15, 55, 83, .35)");
-  skyGradient.addColorStop(.55, "rgba(5, 20, 36, .15)");
-  skyGradient.addColorStop(1, "rgba(0, 3, 9, .55)");
+  ctx.save();
+  clipToSky(cx, cy, skyRadius);
+
+  const skyGradient = ctx.createRadialGradient(cx, cy * .96, 0, cx, cy, skyRadius);
+  skyGradient.addColorStop(0, "rgba(20,68,98,.42)");
+  skyGradient.addColorStop(.55, "rgba(5,31,49,.28)");
+  skyGradient.addColorStop(1, "rgba(1,12,22,.9)");
   ctx.fillStyle = skyGradient;
-  ctx.fillRect(0,0,width,height);
+  ctx.fillRect(cx - skyRadius, cy - skyRadius, skyRadius * 2, skyRadius * 2);
 
-  if (gridToggle.checked) drawGrid(width, height);
+  if (gridToggle.checked) drawGrid(cx, cy, skyRadius);
 
   const angle = getSkyRotation();
 
   backgroundStars.forEach(star => {
-    const [x,y] = project(star.x, star.y, width, height, angle);
+    const [x, y] = project(star.x, star.y, width, height, angle, .67);
     drawStar(x, y, star.size, star.alpha);
   });
 
   const allProjected = constellations.map(c => ({
     ...c,
-    projected: c.stars.map(s => project(s[0], s[1], width, height, angle)),
-    labelPoint: project(c.label[0], c.label[1], width, height, angle)
+    projected: c.stars.map(s => project(s[0], s[1], width, height, angle, .67)),
+    labelPoint: project(c.label[0], c.label[1], width, height, angle, .67)
   }));
 
   if (linesToggle.checked) {
     ctx.save();
-    ctx.strokeStyle = "rgba(141, 216, 255, .48)";
-    ctx.lineWidth = 1.35;
+    ctx.strokeStyle = "rgba(238,213,162,.68)";
+    ctx.lineWidth = 1.25;
     allProjected.forEach(c => {
-      c.lines.forEach(([a,b]) => {
+      c.lines.forEach(([a, b]) => {
         ctx.beginPath();
         ctx.moveTo(...c.projected[a]);
         ctx.lineTo(...c.projected[b]);
@@ -240,35 +344,37 @@ function draw() {
   }
 
   allProjected.forEach(c => {
-    c.projected.forEach((p, i) => {
-      drawStar(p[0], p[1], c.stars[i][2], .95);
-    });
+    c.projected.forEach((p, i) => drawStar(p[0], p[1], c.stars[i][2], .95));
   });
 
-  // 北極星
-  const [px, py] = project(.5, .5, width, height, angle);
-  drawStar(px, py, 2.6, 1);
-  ctx.save();
-  ctx.fillStyle = "rgba(183,245,223,.92)";
-  ctx.font = '600 12px "Noto Sans TC", sans-serif';
-  ctx.fillText("北極星", px + 10, py - 10);
-  ctx.restore();
+  const [px, py] = project(.5, .5, width, height, angle, .67);
+  drawStar(px, py, 2.8, 1);
+  ctx.fillStyle = "rgba(245,230,194,.95)";
+  ctx.font = `700 ${Math.max(12, skyRadius * .035)}px "Noto Serif TC", serif`;
+  ctx.fillText("北極星", px + 10, py - 12);
 
   if (labelsToggle.checked) {
     ctx.save();
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.font = '600 13px "Noto Sans TC", sans-serif';
+    ctx.font = `700 ${Math.max(12, skyRadius * .035)}px "Noto Serif TC", serif`;
     allProjected.forEach(c => {
-      const [x,y] = c.labelPoint;
-      ctx.fillStyle = "rgba(3, 11, 20, .66)";
-      const metrics = ctx.measureText(c.name);
-      ctx.fillRect(x - metrics.width/2 - 7, y - 11, metrics.width + 14, 22);
-      ctx.fillStyle = "rgba(235, 246, 255, .92)";
+      const [x, y] = c.labelPoint;
+      ctx.fillStyle = "rgba(244,231,196,.94)";
       ctx.fillText(c.name, x, y);
+
+      if (c.starNames) {
+        c.starNames.forEach((name, i) => {
+          const [sx, sy] = c.projected[i];
+          ctx.font = `600 ${Math.max(9, skyRadius * .024)}px "Noto Serif TC", serif`;
+          ctx.fillText(name, sx, sy - 12);
+        });
+      }
     });
     ctx.restore();
   }
+
+  ctx.restore();
 }
 
 function advanceTime() {
@@ -277,7 +383,7 @@ function advanceTime() {
     value -= 1440;
     const d = new Date(`${dateInput.value}T12:00:00`);
     d.setDate(d.getDate() + 1);
-    dateInput.value = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    dateInput.value = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
   }
   timeRange.value = value;
   updateReadout();
@@ -286,8 +392,9 @@ function advanceTime() {
 
 function togglePlay() {
   isPlaying = !isPlaying;
-  playText.textContent = isPlaying ? "暫停星空運動" : "播放星空運動";
+  playText.textContent = isPlaying ? "暫停星空運轉" : "播放星空運轉";
   playIcon.textContent = isPlaying ? "Ⅱ" : "▶";
+
   if (isPlaying) {
     animationTimer = setInterval(advanceTime, 1000);
   } else {
@@ -297,8 +404,8 @@ function togglePlay() {
 
 function getPointerAngle(event) {
   const rect = canvasWrap.getBoundingClientRect();
-  const x = event.clientX - rect.left - rect.width/2;
-  const y = event.clientY - rect.top - rect.height/2;
+  const x = event.clientX - rect.left - rect.width / 2;
+  const y = event.clientY - rect.top - rect.height / 2;
   return Math.atan2(y, x);
 }
 
@@ -319,12 +426,24 @@ canvasWrap.addEventListener("pointermove", event => {
   draw();
 });
 
-canvasWrap.addEventListener("pointerup", () => dragging = false);
-canvasWrap.addEventListener("pointercancel", () => dragging = false);
+canvasWrap.addEventListener("pointerup", () => { dragging = false; });
+canvasWrap.addEventListener("pointercancel", () => { dragging = false; });
 
-dateInput.addEventListener("change", () => { manualRotation = 0; updateReadout(); draw(); });
-timeRange.addEventListener("input", () => { manualRotation = 0; updateReadout(); draw(); });
-[linesToggle, labelsToggle, gridToggle].forEach(el => el.addEventListener("change", draw));
+dateInput.addEventListener("change", () => {
+  manualRotation = 0;
+  updateReadout();
+  draw();
+});
+
+timeRange.addEventListener("input", () => {
+  manualRotation = 0;
+  updateReadout();
+  draw();
+});
+
+[linesToggle, labelsToggle, mansionsToggle, termsToggle, gridToggle].forEach(el => {
+  el.addEventListener("change", draw);
+});
 
 document.querySelectorAll("[data-time]").forEach(button => {
   button.addEventListener("click", () => {
