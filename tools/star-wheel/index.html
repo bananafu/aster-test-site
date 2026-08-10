@@ -9,6 +9,7 @@
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="star-map-base.css">
+  <link rel="stylesheet" href="star-map-override.css">
 </head>
 <body>
   <div class="page-frame">
@@ -49,8 +50,8 @@
 
         <section class="panel legend-panel">
           <h2>圖例</h2>
-          <label><input id="linesToggle" type="checkbox" checked>顯示星座連線</label>
-          <label><input id="labelsToggle" type="checkbox" checked>顯示北斗七星名稱</label>
+          <label><input id="linesToggle" type="checkbox" checked>強化星座線與星點</label>
+          <label><input id="labelsToggle" type="checkbox" checked>顯示教學標示</label>
           <label><input id="mansionsToggle" type="checkbox" checked>顯示二十八星宿</label>
           <label><input id="termsToggle" type="checkbox" checked>顯示二十四節氣</label>
           <label><input id="gridToggle" type="checkbox" checked>顯示方位與高度圈</label>
@@ -94,7 +95,7 @@
         <div class="option-compass-row">
           <section class="panel compact-options">
             <h2>顯示選項</h2>
-            <label><input id="compactLinesToggle" type="checkbox" checked>星座連線</label>
+            <label><input id="compactLinesToggle" type="checkbox" checked>星圖強化</label>
             <label><input id="compactTermsToggle" type="checkbox" checked>二十四節氣</label>
             <label><input id="compactMansionsToggle" type="checkbox" checked>二十八星宿</label>
           </section>
@@ -129,7 +130,7 @@
 
         <section class="panel explanation-panel">
           <h2>說明</h2>
-          <p>中央星圖以臺北市立天文科學教育館 2025 年提供的簡易星座盤為視覺基底；外層再疊加二十八星宿、二十四節氣與互動控制。</p>
+          <p>中央星圖以臺北市立天文科學教育館 2025 年提供的簡易星座盤為基底，保留原星點分布、星座連線、月份日期外圈與赤經赤緯等標示；本站僅將夜空底色改為深藍色，並在外層加入二十八星宿與二十四節氣互動資訊。</p>
           <p class="note">可調整日期、時間、視角與顯示內容，並播放星空運轉。</p>
         </section>
       </aside>
