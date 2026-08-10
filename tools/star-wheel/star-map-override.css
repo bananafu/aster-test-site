@@ -1,0 +1,31 @@
+.chart-wrap::before {
+  inset: 8% !important;
+  z-index: 1 !important;
+  opacity: 1 !important;
+  border-radius: 50% !important;
+  background-color: #061b33 !important;
+  background-blend-mode: screen !important;
+  background-size: contain !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  transform: rotate(var(--star-map-rotation, 0rad));
+  transform-origin: center;
+  transition: transform .18s linear, filter .2s ease, opacity .2s ease;
+  filter: contrast(1.08) brightness(1.03);
+  box-shadow: 0 0 0 2px rgba(235,220,177,.88), 0 10px 30px rgba(8,27,51,.18);
+}
+
+.chart-wrap.map-soft::before {
+  opacity: .72 !important;
+  filter: contrast(.9) brightness(.92);
+}
+
+#skyCanvas {
+  position: relative;
+  z-index: 2;
+  background: transparent !important;
+}
+
+.drag-hint {
+  z-index: 3;
+}
