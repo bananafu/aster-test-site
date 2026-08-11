@@ -1,95 +1,55 @@
-const starDisk=document.getElementById("starDisk");
-const planisphere=document.getElementById("planisphere");
-const dateInput=document.getElementById("dateInput");
-const timeRange=document.getElementById("timeRange");
-const timeText=document.getElementById("timeText");
-const dateText=document.getElementById("dateText");
-const nowBtn=document.getElementById("nowBtn");
-const fullscreenBtn=document.getElementById("fullscreenBtn");
-const playBtn=document.getElementById("playBtn");
-const playIcon=document.getElementById("playIcon");
-const playText=document.getElementById("playText");
-const resetBtn=document.getElementById("resetBtn");
-const speedSelect=document.getElementById("speedSelect");
-const enhanceToggle=document.getElementById("enhanceToggle");
-const gridToggle=document.getElementById("gridToggle");
-const labelsToggle=document.getElementById("labelsToggle");
-const altitudeGrid=document.getElementById("altitudeGrid");
-const quick=[...document.querySelectorAll("[data-time]")];
-
-let manualRotation=0,isPlaying=false,timer=null,dragging=false,lastAngle=0;
-
-function pad(n){return String(n).padStart(2,"0")}
-function setNow(){
-  const n=new Date();
-  dateInput.value=`${n.getFullYear()}-${pad(n.getMonth()+1)}-${pad(n.getDate())}`;
-  timeRange.value=n.getHours()*60+n.getMinutes();
-  manualRotation=0;update()
-}
-function dayOfYear(d){
-  const start=new Date(d.getFullYear(),0,0);
-  return Math.floor((d-start)/86400000)
-}
-function rotationForDateTime(){
-  const d=new Date(`${dateInput.value}T12:00:00`);
-  const day=dayOfYear(d);
-  const minutes=Number(timeRange.value);
-  return ((day-80)/365.2422)*360 + (minutes/1440)*360 + 180 + manualRotation;
-}
-function update(){
-  const total=Number(timeRange.value);
-  timeText.textContent=`${pad(Math.floor(total/60))}:${pad(total%60)}`;
-  const d=new Date(`${dateInput.value}T12:00:00`);
-  dateText.textContent=new Intl.DateTimeFormat("zh-TW",{month:"long",day:"numeric",weekday:"short"}).format(d);
-  quick.forEach(b=>b.classList.toggle("active",Number(b.dataset.time)===total));
-  starDisk.style.transform=`rotate(${rotationForDateTime()}deg)`;
-}
-function advance(){
-  let v=Number(timeRange.value)+Number(speedSelect.value);
-  if(v>=1440){
-    v-=1440;
-    const d=new Date(`${dateInput.value}T12:00:00`);d.setDate(d.getDate()+1);
-    dateInput.value=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-  }
-  timeRange.value=v;update()
-}
-function togglePlay(){
-  isPlaying=!isPlaying;
-  playIcon.textContent=isPlaying?"Ⅱ":"▶";
-  playText.textContent=isPlaying?"暫停星空運轉":"播放星空運轉";
-  clearInterval(timer);
-  if(isPlaying)timer=setInterval(advance,1000)
-}
-function stop(){isPlaying=false;clearInterval(timer);timer=null;playIcon.textContent="▶";playText.textContent="播放星空運轉"}
-function reset(){stop();setNow();enhanceToggle.checked=true;gridToggle.checked=false;labelsToggle.checked=true;applyToggles()}
-function applyToggles(){
-  starDisk.classList.toggle("soft",!enhanceToggle.checked);
-  altitudeGrid.hidden=!gridToggle.checked;
-  planisphere.classList.toggle("hide-cover-labels",!labelsToggle.checked)
-}
-function pointerAngle(e){
-  const r=planisphere.getBoundingClientRect();
-  return Math.atan2(e.clientY-(r.top+r.height/2),e.clientX-(r.left+r.width/2))*180/Math.PI
-}
-planisphere.addEventListener("pointerdown",e=>{dragging=true;lastAngle=pointerAngle(e);planisphere.setPointerCapture(e.pointerId)});
-planisphere.addEventListener("pointermove",e=>{
-  if(!dragging)return;
-  const a=pointerAngle(e);let delta=a-lastAngle;
-  if(delta>180)delta-=360;if(delta<-180)delta+=360;
-  manualRotation+=delta;lastAngle=a;update()
-});
-planisphere.addEventListener("pointerup",()=>dragging=false);
-planisphere.addEventListener("pointercancel",()=>dragging=false);
-dateInput.addEventListener("change",()=>{manualRotation=0;update()});
-timeRange.addEventListener("input",()=>{manualRotation=0;update()});
-quick.forEach(b=>b.addEventListener("click",()=>{timeRange.value=b.dataset.time;manualRotation=0;update()}));
-playBtn.addEventListener("click",togglePlay);
-resetBtn.addEventListener("click",reset);
-nowBtn.addEventListener("click",setNow);
-[enhanceToggle,gridToggle,labelsToggle].forEach(el=>el.addEventListener("change",applyToggles));
-fullscreenBtn.addEventListener("click",async()=>{
-  if(!document.fullscreenElement){await document.documentElement.requestFullscreen();fullscreenBtn.textContent="離開全螢幕"}
-  else{await document.exitFullscreen();fullscreenBtn.textContent="全螢幕"}
-});
-document.addEventListener("fullscreenchange",()=>{if(!document.fullscreenElement)fullscreenBtn.textContent="全螢幕"});
-setNow();applyToggles();
+const canvas=document.getElementById('skyCanvas');const ctx=canvas.getContext('2d');const wrap=document.getElementById('canvasWrap');
+const dateInput=document.getElementById('dateInput'),timeRange=document.getElementById('timeRange'),timeText=document.getElementById('timeText'),dateText=document.getElementById('dateText');
+const linesToggle=document.getElementById('linesToggle'),namesToggle=document.getElementById('namesToggle'),brightToggle=document.getElementById('brightToggle'),gridToggle=document.getElementById('gridToggle'),horizonToggle=document.getElementById('horizonToggle');
+const playBtn=document.getElementById('playBtn'),playIcon=document.getElementById('playIcon'),playText=document.getElementById('playText'),speedSelect=document.getElementById('speedSelect'),resetBtn=document.getElementById('resetBtn'),nowBtn=document.getElementById('nowBtn'),fullscreenBtn=document.getElementById('fullscreenBtn');
+const quickButtons=[...document.querySelectorAll('[data-time]')];
+const LAT=23.5,LON=121.5,MIN_DEC=-60;let manualDeg=0,isPlaying=false,timer=null,dragging=false,lastAngle=0;
+const D=Math.PI/180,R=180/Math.PI;
+const stars=[
+{id:'polaris',ra:2.53,dec:89.26,mag:1.98,name:'北極星'},
+{id:'dubhe',ra:11.06,dec:61.75,mag:1.79,name:'天樞'},{id:'merak',ra:11.03,dec:56.38,mag:2.37,name:'天璇'},{id:'phecda',ra:11.90,dec:53.69,mag:2.44,name:'天璣'},{id:'megrez',ra:12.26,dec:57.03,mag:3.31,name:'天權'},{id:'alioth',ra:12.90,dec:55.96,mag:1.77,name:'玉衡'},{id:'mizar',ra:13.40,dec:54.93,mag:2.23,name:'開陽'},{id:'alkaid',ra:13.79,dec:49.31,mag:1.86,name:'搖光'},
+{id:'caph',ra:.15,dec:59.15,mag:2.27},{id:'schedar',ra:.68,dec:56.54,mag:2.24},{id:'navi',ra:.95,dec:60.72,mag:2.15},{id:'ruchbah',ra:1.43,dec:60.24,mag:2.68},{id:'segin',ra:1.91,dec:63.67,mag:3.35},
+{id:'betelgeuse',ra:5.92,dec:7.41,mag:.42,name:'參宿四'},{id:'bellatrix',ra:5.42,dec:6.35,mag:1.64},{id:'mintaka',ra:5.53,dec:-.30,mag:2.23},{id:'alnilam',ra:5.60,dec:-1.20,mag:1.69},{id:'alnitak',ra:5.68,dec:-1.94,mag:1.74},{id:'saiph',ra:5.80,dec:-9.67,mag:2.07},{id:'rigel',ra:5.24,dec:-8.20,mag:.13,name:'參宿七'},
+{id:'sirius',ra:6.75,dec:-16.72,mag:-1.46,name:'天狼星'},{id:'mirzam',ra:6.38,dec:-17.96,mag:1.98},{id:'wezen',ra:7.14,dec:-26.39,mag:1.83},{id:'adhara',ra:6.98,dec:-28.97,mag:1.50},
+{id:'procyon',ra:7.66,dec:5.22,mag:.34,name:'南河三'},{id:'gomeisa',ra:7.45,dec:8.29,mag:2.90},
+{id:'aldebaran',ra:4.60,dec:16.51,mag:.85,name:'畢宿五'},{id:'elnath',ra:5.44,dec:28.61,mag:1.65},{id:'ain',ra:4.48,dec:19.18,mag:3.53},{id:'thetaTau',ra:4.48,dec:15.96,mag:3.84},
+{id:'castor',ra:7.58,dec:31.89,mag:1.58,name:'北河二'},{id:'pollux',ra:7.76,dec:28.03,mag:1.14,name:'北河三'},{id:'alhena',ra:6.63,dec:16.40,mag:1.93},{id:'mebsuta',ra:6.73,dec:25.13,mag:3.06},{id:'tejat',ra:6.38,dec:22.51,mag:2.88},
+{id:'regulus',ra:10.14,dec:11.97,mag:1.35,name:'軒轅十四'},{id:'algieba',ra:10.33,dec:19.84,mag:2.01},{id:'zosma',ra:11.24,dec:20.52,mag:2.56},{id:'denebola',ra:11.82,dec:14.57,mag:2.14},
+{id:'spica',ra:13.42,dec:-11.16,mag:.98,name:'角宿一'},{id:'porrima',ra:12.69,dec:-1.45,mag:2.74},{id:'vindemiatrix',ra:13.04,dec:10.96,mag:2.83},
+{id:'arcturus',ra:14.26,dec:19.18,mag:-.05,name:'大角星'},{id:'izar',ra:14.75,dec:27.07,mag:2.37},{id:'muphrid',ra:13.91,dec:18.40,mag:2.68},
+{id:'antares',ra:16.49,dec:-26.43,mag:.96,name:'心宿二'},{id:'dschubba',ra:16.01,dec:-22.62,mag:2.32},{id:'acrab',ra:16.09,dec:-19.81,mag:2.62},{id:'sargas',ra:17.62,dec:-42.99,mag:1.86},{id:'shaula',ra:17.56,dec:-37.10,mag:1.62},{id:'lesath',ra:17.51,dec:-37.30,mag:2.70},
+{id:'vega',ra:18.62,dec:38.78,mag:.03,name:'織女星'},{id:'sheliak',ra:18.83,dec:33.36,mag:3.45},{id:'sulafat',ra:18.98,dec:32.69,mag:3.25},
+{id:'altair',ra:19.85,dec:8.87,mag:.77,name:'牛郎星'},{id:'tarazed',ra:19.77,dec:10.61,mag:2.72},{id:'alshain',ra:19.92,dec:6.41,mag:3.71},
+{id:'deneb',ra:20.69,dec:45.28,mag:1.25,name:'天津四'},{id:'sadr',ra:20.37,dec:40.26,mag:2.23},{id:'gienah',ra:20.77,dec:33.97,mag:2.46},{id:'deltaCyg',ra:19.75,dec:45.13,mag:2.87},{id:'albireo',ra:19.51,dec:27.96,mag:3.08},
+{id:'markab',ra:23.08,dec:15.21,mag:2.49},{id:'scheat',ra:23.06,dec:28.08,mag:2.42},{id:'algenib',ra:.22,dec:15.18,mag:2.84},{id:'enif',ra:21.74,dec:9.88,mag:2.39},
+{id:'alpheratz',ra:.14,dec:29.09,mag:2.06},{id:'mirach',ra:1.16,dec:35.62,mag:2.05},{id:'almach',ra:2.06,dec:42.33,mag:2.10},
+{id:'kausA',ra:18.40,dec:-34.38,mag:1.79},{id:'kausM',ra:18.35,dec:-29.83,mag:2.70},{id:'kausB',ra:18.47,dec:-25.42,mag:2.82},{id:'nunki',ra:18.92,dec:-26.30,mag:2.02},
+{id:'fomalhaut',ra:22.96,dec:-29.62,mag:1.16,name:'北落師門'},{id:'achernar',ra:1.63,dec:-57.24,mag:.46,name:'水委一'},
+{id:'acrux',ra:12.44,dec:-63.10,mag:.76,name:'十字架二'},{id:'mimosa',ra:12.80,dec:-59.69,mag:1.25},{id:'gacrux',ra:12.52,dec:-57.11,mag:1.63}
+];
+const byId=Object.fromEntries(stars.map(s=>[s.id,s]));
+const constellations=[
+{name:'大熊座',ids:['dubhe','merak','phecda','megrez','alioth','mizar','alkaid']},{name:'仙后座',ids:['caph','schedar','navi','ruchbah','segin']},{name:'獵戶座',ids:['betelgeuse','bellatrix','mintaka','alnilam','alnitak','saiph','rigel','mintaka']},{name:'大犬座',ids:['sirius','mirzam','adhara','wezen','sirius']},{name:'小犬座',ids:['procyon','gomeisa']},{name:'金牛座',ids:['aldebaran','ain','thetaTau','elnath']},{name:'雙子座',ids:['castor','mebsuta','tejat','alhena','pollux']},{name:'獅子座',ids:['regulus','algieba','zosma','denebola']},{name:'室女座',ids:['spica','porrima','vindemiatrix']},{name:'牧夫座',ids:['arcturus','muphrid','izar','arcturus']},{name:'天蠍座',ids:['acrab','dschubba','antares','sargas','shaula','lesath']},{name:'天琴座',ids:['vega','sheliak','sulafat','vega']},{name:'天鷹座',ids:['tarazed','altair','alshain']},{name:'天鵝座',ids:['deltaCyg','sadr','deneb','sadr','gienah','sadr','albireo']},{name:'飛馬座',ids:['markab','scheat','alpheratz','algenib','markab','enif']},{name:'仙女座',ids:['alpheratz','mirach','almach']},{name:'人馬座',ids:['kausA','kausM','kausB','nunki','kausM']},{name:'南十字座',ids:['acrux','gacrux','mimosa']}
+];
+function pad(n){return String(n).padStart(2,'0')}function mod(n,m){return((n%m)+m)%m}
+function currentParts(){const mins=+timeRange.value;return{h:Math.floor(mins/60),m:mins%60}}
+function julianDate(){const [y,mo,d]=dateInput.value.split('-').map(Number),{h,m}=currentParts();return Date.UTC(y,mo-1,d,h-8,m)/86400000+2440587.5}
+function lstHours(){const jd=julianDate(),d=jd-2451545.0,gmst=mod(18.697374558+24.06570982441908*d,24);return mod(gmst+LON/15,24)}
+function updateText(){const {h,m}=currentParts();timeText.textContent=`${pad(h)}:${pad(m)}`;const dt=new Date(`${dateInput.value}T12:00:00`);dateText.textContent=new Intl.DateTimeFormat('zh-TW',{month:'long',day:'numeric',weekday:'short'}).format(dt);quickButtons.forEach(b=>b.classList.toggle('active',+b.dataset.time===+timeRange.value))}
+function setNow(){const n=new Date();dateInput.value=`${n.getFullYear()}-${pad(n.getMonth()+1)}-${pad(n.getDate())}`;timeRange.value=n.getHours()*60+n.getMinutes();manualDeg=0;updateText();draw()}
+function resize(){const r=wrap.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(r.width*dpr);canvas.height=Math.round(r.height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);draw()}
+function geometry(){const w=wrap.clientWidth,h=wrap.clientHeight,s=Math.min(w,h),cx=w/2,cy=h/2,outer=s*.485,dateInner=s*.43,starR=s*.398;return{w,h,s,cx,cy,outer,dateInner,starR}}
+function project(ra,dec,g){if(dec<MIN_DEC)return null;const lst=lstHours()*15,ang=((ra*15-lst+manualDeg)-90)*D,r=(90-dec)/(90-MIN_DEC)*g.starR;return[g.cx+Math.cos(ang)*r,g.cy+Math.sin(ang)*r]}
+function drawCalendar(g){ctx.save();ctx.translate(g.cx,g.cy);ctx.rotate((-lstHours()*15+manualDeg)*D);ctx.fillStyle='#efe1bf';ctx.strokeStyle='#8f7040';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(0,0,g.outer,0,Math.PI*2);ctx.arc(0,0,g.dateInner,0,Math.PI*2,true);ctx.fill();ctx.stroke();const months=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];for(let i=0;i<120;i++){const a=i/120*Math.PI*2-Math.PI/2,ri=i%10===0?g.dateInner:g.dateInner+g.s*.012;ctx.beginPath();ctx.moveTo(Math.cos(a)*ri,Math.sin(a)*ri);ctx.lineTo(Math.cos(a)*g.outer,Math.sin(a)*g.outer);ctx.strokeStyle=i%10===0?'#31583f':'rgba(80,62,34,.55)';ctx.lineWidth=i%10===0?1.4:.55;ctx.stroke()}ctx.font=`700 ${Math.max(10,g.s*.018)}px "Noto Serif TC",serif`;ctx.fillStyle='#203a31';ctx.textAlign='center';ctx.textBaseline='middle';months.forEach((m,i)=>{const a=(i+.5)/12*Math.PI*2-Math.PI/2,r=(g.outer+g.dateInner)/2;ctx.save();ctx.translate(Math.cos(a)*r,Math.sin(a)*r);ctx.rotate(a+Math.PI/2);ctx.fillText(m,0,0);ctx.restore()});ctx.restore()}
+function starSize(mag,g){return Math.max(.7,(4.2-mag)*g.s*.0019)}
+function drawSky(g){ctx.save();ctx.fillStyle='#061b33';ctx.beginPath();ctx.arc(g.cx,g.cy,g.starR,0,Math.PI*2);ctx.fill();ctx.clip();if(linesToggle.checked){ctx.strokeStyle='rgba(166,205,231,.56)';ctx.lineWidth=Math.max(.7,g.s*.001);constellations.forEach(c=>{let started=false;ctx.beginPath();c.ids.forEach(id=>{const s=byId[id],p=s&&project(s.ra,s.dec,g);if(!p){started=false;return}if(!started){ctx.moveTo(...p);started=true}else ctx.lineTo(...p)});ctx.stroke()})}stars.forEach(s=>{const p=project(s.ra,s.dec,g);if(!p)return;const r=starSize(s.mag,g);const glow=ctx.createRadialGradient(p[0],p[1],0,p[0],p[1],r*4);glow.addColorStop(0,'rgba(255,255,255,1)');glow.addColorStop(.28,'rgba(215,235,255,.82)');glow.addColorStop(1,'rgba(170,220,255,0)');ctx.fillStyle=glow;ctx.beginPath();ctx.arc(p[0],p[1],r*4,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(p[0],p[1],r,0,Math.PI*2);ctx.fill()});if(namesToggle.checked){ctx.font=`600 ${Math.max(10,g.s*.014)}px "Noto Serif TC",serif`;ctx.fillStyle='rgba(225,239,248,.85)';ctx.textAlign='center';constellations.forEach(c=>{const pts=c.ids.map(id=>byId[id]).filter(Boolean).map(s=>project(s.ra,s.dec,g)).filter(Boolean);if(!pts.length)return;const x=pts.reduce((a,p)=>a+p[0],0)/pts.length,y=pts.reduce((a,p)=>a+p[1],0)/pts.length;ctx.fillText(c.name,x,y-10)})}if(brightToggle.checked){ctx.font=`700 ${Math.max(9,g.s*.012)}px "Noto Sans TC",sans-serif`;ctx.fillStyle='#fff4c9';ctx.textAlign='left';stars.filter(s=>s.name&&s.mag<=1.4).forEach(s=>{const p=project(s.ra,s.dec,g);if(p)ctx.fillText(s.name,p[0]+6,p[1]-5)})}ctx.restore()}
+function horizonPoint(azDeg,altDeg,g){const az=azDeg*D,alt=altDeg*D,lat=LAT*D,sinDec=Math.sin(alt)*Math.sin(lat)+Math.cos(alt)*Math.cos(lat)*Math.cos(az),dec=Math.asin(Math.max(-1,Math.min(1,sinDec))),cosDec=Math.cos(dec),sinH=-Math.sin(az)*Math.cos(alt)/Math.max(.0001,cosDec),cosH=(Math.sin(alt)-Math.sin(lat)*Math.sin(dec))/(Math.cos(lat)*Math.max(.0001,cosDec)),H=Math.atan2(sinH,cosH),ang=-H-Math.PI/2,r=(90-dec*R)/(90-MIN_DEC)*g.starR;return[g.cx+Math.cos(ang)*r,g.cy+Math.sin(ang)*r]}
+function horizonPath(alt,g){const p=new Path2D();for(let a=0;a<=360;a+=2){const q=horizonPoint(a,alt,g);if(a===0)p.moveTo(...q);else p.lineTo(...q)}p.closePath();return p}
+function drawOverlay(g){if(horizonToggle.checked){const outer=new Path2D();outer.arc(g.cx,g.cy,g.starR,0,Math.PI*2);const hp=horizonPath(0,g);const combo=new Path2D();combo.addPath(outer);combo.addPath(hp);ctx.fillStyle='rgba(239,225,191,.94)';ctx.fill(combo,'evenodd');ctx.strokeStyle='#675435';ctx.lineWidth=Math.max(1.2,g.s*.002);ctx.stroke(hp)}if(gridToggle.checked){[30,60].forEach(a=>{ctx.strokeStyle='rgba(231,211,161,.65)';ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.stroke(horizonPath(a,g));ctx.setLineDash([])})}const dirs=[['北',0],['東',90],['南',180],['西',270]];ctx.font=`800 ${Math.max(17,g.s*.029)}px "Noto Serif TC",serif`;ctx.textAlign='center';ctx.textBaseline='middle';dirs.forEach(([t,a])=>{const p=horizonPoint(a,0,g),dx=p[0]-g.cx,dy=p[1]-g.cy,len=Math.hypot(dx,dy)||1,x=p[0]+dx/len*g.s*.025,y=p[1]+dy/len*g.s*.025;ctx.fillStyle=t==='東'||t==='南'?'#a22c24':'#214f80';ctx.fillText(t,x,y)});ctx.strokeStyle='#31583f';ctx.lineWidth=2;ctx.beginPath();ctx.arc(g.cx,g.cy,g.starR,0,Math.PI*2);ctx.stroke();ctx.font=`600 ${Math.max(8,g.s*.011)}px Arial,sans-serif`;ctx.fillStyle='#38574a';for(let h=0;h<24;h+=2){const a=(h/24*Math.PI*2)-Math.PI/2,r=g.dateInner-g.s*.014;ctx.fillText(String(h),g.cx+Math.cos(a)*r,g.cy+Math.sin(a)*r)}}
+function draw(){const g=geometry();ctx.clearRect(0,0,g.w,g.h);drawCalendar(g);drawSky(g);drawOverlay(g)}
+function advance(){let v=+timeRange.value+(+speedSelect.value);if(v>=1440){v-=1440;const d=new Date(`${dateInput.value}T12:00:00`);d.setDate(d.getDate()+1);dateInput.value=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`}timeRange.value=v;updateText();draw()}
+function togglePlay(){isPlaying=!isPlaying;playIcon.textContent=isPlaying?'Ⅱ':'▶';playText.textContent=isPlaying?'暫停星空運動':'播放星空運動';if(isPlaying)timer=setInterval(advance,700);else{clearInterval(timer);timer=null}}
+function reset(){if(isPlaying)togglePlay();manualDeg=0;linesToggle.checked=namesToggle.checked=brightToggle.checked=gridToggle.checked=horizonToggle.checked=true;setNow()}
+function pointerAngle(e){const r=wrap.getBoundingClientRect();return Math.atan2(e.clientY-r.top-r.height/2,e.clientX-r.left-r.width/2)}
+wrap.addEventListener('pointerdown',e=>{dragging=true;lastAngle=pointerAngle(e);wrap.setPointerCapture(e.pointerId)});wrap.addEventListener('pointermove',e=>{if(!dragging)return;const a=pointerAngle(e);let d=a-lastAngle;if(d>Math.PI)d-=Math.PI*2;if(d<-Math.PI)d+=Math.PI*2;manualDeg+=d*R;lastAngle=a;draw()});wrap.addEventListener('pointerup',()=>dragging=false);wrap.addEventListener('pointercancel',()=>dragging=false);
+dateInput.addEventListener('change',()=>{manualDeg=0;updateText();draw()});timeRange.addEventListener('input',()=>{manualDeg=0;updateText();draw()});[linesToggle,namesToggle,brightToggle,gridToggle,horizonToggle].forEach(el=>el.addEventListener('change',draw));quickButtons.forEach(b=>b.addEventListener('click',()=>{timeRange.value=b.dataset.time;manualDeg=0;updateText();draw()}));playBtn.addEventListener('click',togglePlay);resetBtn.addEventListener('click',reset);nowBtn.addEventListener('click',setNow);fullscreenBtn.addEventListener('click',async()=>{if(!document.fullscreenElement){await document.documentElement.requestFullscreen();fullscreenBtn.textContent='離開全螢幕'}else{await document.exitFullscreen();fullscreenBtn.textContent='全螢幕'}});document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement)fullscreenBtn.textContent='全螢幕';setTimeout(resize,80)});window.addEventListener('resize',resize);setNow();resize();
