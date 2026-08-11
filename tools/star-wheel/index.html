@@ -5,117 +5,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#efe1bf">
   <title>臺灣互動式星座盤｜Aster Earth Science</title>
-  <meta name="description" content="以臺北市立天文科學教育館簡易星座盤為樣板，製作適合臺灣課堂使用的互動式星座盤。">
+  <meta name="description" content="適合臺灣地區國中地科教學使用的互動式星座盤，可調整日期、時間並觀察星空移動。">
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="star-map-base.css">
 </head>
 <body>
-  <div class="page-frame">
-    <header class="masthead">
-      <a class="teaching-mode" href="/">▣ 教學模式</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="home-button" href="/">← 教學工具</a>
       <div class="title-block">
         <h1>臺灣互動式星座盤</h1>
-        <p>日期・時間・方位・星座辨識</p>
+        <p>TAIWAN INTERACTIVE PLANISPHERE · 23.5°N</p>
       </div>
-      <div class="header-actions">
+      <div class="top-actions">
         <button id="nowBtn" type="button">使用現在時間</button>
         <button id="fullscreenBtn" type="button">全螢幕</button>
       </div>
     </header>
 
-    <main class="main-layout">
-      <aside class="left-rail">
+    <main class="workspace">
+      <aside class="control-column">
         <section class="panel">
-          <h2>使用方式</h2>
-          <ol class="steps">
-            <li>選擇觀測日期。</li>
-            <li>調整觀測時間。</li>
-            <li>觀察固定方位外殼內出現的星座。</li>
-            <li>也可直接拖曳星盤旋轉。</li>
-          </ol>
-        </section>
-
-        <section class="panel">
-          <h2>顯示設定</h2>
-          <label class="check-row"><input id="enhanceToggle" type="checkbox" checked>強化星點與星座線</label>
-          <label class="check-row"><input id="gridToggle" type="checkbox">顯示高度角輔助圈</label>
-          <label class="check-row"><input id="labelsToggle" type="checkbox" checked>顯示方位提示</label>
-        </section>
-
-        <section class="panel bright-stars">
-          <h2>亮星提示</h2>
-          <p>可在星圖上尋找：</p>
-          <ul>
-            <li>天狼星</li>
-            <li>織女星</li>
-            <li>五車二</li>
-            <li>參宿七</li>
-            <li>北極星</li>
-          </ul>
-          <small>亮星資料依天文館提供版本整理。</small>
-        </section>
-      </aside>
-
-      <section class="chart-section">
-        <div id="planisphere" class="planisphere" aria-label="臺灣互動式星座盤">
-          <div id="starDisk" class="chart-wrap pdf-disk"></div>
-          <svg class="fixed-cover" viewBox="0 0 1000 1000" aria-hidden="true">
-            <path class="cover-body" fill-rule="evenodd"
-              d="M110 170 A450 450 0 0 1 890 170 L940 640 L860 850 L140 850 L60 640 Z
-                 M185 565 A315 245 0 1 0 815 565 A315 245 0 1 0 185 565 Z"/>
-            <path class="horizon-line" d="M185 565 A315 245 0 1 0 815 565"/>
-            <text x="500" y="322" class="cover-direction">北</text>
-            <text x="343" y="375" class="cover-direction small">東北</text>
-            <text x="220" y="505" class="cover-direction small">東</text>
-            <text x="657" y="375" class="cover-direction small">西北</text>
-            <text x="780" y="505" class="cover-direction small">西</text>
-            <text x="500" y="820" class="cover-direction">南</text>
-            <text x="235" y="710" class="horizon-label">地平線</text>
-            <text x="765" y="710" class="horizon-label">地平線</text>
-            <g class="hour-scale">
-              <text x="205" y="260">6</text><text x="245" y="220">5</text><text x="300" y="185">4</text>
-              <text x="365" y="155">3</text><text x="435" y="138">2</text><text x="500" y="130">12時</text>
-              <text x="565" y="138">11</text><text x="635" y="155">10</text><text x="700" y="185">9</text>
-              <text x="755" y="220">8</text><text x="795" y="260">7</text>
-            </g>
-          </svg>
-          <div id="altitudeGrid" class="altitude-grid" hidden>
-            <span class="alt alt-30"></span>
-            <span class="alt alt-60"></span>
-          </div>
-          <div class="drag-hint">拖曳星圖可旋轉</div>
-        </div>
-        <div class="chart-footer">Aster Earth Science Lab <span class="seal">地科</span></div>
-      </section>
-
-      <aside class="right-rail">
-        <section class="panel controls-panel">
           <h2>日期與時間</h2>
-          <label class="stacked-label">日期<input id="dateInput" type="date"></label>
-          <label class="stacked-label">時間<input id="timeRange" type="range" min="0" max="1435" step="5"></label>
-          <div class="time-readout"><strong id="timeText">21:00</strong><span id="dateText"></span></div>
-          <p class="location">觀測地點：臺灣（約北緯 23.5°）</p>
-        </section>
-
-        <section class="panel controls-panel">
-          <h2>快速時間</h2>
+          <label class="field">日期<input id="dateInput" type="date"></label>
+          <label class="field">時間<input id="timeRange" type="range" min="0" max="1435" step="5"></label>
+          <div class="time-display"><strong id="timeText">21:00</strong><span id="dateText"></span></div>
           <div class="quick-times">
-            <button type="button" data-time="1080">18:00</button>
-            <button type="button" data-time="1260">21:00</button>
-            <button type="button" data-time="0">00:00</button>
-            <button type="button" data-time="180">03:00</button>
-            <button type="button" data-time="360">06:00</button>
+            <button data-time="1080" type="button">18:00</button>
+            <button data-time="1260" type="button">21:00</button>
+            <button data-time="0" type="button">00:00</button>
+            <button data-time="180" type="button">03:00</button>
+            <button data-time="360" type="button">06:00</button>
           </div>
         </section>
 
-        <section class="panel controls-panel">
-          <h2>動畫與操作</h2>
-          <div class="operation-buttons">
-            <button id="playBtn" type="button" class="primary-button"><span id="playIcon">▶</span><span id="playText">播放星空運轉</span></button>
-            <button id="resetBtn" type="button" class="secondary-button">↻ 重設</button>
-          </div>
-          <label class="stacked-label">速度
+        <section class="panel">
+          <h2>顯示內容</h2>
+          <label class="check"><input id="linesToggle" type="checkbox" checked>星座連線</label>
+          <label class="check"><input id="namesToggle" type="checkbox" checked>星座名稱</label>
+          <label class="check"><input id="brightToggle" type="checkbox" checked>亮星名稱</label>
+          <label class="check"><input id="gridToggle" type="checkbox" checked>高度角透明片</label>
+          <label class="check"><input id="horizonToggle" type="checkbox" checked>固定地平線罩片</label>
+        </section>
+
+        <section class="panel">
+          <h2>動畫</h2>
+          <button id="playBtn" class="primary" type="button"><span id="playIcon">▶</span> <span id="playText">播放星空運動</span></button>
+          <label class="field">播放速度
             <select id="speedSelect">
               <option value="5">慢</option>
               <option value="15" selected>正常</option>
@@ -123,12 +59,41 @@
               <option value="60">很快</option>
             </select>
           </label>
+          <button id="resetBtn" class="secondary" type="button">↻ 重設星座盤</button>
+        </section>
+      </aside>
+
+      <section class="wheel-stage">
+        <div class="wheel-heading">
+          <span>固定方位罩片</span>
+          <strong>拖曳圓盤旋轉</strong>
+          <span>星圖會依日期時間轉動</span>
+        </div>
+        <div id="canvasWrap" class="canvas-wrap">
+          <canvas id="skyCanvas" aria-label="臺灣互動式星座盤"></canvas>
+        </div>
+        <div class="wheel-note">外圈：月份／日期 · 固定罩片：時刻／方位 · 觀測緯度：北緯 23.5°</div>
+      </section>
+
+      <aside class="info-column">
+        <section class="panel guide-panel">
+          <h2>怎麼使用</h2>
+          <ol>
+            <li>選擇觀測日期。</li>
+            <li>調整時間，星圖會自動旋轉。</li>
+            <li>讀取固定罩片上的東、西、南、北。</li>
+            <li>也可以直接拖曳星盤比較不同時刻。</li>
+          </ol>
         </section>
 
-        <section class="panel explanation-panel">
-          <h2>原理</h2>
-          <p>圓形星圖會隨日期與時間旋轉；外層方位與地平線視窗保持固定，模擬實體星座盤的使用方式。</p>
-          <p class="note">星圖與外殼皆以臺北市立天文科學教育館 2025 年簡易星座盤為樣板。</p>
+        <section class="panel legend-panel">
+          <h2>星等</h2>
+          <div class="star-scale"><i class="s1"></i><span>一等星</span><i class="s2"></i><span>二等星</span><i class="s3"></i><span>三等星以下</span></div>
+        </section>
+
+        <section class="panel">
+          <h2>臺灣觀星提示</h2>
+          <p>星座盤以北緯 23.5° 為教學基準。畫面中的地平線罩片固定不動，星圖則隨恆星時旋轉，呈現不同日期與時間的可見星空。</p>
         </section>
       </aside>
     </main>
