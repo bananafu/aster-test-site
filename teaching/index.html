@@ -117,6 +117,11 @@
       line-height: 1.78;
     }
 
+    .course-list {
+      display: grid;
+      gap: 28px;
+    }
+
     .course-card {
       position: relative;
       display: grid;
@@ -265,12 +270,21 @@
       <p>Course materials designed to help students observe evidence, build explanations, and reason scientifically about the Earth.</p>
     </header>
 
-    <section aria-label="Available courses">
+    <section class="course-list" aria-label="Available courses">
       <a class="course-card" href="xiufeng-jhs-grade9-summer2026/">
         <div>
           <p class="course-label">Xiufeng Junior High School</p>
           <h2>Grade 9 Summer Course</h2>
           <p class="course-meta">Earth Science · 2026<br>Introduction to Scientific Reasoning</p>
+        </div>
+        <span class="course-action">Enter Course <span class="course-arrow" aria-hidden="true">→</span></span>
+      </a>
+
+      <a class="course-card" href="grade11-summer2026/">
+        <div>
+          <p class="course-label">Summer 2026</p>
+          <h2>Grade 11 Summer Course</h2>
+          <p class="course-meta">Earth Science · Grade 11<br>Course materials and classroom resources</p>
         </div>
         <span class="course-action">Enter Course <span class="course-arrow" aria-hidden="true">→</span></span>
       </a>
